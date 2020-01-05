@@ -1,106 +1,10 @@
 import React from "react";
-import { Formik, Form, ErrorMessage } from "formik";
-import TextField from "@material-ui/core/TextField";
+import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
-import { MenuItem } from "@material-ui/core";
-
-function renderInput(name, label, value, touched, errors, handleChange) {
-  return (
-    <div style={{ marginTop: 20 }}>
-      <label htmlFor={name}>{label}</label>
-      <div className="form-group">
-        <TextField
-          name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
-          label=""
-          margin="normal"
-          fullWidth
-          variant="outlined"
-          value={value}
-          onChange={handleChange}
-          size="small"
-        />
-        <ErrorMessage
-          name={name}
-          component="div"
-          className="invalid-feedback"
-        />
-      </div>
-    </div>
-  );
-}
-
-function renderSelect(name, label, value, touched, errors, handleChange) {
-  return (
-    <div style={{ marginTop: 20 }}>
-      <label htmlFor={name}>{label}</label>
-      <div className="form-group">
-        <TextField
-          name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
-          select
-          label=""
-          margin="normal"
-          variant="outlined"
-          value={value}
-          onChange={handleChange}
-          size="small"
-        >
-          <MenuItem key={1} value={"Yes"}>
-            {"Yes"}
-          </MenuItem>
-          <MenuItem key={2} value={"No"}>
-            {"No"}
-          </MenuItem>
-        </TextField>
-        <ErrorMessage
-          name={name}
-          component="div"
-          className="invalid-feedback"
-        />
-      </div>
-    </div>
-  );
-}
-
-function renderMultilineInput(
-  name,
-  label,
-  value,
-  touched,
-  errors,
-  handleChange
-) {
-  return (
-    <div style={{ marginTop: 20 }}>
-      <label htmlFor={name}>{label}</label>
-      <div className="form-group">
-        <TextField
-          name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
-          label=""
-          margin="normal"
-          fullWidth
-          variant="outlined"
-          value={value}
-          onChange={handleChange}
-          multiline
-          rows="10"
-          size="small"
-        />
-        <ErrorMessage
-          name={name}
-          component="div"
-          className="invalid-feedback"
-        />
-      </div>
-    </div>
-  );
-}
+import Input from "./common/Input";
+import Select from "./common/Select";
+import MultiInput from "./common/MultiInput";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
@@ -160,7 +64,7 @@ function InspectorForm() {
 
         return (
           <Form style={{ width: "80%" }} className={classes.form}>
-            {renderInput(
+            {Input(
               "nameOfInspector",
               "Name of Inspector",
               nameOfInspector,
@@ -168,7 +72,7 @@ function InspectorForm() {
               errors,
               handleChange
             )}
-            {renderInput(
+            {Input(
               "nameOfSupervisor",
               "Name of Supervisor",
               nameOfSupervisor,
@@ -176,7 +80,7 @@ function InspectorForm() {
               errors,
               handleChange
             )}
-            {renderInput(
+            {Input(
               "placeOfInspection",
               "Place of Inspection",
               placeOfInspection,
@@ -184,7 +88,7 @@ function InspectorForm() {
               errors,
               handleChange
             )}
-            {renderInput(
+            {Input(
               "dateOfInspection",
               "Date of Inspection",
               dateOfInspection,
@@ -192,7 +96,7 @@ function InspectorForm() {
               errors,
               handleChange
             )}
-            {renderInput(
+            {Input(
               "vehiclePlateNumber",
               "Vehicle Plate Number",
               vehiclePlateNumber,
@@ -200,15 +104,16 @@ function InspectorForm() {
               errors,
               handleChange
             )}
-            {renderSelect(
+            {Select(
               "inspectionPassed",
               "Inspection Passed?",
               inspectionPassed,
+              ["Yes", "No"],
               touched,
               errors,
               handleChange
             )}
-            {renderMultilineInput(
+            {MultiInput(
               "generalRemarks",
               "General Remarks",
               generalRemarks,
