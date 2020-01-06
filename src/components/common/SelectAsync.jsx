@@ -1,9 +1,15 @@
 import React from "react";
-import { ErrorMessage } from "formik";
-import MenuItem from "@material-ui/core/MenuItem";
 import Select from "react-select";
 
-export default function AsyncSelect(name, label, value, values) {
+export default function SelectAsync(
+  name,
+  label,
+  value,
+  values,
+  width,
+  errors,
+  handleChange
+) {
   const [selectedOption, setSelectedOption] = useState("");
   const handleChange = selectedOption => {
     setSelectedOption(selectedOption);

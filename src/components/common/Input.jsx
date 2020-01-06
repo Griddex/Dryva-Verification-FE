@@ -2,29 +2,21 @@ import React from "react";
 import { ErrorMessage } from "formik";
 import TextField from "@material-ui/core/TextField";
 
-export default function Input(
-  name,
-  label,
-  value,
-  touched,
-  errors,
-  handleChange
-) {
+export default function Input(name, label, value, width, errors, handleChange) {
   return (
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, width: width }}>
       <label htmlFor={name}>{label}</label>
       <div className="form-group">
         <TextField
           name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
           label=""
-          margin="normal"
-          fullWidth
-          variant="outlined"
           value={value}
           onChange={handleChange}
+          error={Boolean(errors[name])}
+          margin="normal"
+          variant="outlined"
           size="small"
+          fullWidth
         />
         <ErrorMessage
           name={name}

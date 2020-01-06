@@ -4,7 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import Input from "./common/Input";
 import Select from "./common/Select";
-import MultiInput from "./common/MultiInput";
+import DatePicker from "./common/DatePicker";
+import {
+  VehicleTypes,
+  VehicleMakes,
+  VehicleManufactureYears
+} from "./../services/vehicleService";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
@@ -26,8 +31,8 @@ function VehicleDetailsForm() {
         yearOfManufacture: "",
         ChassisNo: "",
         EngineNo: "",
-        MOTExpiry: "No",
-        InsuranceExpiry: "",
+        MOTExpiry: new Date(),
+        InsuranceExpiry: new Date(),
         classes
       }}
       validationSchema={Yup.object().shape({
@@ -40,7 +45,6 @@ function VehicleDetailsForm() {
           values: {
             vehicleType,
             vehicleMake,
-            vehicleModel,
             yearOfManufacture,
             ChassisNo,
             EngineNo,
@@ -49,17 +53,17 @@ function VehicleDetailsForm() {
             classes
           },
           errors,
-          touched,
           handleChange
         } = props;
 
         return (
-          <Form style={{ width: "80%" }} className={classes.form}>
+          <Form style={{ width: "90%" }} className={classes.form}>
             {Select(
               "vehicleType",
               "Vehicle Type",
               vehicleType,
-              touched,
+              VehicleTypes,
+              300,
               errors,
               handleChange
             )}
@@ -67,15 +71,8 @@ function VehicleDetailsForm() {
               "vehicleMake",
               "Vehicle Make",
               vehicleMake,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Select(
-              "vehicleModel",
-              "Vehicle Model",
-              vehicleModel,
-              touched,
+              VehicleMakes,
+              300,
               errors,
               handleChange
             )}
@@ -83,7 +80,8 @@ function VehicleDetailsForm() {
               "yearOfManufacture",
               "Year of Manufacture",
               yearOfManufacture,
-              touched,
+              VehicleManufactureYears,
+              150,
               errors,
               handleChange
             )}
@@ -91,7 +89,7 @@ function VehicleDetailsForm() {
               "ChassisNo",
               "Chassis Number",
               ChassisNo,
-              touched,
+              250,
               errors,
               handleChange
             )}
@@ -99,26 +97,20 @@ function VehicleDetailsForm() {
               "EngineNo",
               "Engine Number",
               EngineNo,
-              touched,
+              250,
               errors,
               handleChange
             )}
-            {Input(
-              "MOTExpiry",
-              "MOT Expiry",
-              MOTExpiry,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "InsuranceExpiry",
-              "Insurance Expiry",
-              InsuranceExpiry,
-              touched,
-              errors,
-              handleChange
-            )}
+            <DatePicker
+              label="MOT Expiry"
+              dateOfInspection={MOTExpiry}
+              handleChange={handleChange}
+            />
+            <DatePicker
+              label="Insurance Expiry"
+              dateOfInspection={InsuranceExpiry}
+              handleChange={handleChange}
+            />
           </Form>
         );
       }}

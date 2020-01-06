@@ -49,7 +49,6 @@ export default function SafetyTechnicalSummary() {
                   classes
                 },
                 errors,
-                touched,
                 handleChange
               } = props;
 
@@ -59,7 +58,7 @@ export default function SafetyTechnicalSummary() {
                     "noOfDefectsOnBus",
                     "Number of Defects on Bus",
                     noOfDefectsOnBus,
-                    touched,
+                    100,
                     errors,
                     handleChange
                   )}
@@ -68,7 +67,8 @@ export default function SafetyTechnicalSummary() {
                     "hasSupervisorBeenNotified",
                     "Has a Supervisor been notified?",
                     hasSupervisorBeenNotified,
-                    touched,
+                    ["Yes", "No"],
+                    100,
                     errors,
                     handleChange
                   )}
@@ -76,7 +76,7 @@ export default function SafetyTechnicalSummary() {
                     "generalRemarks",
                     "General Remarks",
                     generalRemarks,
-                    touched,
+                    500,
                     errors,
                     handleChange
                   )}

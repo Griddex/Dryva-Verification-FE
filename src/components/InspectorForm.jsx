@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import Input from "./common/Input";
 import Select from "./common/Select";
 import MultiInput from "./common/MultiInput";
+import DatePicker from "./common/DatePicker";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
@@ -23,7 +24,7 @@ function InspectorForm() {
         nameOfInspector: "",
         nameOfSupervisor: "",
         placeOfInspection: "",
-        dateOfInspection: "",
+        dateOfInspection: new Date(),
         vehiclePlateNumber: "",
         inspectionPassed: "No",
         generalRemarks: "",
@@ -37,9 +38,9 @@ function InspectorForm() {
         placeOfInspection: Yup.string().required(
           "Place of inspection is required"
         ),
-        dateOfInspection: Yup.string().required(
-          "Date of inspection is required"
-        ),
+        dateOfInspection: Yup.date()
+          .default(() => new Date())
+          .required(),
         vehiclePlateNumber: Yup.string().required(
           "Vehicle plate number is required"
         )
@@ -58,7 +59,6 @@ function InspectorForm() {
             classes
           },
           errors,
-          touched,
           handleChange
         } = props;
 
@@ -68,7 +68,7 @@ function InspectorForm() {
               "nameOfInspector",
               "Name of Inspector",
               nameOfInspector,
-              touched,
+              400,
               errors,
               handleChange
             )}
@@ -76,7 +76,7 @@ function InspectorForm() {
               "nameOfSupervisor",
               "Name of Supervisor",
               nameOfSupervisor,
-              touched,
+              400,
               errors,
               handleChange
             )}
@@ -84,23 +84,20 @@ function InspectorForm() {
               "placeOfInspection",
               "Place of Inspection",
               placeOfInspection,
-              touched,
+              300,
               errors,
               handleChange
             )}
-            {Input(
-              "dateOfInspection",
-              "Date of Inspection",
-              dateOfInspection,
-              touched,
-              errors,
-              handleChange
-            )}
+            <DatePicker
+              label="Date of Inspection"
+              dateOfInspection={dateOfInspection}
+              handleChange={handleChange}
+            />
             {Input(
               "vehiclePlateNumber",
               "Vehicle Plate Number",
               vehiclePlateNumber,
-              touched,
+              200,
               errors,
               handleChange
             )}
@@ -109,7 +106,7 @@ function InspectorForm() {
               "Inspection Passed?",
               inspectionPassed,
               ["Yes", "No"],
-              touched,
+              100,
               errors,
               handleChange
             )}
@@ -117,7 +114,7 @@ function InspectorForm() {
               "generalRemarks",
               "General Remarks",
               generalRemarks,
-              touched,
+              500,
               errors,
               handleChange
             )}

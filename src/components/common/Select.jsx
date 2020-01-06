@@ -7,26 +7,24 @@ export default function Select(
   label,
   value,
   values,
-  touched,
+  width,
   errors,
   handleChange
 ) {
   return (
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, width: width }}>
       <label htmlFor={name}>{label}</label>
       <div className="form-group">
         <TextField
           name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
-          select
           label=""
-          margin="normal"
-          variant="outlined"
           value={value}
           onChange={handleChange}
+          error={Boolean(errors[name])}
+          margin="normal"
+          variant="outlined"
           size="small"
-          fullWidth
+          select
         >
           {values.map((v, i) => {
             return (

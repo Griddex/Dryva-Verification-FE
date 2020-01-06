@@ -10,6 +10,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
+import MultiInput from "./common/MultiInput";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,10 +25,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function EngineFluidLevels() {
+export default function EngineFluidLevels(props) {
   const classes = useStyles();
-  //const { touched, errors, handleChange } = props;
-  const [state, setState] = React.useState({
+  const { errors } = props;
+  const [engineFluidLevels, setEngineFluidLevels] = React.useState({
     FuelGaugeWorking: false,
     OilLevelPressureGaugeWorking: false,
     TransmissionFluidLevel: false,
@@ -38,11 +39,13 @@ export default function EngineFluidLevels() {
     RadiatorFluidLevel: false,
     FluidsLeakingUnderBus: false,
     EngineWarningLights: false,
-    OtherEngineFluidLevels: false,
     OtherEngineFluidLevels: ""
   });
   const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+    setEngineFluidLevels({
+      ...engineFluidLevels,
+      [name]: event.target.checked
+    });
   };
 
   return (
@@ -63,7 +66,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.FuelGaugeWorking}
+                    checked={engineFluidLevels.FuelGaugeWorking}
                     onChange={handleChange("FuelGaugeWorking")}
                     value="FuelGaugeWorking"
                   />
@@ -73,7 +76,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.OilLevelPressureGaugeWorking}
+                    checked={engineFluidLevels.OilLevelPressureGaugeWorking}
                     onChange={handleChange("OilLevelPressureGaugeWorking")}
                     value="OilLevelPressureGaugeWorking"
                   />
@@ -83,7 +86,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.TransmissionFluidLevel}
+                    checked={engineFluidLevels.TransmissionFluidLevel}
                     onChange={handleChange("TransmissionFluidLevel")}
                     value="TransmissionFluidLevel"
                   />
@@ -93,7 +96,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.PowerSteeringFluidLevel}
+                    checked={engineFluidLevels.PowerSteeringFluidLevel}
                     onChange={handleChange("PowerSteeringFluidLevel")}
                     value="PowerSteeringFluidLevel"
                   />
@@ -103,7 +106,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.BrakeFluidLevel}
+                    checked={engineFluidLevels.BrakeFluidLevel}
                     onChange={handleChange("BrakeFluidLevel")}
                     value="BrakeFluidLevel"
                   />
@@ -113,7 +116,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.BatteryCharge}
+                    checked={engineFluidLevels.BatteryCharge}
                     onChange={handleChange("BatteryCharge")}
                     value="BatteryCharge"
                   />
@@ -123,7 +126,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WindshieldWiperFluid}
+                    checked={engineFluidLevels.WindshieldWiperFluid}
                     onChange={handleChange("WindshieldWiperFluid")}
                     value="WindshieldWiperFluid"
                   />
@@ -133,7 +136,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.RadiatorFluidLevel}
+                    checked={engineFluidLevels.RadiatorFluidLevel}
                     onChange={handleChange("RadiatorFluidLevel")}
                     value="RadiatorFluidLevel"
                   />
@@ -143,7 +146,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.FluidsLeakingUnderBus}
+                    checked={engineFluidLevels.FluidsLeakingUnderBus}
                     onChange={handleChange("FluidsLeakingUnderBus")}
                     value="FluidsLeakingUnderBus"
                   />
@@ -153,7 +156,7 @@ export default function EngineFluidLevels() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.EngineWarningLights}
+                    checked={engineFluidLevels.EngineWarningLights}
                     onChange={handleChange("EngineWarningLights")}
                     value="EngineWarningLights"
                   />
@@ -162,15 +165,17 @@ export default function EngineFluidLevels() {
               />
 
               <div style={{ marginTop: 20 }}>
-                <label htmlFor={state.OtherEngineFluidLevels}>Other</label>
+                <label htmlFor={engineFluidLevels.OtherEngineFluidLevels}>
+                  Other
+                </label>
                 <div className="form-group">
                   <TextField
-                    name={state.OtherEngineFluidLevels}
+                    name={engineFluidLevels.OtherEngineFluidLevels}
                     label=""
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={state.OtherEngineFluidLevels}
+                    value={engineFluidLevels.OtherEngineFluidLevels}
                     onChange={handleChange}
                     multiline
                     rows="10"

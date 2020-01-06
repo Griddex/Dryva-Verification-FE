@@ -3,11 +3,11 @@ import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import Input from "./common/Input";
-import Select from "./common/Select";
-import MultiInput from "./common/MultiInput";
 import NextOfKin from "./common/NextOfKin";
 import Address from "./common/Address";
 import DatePicker from "./common/DatePicker";
+import Container from "@material-ui/core/Container";
+import DriverPersonalDetails from "./DriverPersonalDetails";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
@@ -30,6 +30,9 @@ function DriversForm() {
         driversEmail: "",
         driversLicenseNo: "",
         driversLicenseExpiryDate: "",
+        addressLine1: "",
+        addressLine2: "",
+        postalCode: "",
         country: "Nigeria",
         state: "Akwa Ibom",
         city: "Uyo",
@@ -51,7 +54,8 @@ function DriversForm() {
         ),
         driversLicenseExpiryDate: Yup.string().required(
           "Driver's license expiry date is required"
-        )
+        ),
+        addressLine1: Yup.string().required("Driver's address is required")
       })}
     >
       {props => {
@@ -64,82 +68,57 @@ function DriversForm() {
             driversEmail,
             driversLicenseNo,
             driversLicenseExpiryDate,
+            addressLine1,
+            addressLine2,
+            postalCode,
+            country,
+            state,
+            city,
             classes
           },
           errors,
-          touched,
           handleChange
         } = props;
 
         return (
-          <Form style={{ width: "80%" }} className={classes.form}>
-            {Input(
-              "driversFirstName",
-              "Driver's First Name",
-              driversFirstName,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "driversMiddleName",
-              "Driver's Middle Name",
-              driversMiddleName,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "driversSurname",
-              "Driver's Surname",
-              driversSurname,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "driversMobile",
-              "Driver's Mobile Number",
-              driversMobile,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "driversEmail",
-              "Driver's Email",
-              driversEmail,
-              touched,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "driversLicenseNo",
-              "Driver's License Number",
-              driversLicenseNo,
-              touched,
-              errors,
-              handleChange
-            )}
-            {/* <DatePicker /> */}
-            <NextOfKin title="Next of Kin" errors touched handleChange />
-            <Address
-              country
-              state
-              city
-              title="Home Address"
-              errors
-              touched
-              handleChange
+          <Form className={classes.form}>
+            <DriverPersonalDetails
+              driversFirstName={driversFirstName}
+              driversMiddleName={driversMiddleName}
+              driversSurname={driversSurname}
+              driversMobile={driversMobile}
+              driversEmail={driversEmail}
+              driversLicenseNo={driversLicenseNo}
+              driversLicenseExpiryDate={driversLicenseExpiryDate}
+              errors={errors}
+              handleChange={handleChange}
+            />
+            <NextOfKin
+              title="Next of Kin"
+              errors={errors}
+              handleChange={handleChange}
             />
             <Address
-              country
-              state
-              city
+              title="Home Address"
+              country={country}
+              state={state}
+              city={city}
+              addressLine1={addressLine1}
+              addressLine2={addressLine2}
+              postalCode={postalCode}
+              errors={errors}
+              handleChange={handleChange}
+            />
+            <Address
               title="Permanent Address"
-              errors
-              touched
-              handleChange
+              country={country}
+              state={state}
+              city={city}
+              addressLine1={addressLine1}
+              addressLine2={addressLine2}
+              postalCode={postalCode}
+              errors={errors}
+              handleChange={handleChange}
             />
           </Form>
         );

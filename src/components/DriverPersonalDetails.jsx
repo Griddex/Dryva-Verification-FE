@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Input from "./Input";
-import Select from "./Select";
-import Countries from "./../../services/countriesService";
-import States from "../../services/statesService";
-import Cities from "./../../services/citiesService";
+import Input from "./../components/common/Input";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,19 +17,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Address(props) {
+export default function DriverPersonalDetails(props) {
   const classes = useStyles();
   const {
-    country,
-    state,
-    city,
-    addressLine1,
-    addressLine2,
-    postalCode,
-    title,
+    driversFirstName,
+    driversMiddleName,
+    driversSurname,
+    driversMobile,
+    driversEmail,
+    driversLicenseNo,
     errors,
     handleChange
   } = props;
+
   return (
     <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
@@ -42,46 +38,61 @@ export default function Address(props) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>{title}</Typography>
+          <Typography className={classes.heading}>
+            Driver's Personal Details
+          </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <div>
             {Input(
-              "addressLine1",
-              "AddressLine1",
-              addressLine1,
-              500,
+              "driversFirstName",
+              "Driver's First Name",
+              driversFirstName,
+              400,
               errors,
               handleChange
             )}
             {Input(
-              "addressLine2",
-              "AddressLine2",
-              addressLine2,
-              500,
+              "driversMiddleName",
+              "Driver's Middle Name",
+              driversMiddleName,
+              400,
               errors,
               handleChange
             )}
-
-            {Select(
-              "Country",
-              "Country",
-              country,
-              Countries,
-              150,
-              errors,
-              handleChange
-            )}
-            {Select("State", "State", state, States, 150, errors, handleChange)}
-            {Select("City", "City", city, Cities, 200, errors, handleChange)}
             {Input(
-              "postalCode",
-              "PostalCode",
-              postalCode,
-              150,
+              "driversSurname",
+              "Driver's Surname",
+              driversSurname,
+              400,
               errors,
               handleChange
             )}
+            {Input(
+              "driversMobile",
+              "Driver's Mobile Number",
+              driversMobile,
+              200,
+              errors,
+              handleChange
+            )}
+            {Input(
+              "driversEmail",
+              "Driver's Email",
+              driversEmail,
+              300,
+              errors,
+              handleChange
+            )}
+            {Input(
+              "driversLicenseNo",
+              "Driver's License Number",
+              driversLicenseNo,
+              200,
+              errors,
+              handleChange
+            )}
+            {/* <DatePicker /> */}
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

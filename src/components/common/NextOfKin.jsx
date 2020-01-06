@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -21,9 +21,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function NextOfKin(props) {
   const classes = useStyles();
-  const { touched, errors, handleChange } = props;
+  const [FirstName, setFirstName] = useState("");
+  const [MiddleName, setMiddleName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [HomeAddress, setHomeAddress] = useState("");
+  const [PhoneNumber, setPhoneNumber] = useState("");
+
+  const { errors, handleChange } = props;
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -33,51 +39,48 @@ export default function NextOfKin(props) {
           <Typography className={classes.heading}>Next of Kin</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <form>
+          <div>
             {Input(
               "firstName",
-              "FirstName",
               "First Name",
-              touched,
+              FirstName,
+              400,
               errors,
               handleChange
             )}
             {Input(
               "middleName",
-              "MiddleName",
               "Middle Name",
-              touched,
+              MiddleName,
+              400,
               errors,
               handleChange
             )}
-
             {Input(
               "lastName",
-              "LastName",
               "Last Name",
-              touched,
+              LastName,
+              400,
               errors,
               handleChange
             )}
-
-            {MultiInput(
+            {Input(
               "homeAddress",
-              "HomeAddress",
               "Home Address",
-              touched,
+              HomeAddress,
+              400,
               errors,
               handleChange
             )}
-
             {Input(
               "phoneNumber",
-              "PhoneNumber",
               "Phone Number",
-              touched,
+              PhoneNumber,
+              200,
               errors,
               handleChange
             )}
-          </form>
+          </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

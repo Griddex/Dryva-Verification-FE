@@ -47,7 +47,6 @@ function OwnersForm() {
             classes
           },
           errors,
-          touched,
           handleChange
         } = props;
 
@@ -57,7 +56,7 @@ function OwnersForm() {
               "nameOfOwner",
               "Name of Owner",
               nameOfOwner,
-              touched,
+              500,
               errors,
               handleChange
             )}
@@ -65,7 +64,7 @@ function OwnersForm() {
               "ownersHouseAddress",
               "Owner's house address",
               ownersHouseAddress,
-              touched,
+              500,
               errors,
               handleChange
             )}
@@ -73,16 +72,16 @@ function OwnersForm() {
               "ownersMobileNo",
               "Owner's Mobile No.",
               ownersMobileNo,
-              touched,
+              200,
               errors,
               handleChange
             )}
 
             {Input(
               "ownersNextOfKinName",
-              "Owner's next of Kin Name",
+              "Owner's Next of Kin Name",
               ownersNextOfKinName,
-              touched,
+              500,
               errors,
               handleChange
             )}

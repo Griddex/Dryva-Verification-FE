@@ -16,9 +16,10 @@ const useStyles = makeStyles(theme => ({
 
 function SafetyTechnicalForm() {
   const classes = useStyles();
+  const errors = "";
   return (
     <Container>
-      <EngineFluidLevels />
+      <EngineFluidLevels errors={errors} />
       <InteriorChecks />
       <ExteriorChecks />
       <SafetyTechnicalSummary />

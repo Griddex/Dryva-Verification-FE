@@ -6,27 +6,26 @@ export default function MultiInput(
   name,
   label,
   value,
-  touched,
+  width,
   errors,
   handleChange
 ) {
   return (
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, width: width }}>
       <label htmlFor={name}>{label}</label>
       <div className="form-group">
         <TextField
           name={name}
-          //helperText={touched[name] ? errors[name] : ""}
-          error={Boolean(errors[name])}
           label=""
-          margin="normal"
-          fullWidth
-          variant="outlined"
           value={value}
           onChange={handleChange}
-          multiline
+          error={Boolean(errors[name])}
+          margin="normal"
+          variant="outlined"
           rows="10"
           size="small"
+          multiline
+          fullWidth
         />
         <ErrorMessage
           name={name}
