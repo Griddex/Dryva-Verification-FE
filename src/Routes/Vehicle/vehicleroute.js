@@ -1,4 +1,5 @@
 import React from "react";
+import Formik from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Container from "@material-ui/core/Container";
@@ -12,6 +13,9 @@ import DriversForm from "./../../components/DriversForm";
 import VehicleDetailsForm from "./../../components/VehicleDetailsForm";
 import SafetyTechnicalForm from "./../../components/SafetyTechnicalForm";
 import { CssBaseline } from "@material-ui/core";
+import StoreInitialValues from "./../../store/store";
+import ValidationSchema from "./../../ValidationSchema/validationSchema";
+import VerificationImagesForm from "../../components/VerificationImagesForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +36,8 @@ function getSteps() {
     "Owner's Details",
     "Driver's Details",
     "Vehicle Details and Documentation",
-    "Safety and Technical"
+    "Safety and Technical",
+    "Verification Images"
   ];
 }
 
@@ -48,6 +53,8 @@ function getStepContent(step) {
       return "Vehicle Details and Documentation";
     case 4:
       return "Safety and Technical";
+    case 5:
+      return "Verification Images";
     default:
       return "Unknown step";
   }
@@ -61,7 +68,7 @@ export default function VehicleRoute(props) {
   const steps = getSteps();
 
   function isStepOptional(step) {
-    return step === 1;
+    return step === 4;
   }
 
   function isStepFailed(step) {
@@ -105,21 +112,33 @@ export default function VehicleRoute(props) {
   }
 
   function renderForm(activeStep) {
-    switch (activeStep) {
-      case 0:
-        return <InspectorForm />;
-      // return <h1>Inspector</h1>;
-      case 1:
-        return <OwnersForm />;
-      case 2:
-        return <DriversForm />;
-      case 3:
-        return <VehicleDetailsForm />;
-      case 4:
-        return <SafetyTechnicalForm />;
-      default:
-        return <InspectorForm />;
-    }
+    return (
+      <Formik
+        className={classes.form}
+        initialValues={StoreInitialValues}
+        validationSchema={ValidationSchema}
+        onSubmit={handleSubmit}
+      >
+        {props => {
+          switch (activeStep) {
+            case 0:
+              return <InspectorForm {...props} />;
+            case 1:
+              return <OwnersForm {...props} />;
+            case 2:
+              return <DriversForm {...props} />;
+            case 3:
+              return <VehicleDetailsForm {...props} />;
+            case 4:
+              return <SafetyTechnicalForm {...props} />;
+            case 5:
+              return <VerificationImagesForm {...props} />;
+            default:
+              return <InspectorForm />;
+          }
+        }}
+      </Formik>
+    );
   }
 
   return (

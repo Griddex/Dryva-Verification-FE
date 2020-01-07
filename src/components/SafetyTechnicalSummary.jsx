@@ -18,7 +18,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SafetyTechnicalSummary() {
+export default function SafetyTechnicalSummary(props) {
+  const {
+    values: {
+      noOfDefectsOnBus,
+      hasSupervisorBeenNotified,
+      generalRemarks,
+      classes
+    },
+    errors,
+    handleChange
+  } = props;
+
   const classes = useStyles();
   return (
     <div className={classes.root} style={{ marginTop: 30 }}>
@@ -31,59 +42,34 @@ export default function SafetyTechnicalSummary() {
           <Typography className={classes.heading}>Summary</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Formik
-            className={classes.form}
-            initialValues={{
-              noOfDefectsOnBus: 0,
-              hasSupervisorBeenNotified: "No",
-              generalRemarks: "",
-              classes
-            }}
-          >
-            {props => {
-              const {
-                values: {
-                  noOfDefectsOnBus,
-                  hasSupervisorBeenNotified,
-                  generalRemarks,
-                  classes
-                },
-                errors,
-                handleChange
-              } = props;
+          <div style={{ width: "80%" }} className={classes.form}>
+            {Input(
+              "noOfDefectsOnBus",
+              "Number of Defects on Bus",
+              noOfDefectsOnBus,
+              100,
+              errors,
+              handleChange
+            )}
 
-              return (
-                <Form style={{ width: "80%" }} className={classes.form}>
-                  {Input(
-                    "noOfDefectsOnBus",
-                    "Number of Defects on Bus",
-                    noOfDefectsOnBus,
-                    100,
-                    errors,
-                    handleChange
-                  )}
-
-                  {Select(
-                    "hasSupervisorBeenNotified",
-                    "Has a Supervisor been notified?",
-                    hasSupervisorBeenNotified,
-                    ["Yes", "No"],
-                    100,
-                    errors,
-                    handleChange
-                  )}
-                  {MultiInput(
-                    "generalRemarks",
-                    "General Remarks",
-                    generalRemarks,
-                    500,
-                    errors,
-                    handleChange
-                  )}
-                </Form>
-              );
-            }}
-          </Formik>
+            {Select(
+              "hasSupervisorBeenNotified",
+              "Has a Supervisor been notified?",
+              hasSupervisorBeenNotified,
+              ["Yes", "No"],
+              100,
+              errors,
+              handleChange
+            )}
+            {MultiInput(
+              "generalRemarks",
+              "General Remarks",
+              generalRemarks,
+              500,
+              errors,
+              handleChange
+            )}
+          </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

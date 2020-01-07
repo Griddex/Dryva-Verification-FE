@@ -19,103 +19,70 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function VehicleDetailsForm() {
+export default function VehicleDetailsForm(props) {
+  const {
+    values: {
+      vehicleType,
+      vehicleMake,
+      yearOfManufacture,
+      ChassisNo,
+      EngineNo,
+      MOTExpiry,
+      InsuranceExpiry
+    },
+    errors,
+    handleChange
+  } = props;
+
   const classes = useStyles();
   return (
-    <Formik
-      className={classes.form}
-      initialValues={{
-        vehicleType: "",
-        vehicleMake: "",
-        vehicleModel: "",
-        yearOfManufacture: "",
-        ChassisNo: "",
-        EngineNo: "",
-        MOTExpiry: new Date(),
-        InsuranceExpiry: new Date(),
-        classes
-      }}
-      validationSchema={Yup.object().shape({
-        ChassisNo: Yup.string().required("Vehicle Chassis Number is required"),
-        EngineNo: Yup.string().required("Vehicle Engine Number is required")
-      })}
-    >
-      {props => {
-        const {
-          values: {
-            vehicleType,
-            vehicleMake,
-            yearOfManufacture,
-            ChassisNo,
-            EngineNo,
-            MOTExpiry,
-            InsuranceExpiry,
-            classes
-          },
-          errors,
-          handleChange
-        } = props;
-
-        return (
-          <Form style={{ width: "90%" }} className={classes.form}>
-            {Select(
-              "vehicleType",
-              "Vehicle Type",
-              vehicleType,
-              VehicleTypes,
-              300,
-              errors,
-              handleChange
-            )}
-            {Select(
-              "vehicleMake",
-              "Vehicle Make",
-              vehicleMake,
-              VehicleMakes,
-              300,
-              errors,
-              handleChange
-            )}
-            {Select(
-              "yearOfManufacture",
-              "Year of Manufacture",
-              yearOfManufacture,
-              VehicleManufactureYears,
-              150,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "ChassisNo",
-              "Chassis Number",
-              ChassisNo,
-              250,
-              errors,
-              handleChange
-            )}
-            {Input(
-              "EngineNo",
-              "Engine Number",
-              EngineNo,
-              250,
-              errors,
-              handleChange
-            )}
-            <DatePicker
-              label="MOT Expiry"
-              dateOfInspection={MOTExpiry}
-              handleChange={handleChange}
-            />
-            <DatePicker
-              label="Insurance Expiry"
-              dateOfInspection={InsuranceExpiry}
-              handleChange={handleChange}
-            />
-          </Form>
-        );
-      }}
-    </Formik>
+    <div style={{ width: "90%" }} className={classes.form}>
+      {Select(
+        "vehicleType",
+        "Vehicle Type",
+        vehicleType,
+        VehicleTypes,
+        300,
+        errors,
+        handleChange
+      )}
+      {Select(
+        "vehicleMake",
+        "Vehicle Make",
+        vehicleMake,
+        VehicleMakes,
+        300,
+        errors,
+        handleChange
+      )}
+      {Select(
+        "yearOfManufacture",
+        "Year of Manufacture",
+        yearOfManufacture,
+        VehicleManufactureYears,
+        150,
+        errors,
+        handleChange
+      )}
+      {Input(
+        "ChassisNo",
+        "Chassis Number",
+        ChassisNo,
+        250,
+        errors,
+        handleChange
+      )}
+      {Input("EngineNo", "Engine Number", EngineNo, 250, errors, handleChange)}
+      <DatePicker
+        label="MOT Expiry"
+        dateOfInspection={MOTExpiry}
+        handleChange={handleChange}
+      />
+      <DatePicker
+        label="Insurance Expiry"
+        dateOfInspection={InsuranceExpiry}
+        handleChange={handleChange}
+      />
+    </div>
   );
 }
-
-export default VehicleDetailsForm;

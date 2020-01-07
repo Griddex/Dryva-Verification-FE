@@ -20,10 +20,10 @@ function LoginForm(props) {
     status,
     classes
   } = props;
+
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
       <div>{errors.username}</div>
-
       <div className="form-group">
         <TextField
           name="username"

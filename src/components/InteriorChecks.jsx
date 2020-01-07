@@ -21,33 +21,32 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function InteriorChecks() {
-  const classes = useStyles();
-  //const { touched, errors, handleChange } = props;
-  const [state, setState] = React.useState({
-    Mirrors: false,
-    WindshieldWipers: false,
-    Horn: false,
-    ParkingBrake: false,
-    Fans: false,
-    AirConditioning: false,
-    RadioEquipmentCellphone: false,
-    CantheDoorsbeOpenedFreely: false,
-    InteriorLights: false,
-    DriverSeatBelts: false,
-    PassengerSeats: false,
-    FireExtinguisher: false,
-    OtherEmergencyGear: false,
-    DestinationSignbox: false,
-    WindowsCleanandcanWindFreely: false,
-    InteriorClean: false,
-    WastebinAvailableOrEmptied: false,
-    OtherInteriorChecks: ""
-  });
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-  };
+export default function InteriorChecks(props) {
+  const {
+    values: {
+      Mirrors,
+      WindshieldWipers,
+      Horn,
+      ParkingBrake,
+      Fans,
+      AirConditioning,
+      RadioEquipmentCellphone,
+      CantheDoorsbeOpenedFreely,
+      InteriorLights,
+      DriverSeatBelts,
+      PassengerSeats,
+      FireExtinguisher,
+      OtherEmergencyGear,
+      DestinationSignbox,
+      WindowsCleanandcanWindFreely,
+      InteriorClean,
+      WastebinAvailableOrEmptied,
+      OtherInteriorChecks
+    },
+    handleChange
+  } = props;
 
+  const classes = useStyles();
   return (
     <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
@@ -64,7 +63,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.Mirrors}
+                    checked={Mirrors}
                     onChange={handleChange("Mirrors")}
                     value="Mirrors"
                   />
@@ -74,7 +73,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WindshieldWipers}
+                    checked={WindshieldWipers}
                     onChange={handleChange("WindshieldWipers")}
                     value="WindshieldWipers"
                   />
@@ -84,7 +83,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.Horn}
+                    checked={Horn}
                     onChange={handleChange("Horn")}
                     value="Horn"
                   />
@@ -94,7 +93,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.ParkingBrake}
+                    checked={ParkingBrake}
                     onChange={handleChange("ParkingBrake")}
                     value="ParkingBrake"
                   />
@@ -104,7 +103,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.Fans}
+                    checked={Fans}
                     onChange={handleChange("Fans")}
                     value="Fans"
                   />
@@ -114,7 +113,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.AirConditioning}
+                    checked={AirConditioning}
                     onChange={handleChange("AirConditioning")}
                     value="AirConditioning"
                   />
@@ -124,7 +123,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.RadioEquipmentCellphone}
+                    checked={RadioEquipmentCellphone}
                     onChange={handleChange("RadioEquipmentCellphone")}
                     value="RadioEquipmentCellphone"
                   />
@@ -134,7 +133,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.CantheDoorsbeOpenedFreely}
+                    checked={CantheDoorsbeOpenedFreely}
                     onChange={handleChange("CantheDoorsbeOpenedFreely")}
                     value="CantheDoorsbeOpenedFreely"
                   />
@@ -144,7 +143,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.FluidsLeakingUnderBus}
+                    checked={FluidsLeakingUnderBus}
                     onChange={handleChange("FluidsLeakingUnderBus")}
                     value="FluidsLeakingUnderBus"
                   />
@@ -154,7 +153,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.InteriorLights}
+                    checked={InteriorLights}
                     onChange={handleChange("InteriorLights")}
                     value="InteriorLights"
                   />
@@ -164,7 +163,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.DriverSeatBelts}
+                    checked={DriverSeatBelts}
                     onChange={handleChange("DriverSeatBelts")}
                     value="DriverSeatBelts"
                   />
@@ -174,7 +173,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.PassengerSeats}
+                    checked={PassengerSeats}
                     onChange={handleChange("PassengerSeats")}
                     value="PassengerSeats"
                   />
@@ -184,7 +183,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.FireExtinguisher}
+                    checked={FireExtinguisher}
                     onChange={handleChange("FireExtinguisher")}
                     value="FireExtinguisher"
                   />
@@ -194,7 +193,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.OtherEmergencyGear}
+                    checked={OtherEmergencyGear}
                     onChange={handleChange("OtherEmergencyGear")}
                     value="OtherEmergencyGear"
                   />
@@ -204,7 +203,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.DestinationSignbox}
+                    checked={DestinationSignbox}
                     onChange={handleChange("DestinationSignbox")}
                     value="DestinationSignbox"
                   />
@@ -214,7 +213,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WindowsCleanandcanWindFreely}
+                    checked={WindowsCleanandcanWindFreely}
                     onChange={handleChange("WindowsCleanandcanWindFreely")}
                     value="WindowsCleanandcanWindFreely"
                   />
@@ -224,7 +223,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.InteriorClean}
+                    checked={InteriorClean}
                     onChange={handleChange("InteriorClean")}
                     value="InteriorClean"
                   />
@@ -234,7 +233,7 @@ export default function InteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WastebinAvailableOrEmptied}
+                    checked={WastebinAvailableOrEmptied}
                     onChange={handleChange("WastebinAvailableOrEmptied")}
                     value="WastebinAvailableOrEmptied"
                   />
@@ -243,15 +242,15 @@ export default function InteriorChecks() {
               />
 
               <div style={{ marginTop: 20 }}>
-                <label htmlFor={state.OtherInteriorChecks}>Other</label>
+                <label htmlFor={OtherInteriorChecks}>Other</label>
                 <div className="form-group">
                   <TextField
-                    name={state.OtherInteriorChecks}
+                    name={OtherInteriorChecks}
                     label=""
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={state.OtherInteriorChecks}
+                    value={OtherInteriorChecks}
                     onChange={handleChange}
                     multiline
                     rows="10"

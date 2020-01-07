@@ -21,27 +21,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ExteriorChecks() {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    HeadlightsHiLow: false,
-    FoglampsHazardlamps: false,
-    WindshieldCondition: false,
-    DirectionalSignalsFrontrear: false,
-    TaillightsRunninglights: false,
-    BrakelightsBackUpLights: false,
-    TireconditionAirpressure: false,
-    LugnutsTight: false,
-    WindowscanWindfreely: false,
-    LuggageStoragedoorsEnginecompartmentPanels: false,
-    ExteriorClean: false,
-    BodyconditionScratchesDingsDents: false,
-    OtherExteriorChecks: ""
-  });
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-  };
+export default function ExteriorChecks(props) {
+  const {
+    values: {
+      HeadlightsHiLow,
+      FoglampsHazardlamps,
+      WindshieldCondition,
+      DirectionalSignalsFrontrear,
+      TaillightsRunninglights,
+      BrakelightsBackUpLights,
+      TireconditionAirpressure,
+      LugnutsTight,
+      WindowscanWindfreely,
+      LuggageStoragedoorsEnginecompartmentPanels,
+      ExteriorClean,
+      BodyconditionScratchesDingsDents,
+      OtherExteriorChecks
+    },
+    handleChange
+  } = props;
 
+  const classes = useStyles();
   return (
     <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
@@ -58,7 +58,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.Mirrors}
+                    checked={Mirrors}
                     onChange={handleChange("Mirrors")}
                     value="Mirrors"
                   />
@@ -68,7 +68,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.HeadlightsHiLow}
+                    checked={HeadlightsHiLow}
                     onChange={handleChange("HeadlightsHiLow")}
                     value="HeadlightsHiLow"
                   />
@@ -78,7 +78,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.FoglampsHazardlamps}
+                    checked={FoglampsHazardlamps}
                     onChange={handleChange("FoglampsHazardlamps")}
                     value="FoglampsHazardlamps"
                   />
@@ -88,7 +88,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WindshieldCondition}
+                    checked={WindshieldCondition}
                     onChange={handleChange("WindshieldCondition")}
                     value="WindshieldCondition"
                   />
@@ -98,7 +98,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.DirectionalSignalsFrontrear}
+                    checked={DirectionalSignalsFrontrear}
                     onChange={handleChange("DirectionalSignalsFrontrear")}
                     value="DirectionalSignalsFrontrear"
                   />
@@ -108,7 +108,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.TaillightsRunninglights}
+                    checked={TaillightsRunninglights}
                     onChange={handleChange("TaillightsRunninglights")}
                     value="TaillightsRunninglights"
                   />
@@ -118,7 +118,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.BrakelightsBackUpLights}
+                    checked={BrakelightsBackUpLights}
                     onChange={handleChange("BrakelightsBackUpLights")}
                     value="BrakelightsBackUpLights"
                   />
@@ -128,7 +128,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.TireconditionAirpressure}
+                    checked={TireconditionAirpressure}
                     onChange={handleChange("TireconditionAirpressure")}
                     value="TireconditionAirpressure"
                   />
@@ -138,7 +138,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.LugnutsTight}
+                    checked={LugnutsTight}
                     onChange={handleChange("LugnutsTight")}
                     value="LugnutsTight"
                   />
@@ -148,7 +148,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.WindowscanWindfreely}
+                    checked={WindowscanWindfreely}
                     onChange={handleChange("WindowscanWindfreely")}
                     value="WindowscanWindfreely"
                   />
@@ -158,7 +158,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.DriverSeatBelts}
+                    checked={DriverSeatBelts}
                     onChange={handleChange("DriverSeatBelts")}
                     value="DriverSeatBelts"
                   />
@@ -168,7 +168,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.LuggageStoragedoorsEnginecompartmentPanels}
+                    checked={LuggageStoragedoorsEnginecompartmentPanels}
                     onChange={handleChange(
                       "LuggageStoragedoorsEnginecompartmentPanels"
                     )}
@@ -180,7 +180,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.ExteriorClean}
+                    checked={ExteriorClean}
                     onChange={handleChange("ExteriorClean")}
                     value="ExteriorClean"
                   />
@@ -190,7 +190,7 @@ export default function ExteriorChecks() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={state.BodyconditionScratchesDingsDents}
+                    checked={BodyconditionScratchesDingsDents}
                     onChange={handleChange("BodyconditionScratchesDingsDents")}
                     value="BodyconditionScratchesDingsDents"
                   />
@@ -199,15 +199,15 @@ export default function ExteriorChecks() {
               />
 
               <div style={{ marginTop: 20 }}>
-                <label htmlFor={state.OtherExteriorChecks}>Other</label>
+                <label htmlFor={OtherExteriorChecks}>Other</label>
                 <div className="form-group">
                   <TextField
-                    name={state.OtherExteriorChecks}
+                    name={OtherExteriorChecks}
                     label=""
                     margin="normal"
                     fullWidth
                     variant="outlined"
-                    value={state.OtherExteriorChecks}
+                    value={OtherExteriorChecks}
                     onChange={handleChange}
                     multiline
                     rows="10"
