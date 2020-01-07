@@ -5,6 +5,7 @@ import EngineFluidLevels from "./EngineFluidLevels";
 import InteriorChecks from "./InteriorChecks";
 import ExteriorChecks from "./ExteriorChecks";
 import SafetyTechnicalSummary from "./SafetyTechnicalSummary";
+import VerificationImages from "./VerificationImages";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
@@ -23,6 +24,7 @@ function SafetyTechnicalForm() {
       <InteriorChecks />
       <ExteriorChecks />
       <SafetyTechnicalSummary />
+      <VerificationImages />
     </Container>
   );
 }

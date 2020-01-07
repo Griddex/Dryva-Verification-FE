@@ -10,7 +10,7 @@ import DatePicker from "./common/DatePicker";
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
   form: {
-    width: "70%", // Fix IE 11 issue.
+    width: "80%", // Fix IE 11 issue.
     marginTop: theme.spacing(5)
   }
 }));
