@@ -32,8 +32,7 @@ export default function DriversForm(props) {
       postalCode,
       country,
       state,
-      city,
-      classes
+      city
     },
     errors,
     handleChange

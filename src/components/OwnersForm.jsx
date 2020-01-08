@@ -3,11 +3,12 @@ import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import Input from "./common/Input";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
   form: {
-    width: "70%", // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(5)
   }
 }));
@@ -18,8 +19,7 @@ export default function OwnersForm(props) {
       nameOfOwner,
       ownersHouseAddress,
       ownersMobileNo,
-      ownersNextOfKinName,
-      classes
+      ownersNextOfKinName
     },
     errors,
     handleChange
@@ -27,40 +27,48 @@ export default function OwnersForm(props) {
 
   const classes = useStyles();
   return (
-    <div style={{ width: "80%" }} className={classes.form}>
-      {Input(
-        "nameOfOwner",
-        "Name of Owner",
-        nameOfOwner,
-        500,
-        errors,
-        handleChange
-      )}
-      {Input(
-        "ownersHouseAddress",
-        "Owner's house address",
-        ownersHouseAddress,
-        500,
-        errors,
-        handleChange
-      )}
-      {Input(
-        "ownersMobileNo",
-        "Owner's Mobile No.",
-        ownersMobileNo,
-        200,
-        errors,
-        handleChange
-      )}
+    <Grid container direction="column" alignItems="center" spacing={10}>
+      <Grid item>
+        {Input(
+          "nameOfOwner",
+          "Name of Owner",
+          nameOfOwner,
+          500,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item>
+        {Input(
+          "ownersHouseAddress",
+          "Owner's house address",
+          ownersHouseAddress,
+          500,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item>
+        {Input(
+          "ownersMobileNo",
+          "Owner's Mobile No.",
+          ownersMobileNo,
+          200,
+          errors,
+          handleChange
+        )}
+      </Grid>
 
-      {Input(
-        "ownersNextOfKinName",
-        "Owner's Next of Kin Name",
-        ownersNextOfKinName,
-        500,
-        errors,
-        handleChange
-      )}
-    </div>
+      <Grid item>
+        {Input(
+          "ownersNextOfKinName",
+          "Owner's Next of Kin Name",
+          ownersNextOfKinName,
+          500,
+          errors,
+          handleChange
+        )}
+      </Grid>
+    </Grid>
   );
 }

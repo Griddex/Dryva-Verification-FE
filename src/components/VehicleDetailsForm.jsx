@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 import Input from "./common/Input";
 import Select from "./common/Select";
@@ -36,53 +37,75 @@ export default function VehicleDetailsForm(props) {
 
   const classes = useStyles();
   return (
-    <div style={{ width: "90%" }} className={classes.form}>
-      {Select(
-        "vehicleType",
-        "Vehicle Type",
-        vehicleType,
-        VehicleTypes,
-        300,
-        errors,
-        handleChange
-      )}
-      {Select(
-        "vehicleMake",
-        "Vehicle Make",
-        vehicleMake,
-        VehicleMakes,
-        300,
-        errors,
-        handleChange
-      )}
-      {Select(
-        "yearOfManufacture",
-        "Year of Manufacture",
-        yearOfManufacture,
-        VehicleManufactureYears,
-        150,
-        errors,
-        handleChange
-      )}
-      {Input(
-        "ChassisNo",
-        "Chassis Number",
-        ChassisNo,
-        250,
-        errors,
-        handleChange
-      )}
-      {Input("EngineNo", "Engine Number", EngineNo, 250, errors, handleChange)}
-      <DatePicker
-        label="MOT Expiry"
-        dateOfInspection={MOTExpiry}
-        handleChange={handleChange}
-      />
-      <DatePicker
-        label="Insurance Expiry"
-        dateOfInspection={InsuranceExpiry}
-        handleChange={handleChange}
-      />
-    </div>
+    <Grid container direction="column" spacing={4}>
+      <Grid item xs={3}>
+        {Select(
+          "vehicleType",
+          "Vehicle Type",
+          vehicleType,
+          VehicleTypes,
+          300,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item xs={3}>
+        {Select(
+          "vehicleMake",
+          "Vehicle Make",
+          vehicleMake,
+          VehicleMakes,
+          300,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item xs={3}>
+        {Select(
+          "yearOfManufacture",
+          "Year of Manufacture",
+          yearOfManufacture,
+          VehicleManufactureYears,
+          100,
+          errors,
+          handleChange
+        )}
+      </Grid>
+
+      <Grid item>
+        {Input(
+          "ChassisNo",
+          "Chassis Number",
+          ChassisNo,
+          250,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item>
+        {Input(
+          "EngineNo",
+          "Engine Number",
+          EngineNo,
+          250,
+          errors,
+          handleChange
+        )}
+      </Grid>
+      <Grid item xs={3}>
+        <DatePicker
+          label="MOT Expiry"
+          dateOfInspection={MOTExpiry}
+          handleChange={handleChange}
+        />
+      </Grid>
+      <Grid item xs={3}>
+        <DatePicker
+          label="Insurance Expiry"
+          dateOfInspection={InsuranceExpiry}
+          handleChange={handleChange}
+        />
+      </Grid>
+    </Grid>
   );
 }

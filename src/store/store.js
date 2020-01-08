@@ -1,4 +1,4 @@
-export default StoreInitialValues = {
+const StoreInitialValues = {
   //Inspector's Form
   nameOfInspector: "",
   nameOfSupervisor: "",
@@ -97,3 +97,5 @@ export default StoreInitialValues = {
 
   errors: []
 };
+
+export default StoreInitialValues;

@@ -20,12 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SafetyTechnicalSummary(props) {
   const {
-    values: {
-      noOfDefectsOnBus,
-      hasSupervisorBeenNotified,
-      generalRemarks,
-      classes
-    },
+    values: { noOfDefectsOnBus, hasSupervisorBeenNotified, generalRemarks },
     errors,
     handleChange
   } = props;

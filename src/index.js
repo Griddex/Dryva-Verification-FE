@@ -9,7 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 const theme = createMuiTheme({
   palette: { primary: { main: "#005337" } },
   background: "#EFEFEF",
-  spacing: "8px"
+  spacing: 2
 });
 
 ReactDOM.render(

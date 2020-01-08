@@ -22,7 +22,6 @@ function SafetyTechnicalForm(props) {
       <InteriorChecks {...props} />
       <ExteriorChecks {...props} />
       <SafetyTechnicalSummary {...props} />
-      <VerificationImages {...props} />
     </Container>
   );
 }

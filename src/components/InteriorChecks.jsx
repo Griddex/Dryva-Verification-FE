@@ -32,6 +32,7 @@ export default function InteriorChecks(props) {
       AirConditioning,
       RadioEquipmentCellphone,
       CantheDoorsbeOpenedFreely,
+      FluidsLeakingUnderBus,
       InteriorLights,
       DriverSeatBelts,
       PassengerSeats,
@@ -148,7 +149,7 @@ export default function InteriorChecks(props) {
                     value="FluidsLeakingUnderBus"
                   />
                 }
-                label="Can the Doors be  opened freely? "
+                label="Fluids Leaking Under Bus?"
               />
               <FormControlLabel
                 control={

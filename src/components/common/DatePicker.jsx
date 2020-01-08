@@ -18,7 +18,7 @@ export default function DatePicker(props) {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="flex-start" flex-direction="row">
+      <Grid container direction="column">
         <label>{label}</label>
         <KeyboardDatePicker
           format="dd-MM-yyyy"

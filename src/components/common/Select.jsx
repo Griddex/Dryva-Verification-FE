@@ -12,29 +12,28 @@ export default function Select(
   handleChange
 ) {
   return (
-    <div style={{ marginTop: 20, width: width }}>
+    <div>
       <label htmlFor={name}>{label}</label>
-      <div className="form-group">
-        <TextField
-          name={name}
-          label=""
-          value={value}
-          onChange={handleChange}
-          error={Boolean(errors[name])}
-          margin="normal"
-          variant="outlined"
-          size="small"
-          select
-        >
-          {values.map((v, i) => {
-            return (
-              <MenuItem key={i} value={v}>
-                {v}
-              </MenuItem>
-            );
-          })}
-        </TextField>
-      </div>
+      <TextField
+        name={name}
+        label=""
+        value={value}
+        onChange={handleChange}
+        error={Boolean(errors[name])}
+        margin="normal"
+        variant="outlined"
+        size="small"
+        fullWidth
+        select
+      >
+        {values.map((v, i) => {
+          return (
+            <MenuItem key={i} value={v}>
+              {v}
+            </MenuItem>
+          );
+        })}
+      </TextField>
     </div>
   );
 }

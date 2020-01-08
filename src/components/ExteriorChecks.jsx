@@ -58,16 +58,6 @@ export default function ExteriorChecks(props) {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={Mirrors}
-                    onChange={handleChange("Mirrors")}
-                    value="Mirrors"
-                  />
-                }
-                label="Mirrors"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
                     checked={HeadlightsHiLow}
                     onChange={handleChange("HeadlightsHiLow")}
                     value="HeadlightsHiLow"
@@ -155,16 +145,7 @@ export default function ExteriorChecks(props) {
                 }
                 label=" Windows can wind freely?"
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={DriverSeatBelts}
-                    onChange={handleChange("DriverSeatBelts")}
-                    value="DriverSeatBelts"
-                  />
-                }
-                label="Driver Seat and Belts"
-              />
+
               <FormControlLabel
                 control={
                   <Checkbox

@@ -85,7 +85,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MiniDrawer(props) {
-  console.log("Logged output: MiniDrawer -> props", props);
   const classes = useStyles();
   const theme = useTheme();
   const { history } = props;

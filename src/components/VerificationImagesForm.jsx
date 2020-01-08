@@ -1,19 +1,16 @@
 import React from "react";
-import Grid from "@material-ui/Grid";
+import Grid from "@material-ui/core/Grid";
 import ImageUploader from "react-images-upload";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 
 const VerificationImagesForm = props => {
+  console.log("Logged output: props", props);
   const useStyles = makeStyles(theme => ({
     root: {
-      flexGrow: 1
+      display: "flex"
     },
-    paper: {
-      padding: theme.spacing(2),
-      margin: "auto",
-      maxWidth: 500
-    },
+    images: { flexFlow: "row" || "wrap" },
     image: {
       width: 128,
       height: 128
@@ -26,35 +23,48 @@ const VerificationImagesForm = props => {
     }
   }));
 
-  const {
-    values: { images },
-    handleChange
+  let {
+    values: { images }
   } = props;
 
-  const onDrop = image => {
-    setImages(images.concat(image));
+  const handleImagesSelected = imgs => {
+    console.log("Logged output: image", imgs);
+    images = imgs;
   };
 
   const classes = useStyles();
   return (
-    <div>
-      <Grid container>
-        {images.map(image => (
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} src={image.url} />
-            </ButtonBase>
-          </Grid>
-        ))}
-      </Grid>
-      <ImageUploader
-        withIcon={true}
-        buttonText="Choose images"
-        onChange={onDrop}
-        imgExtension={[".jpg", ".gif", ".png", "gif"]}
-        maxFileSize={5242880}
-      />
-    </div>
+    // <Grid container spacing={3} className={classes.root}>
+    //   <Grid item xs={12}>
+    //     <Grid
+    //       container
+    //       justify="flex-start"
+    //       spacing={2}
+    //       //className={classes.images}
+    //     >
+    //       {images &&
+    //         images.map(image => (
+    //           <Grid item>
+    //             <ButtonBase className={classes.image}>
+    //               <img className={classes.img} src={image.name} />
+    //             </ButtonBase>
+    //           </Grid>
+    //         ))}
+    //     </Grid>
+    //   </Grid>
+    //   <Grid item xs={12}>
+    //     <Grid container justify="center">
+    <ImageUploader
+      withIcon={true}
+      buttonText="Choose images"
+      onChange={handleImagesSelected}
+      imgExtension={[".jpg", ".gif", ".png", "gif"]}
+      maxFileSize={5242880}
+      withPreview={true}
+    />
+    // </Grid>
+    // </Grid>
+    // </Grid> */
   );
 };
 

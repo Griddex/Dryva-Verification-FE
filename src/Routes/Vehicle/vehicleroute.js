@@ -1,5 +1,5 @@
 import React from "react";
-import Formik from "formik";
+import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Container from "@material-ui/core/Container";
@@ -16,6 +16,7 @@ import { CssBaseline } from "@material-ui/core";
 import StoreInitialValues from "./../../store/store";
 import ValidationSchema from "./../../ValidationSchema/validationSchema";
 import VerificationImagesForm from "../../components/VerificationImagesForm";
+import ReviseForm from "../../components/ReviseForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +38,8 @@ function getSteps() {
     "Driver's Details",
     "Vehicle Details and Documentation",
     "Safety and Technical",
-    "Verification Images"
+    "Verification Images",
+    "Revision"
   ];
 }
 
@@ -55,6 +57,8 @@ function getStepContent(step) {
       return "Safety and Technical";
     case 5:
       return "Verification Images";
+    case 6:
+      return "Revision";
     default:
       return "Unknown step";
   }
@@ -84,6 +88,9 @@ export default function VehicleRoute(props) {
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(skipped.values());
       newSkipped.delete(activeStep);
+    }
+    if (activeStep === steps.length - 1) {
+      console.log(activeStep);
     }
     setActiveStep(prevActiveStep => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -117,7 +124,7 @@ export default function VehicleRoute(props) {
         className={classes.form}
         initialValues={StoreInitialValues}
         validationSchema={ValidationSchema}
-        onSubmit={handleSubmit}
+        //onSubmit={handleSubmit}
       >
         {props => {
           switch (activeStep) {
@@ -133,8 +140,10 @@ export default function VehicleRoute(props) {
               return <SafetyTechnicalForm {...props} />;
             case 5:
               return <VerificationImagesForm {...props} />;
+            case 6:
+              return <ReviseForm {...props} />;
             default:
-              return <InspectorForm />;
+              return <h1>Congratulations!!!</h1>;
           }
         }}
       </Formik>
@@ -167,9 +176,7 @@ export default function VehicleRoute(props) {
           );
         })}
       </Stepper>
-      <Container component="main" maxWidth="lg">
-        {renderForm(activeStep)}
-      </Container>
+      <Container maxWidth="lg">{renderForm(activeStep)}</Container>
       {/* {renderForm(activeStep)} */}
       <div>
         {activeStep === steps.length ? (
@@ -212,7 +219,7 @@ export default function VehicleRoute(props) {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
               </Button>
             </div>
           </div>
