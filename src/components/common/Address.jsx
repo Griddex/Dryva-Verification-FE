@@ -17,13 +17,19 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightBold
   }
 }));
 
 export default function Address(props) {
   const classes = useStyles();
   const {
+    addressLine1Name,
+    addressLine2Name,
+    countryName,
+    stateName,
+    cityName,
+    postalCodeName,
     country,
     state,
     city,
@@ -32,8 +38,11 @@ export default function Address(props) {
     postalCode,
     title,
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
+
   return (
     <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
@@ -47,40 +56,54 @@ export default function Address(props) {
         <ExpansionPanelDetails>
           <div>
             {Input(
-              "addressLine1",
-              "AddressLine1",
+              addressLine1Name,
+              "Address Line1",
               addressLine1,
-              500,
+              450,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
-              "addressLine2",
-              "AddressLine2",
+              addressLine2Name,
+              "Address Line2",
               addressLine2,
-              500,
+              450,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
 
             {Select(
-              "Country",
+              countryName,
               "Country",
               country,
               Countries,
-              150,
+              220,
               errors,
               handleChange
             )}
-            {Select("State", "State", state, States, 150, errors, handleChange)}
-            {Select("City", "City", city, Cities, 200, errors, handleChange)}
+            {Select(
+              stateName,
+              "State",
+              state,
+              States,
+              220,
+              errors,
+              handleChange
+            )}
+            {Select(cityName, "City", city, Cities, 200, errors, handleChange)}
             {Input(
-              "postalCode",
+              postalCodeName,
               "PostalCode",
               postalCode,
               150,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
           </div>
         </ExpansionPanelDetails>

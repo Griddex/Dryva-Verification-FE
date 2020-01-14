@@ -18,7 +18,7 @@ export default function DatePicker(props) {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container direction="column">
+      <div style={{ width: 200 }}>
         <label>{label}</label>
         <KeyboardDatePicker
           format="dd-MM-yyyy"
@@ -29,7 +29,7 @@ export default function DatePicker(props) {
             "aria-label": "change date"
           }}
         />
-      </Grid>
+      </div>
     </MuiPickersUtilsProvider>
   );
 }

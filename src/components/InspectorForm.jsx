@@ -20,7 +20,9 @@ function InspectorForm(props) {
       generalRemarks
     },
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
 
   const useStyles = makeStyles(theme => ({
@@ -35,9 +37,9 @@ function InspectorForm(props) {
   }));
 
   const classes = useStyles();
-  console.log("Logged output: InspectorForm -> classes", classes);
   return (
-    <Grid container direction="column" alignItems="center" spacing={10}>
+    // <Grid container direction="column" spacing={10}>
+    <Grid container spacing={10} direction="column" justify="flex-start">
       <Grid item>
         {Input(
           "nameOfInspector",
@@ -45,7 +47,9 @@ function InspectorForm(props) {
           nameOfInspector,
           400,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -55,7 +59,9 @@ function InspectorForm(props) {
           nameOfSupervisor,
           400,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -65,7 +71,9 @@ function InspectorForm(props) {
           placeOfInspection,
           300,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -82,7 +90,9 @@ function InspectorForm(props) {
           vehiclePlateNumber,
           200,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -103,7 +113,9 @@ function InspectorForm(props) {
           generalRemarks,
           500,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
     </Grid>

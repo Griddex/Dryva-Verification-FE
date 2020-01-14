@@ -7,7 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Input from "./Input";
 import Select from "./Select";
-import MultiInput from "./MultiInput";
+import Countries from "./../../services/countriesService";
+import States from "../../services/statesService";
+import Cities from "./../../services/citiesService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,19 +17,29 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightBold
   }
 }));
 
 export default function NextOfKin(props) {
   const classes = useStyles();
-  const [FirstName, setFirstName] = useState("");
-  const [MiddleName, setMiddleName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [HomeAddress, setHomeAddress] = useState("");
-  const [PhoneNumber, setPhoneNumber] = useState("");
+  const {
+    nextOfKinFirstName,
+    nextOfKinMiddleName,
+    nextOfKinLastName,
+    nextOfKinPhoneNumber,
+    nextOfKinHomeCountry,
+    nextOfKinHomeState,
+    nextOfKinHomeCity,
+    nextOfKinHomeAddressLine1,
+    nextOfKinHomeAddressLine2,
+    nextOfKinHomePostalCode,
+    errors,
+    touched,
+    handleChange,
+    handleBlur
+  } = props;
 
-  const { errors, handleChange } = props;
   return (
     <div className={classes.root} style={{ marginTop: 20 }}>
       <ExpansionPanel>
@@ -41,44 +53,102 @@ export default function NextOfKin(props) {
         <ExpansionPanelDetails>
           <div>
             {Input(
-              "firstName",
+              "nextOfKinFirstName",
               "First Name",
-              FirstName,
+              nextOfKinFirstName,
               400,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
-              "middleName",
+              "nextOfKinMiddleName",
               "Middle Name",
-              MiddleName,
+              nextOfKinMiddleName,
               400,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
-              "lastName",
+              "nextOfKinLastName",
               "Last Name",
-              LastName,
+              nextOfKinLastName,
               400,
+              errors,
+              touched,
+              handleChange,
+              handleBlur
+            )}
+            {Input(
+              "nextOfKinHomeAddressLine1",
+              "Address Line1",
+              nextOfKinHomeAddressLine1,
+              450,
+              errors,
+              touched,
+              handleChange,
+              handleBlur
+            )}
+            {Input(
+              "nextOfKinHomeAddressLine2",
+              "Address Line2",
+              nextOfKinHomeAddressLine2,
+              450,
+              errors,
+              touched,
+              handleChange,
+              handleBlur
+            )}
+
+            {Select(
+              "nextOfKinHomeCountry",
+              "Country",
+              nextOfKinHomeCountry,
+              Countries,
+              220,
               errors,
               handleChange
             )}
-            {Input(
-              "homeAddress",
-              "Home Address",
-              HomeAddress,
-              400,
+            {Select(
+              "nextOfKinHomeState",
+              "State",
+              nextOfKinHomeState,
+              States,
+              220,
               errors,
               handleChange
             )}
-            {Input(
-              "phoneNumber",
-              "Phone Number",
-              PhoneNumber,
+            {Select(
+              "nextOfKinHomeCity",
+              "City",
+              nextOfKinHomeCity,
+              Cities,
               200,
               errors,
               handleChange
+            )}
+            {Input(
+              "nextOfKinHomePostalCode",
+              "PostalCode",
+              nextOfKinHomePostalCode,
+              150,
+              errors,
+              touched,
+              handleChange,
+              handleBlur
+            )}
+            {Input(
+              "nextOfKinPhoneNumber",
+              "Phone Number",
+              nextOfKinPhoneNumber,
+              200,
+              errors,
+              touched,
+              handleChange,
+              handleBlur
             )}
           </div>
         </ExpansionPanelDetails>

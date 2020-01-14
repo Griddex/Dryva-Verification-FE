@@ -32,7 +32,9 @@ export default function VehicleDetailsForm(props) {
       InsuranceExpiry
     },
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
 
   const classes = useStyles();
@@ -79,7 +81,9 @@ export default function VehicleDetailsForm(props) {
           ChassisNo,
           250,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -89,7 +93,9 @@ export default function VehicleDetailsForm(props) {
           EngineNo,
           250,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item xs={3}>

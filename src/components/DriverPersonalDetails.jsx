@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightBold
   }
 }));
 
@@ -27,11 +27,13 @@ export default function DriverPersonalDetails(props) {
     driversEmail,
     driversLicenseNo,
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
 
   return (
-    <div className={classes.root} style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20 }}>
       <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -50,7 +52,9 @@ export default function DriverPersonalDetails(props) {
               driversFirstName,
               400,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
               "driversMiddleName",
@@ -58,7 +62,9 @@ export default function DriverPersonalDetails(props) {
               driversMiddleName,
               400,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
               "driversSurname",
@@ -66,7 +72,9 @@ export default function DriverPersonalDetails(props) {
               driversSurname,
               400,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
               "driversMobile",
@@ -74,7 +82,9 @@ export default function DriverPersonalDetails(props) {
               driversMobile,
               200,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
               "driversEmail",
@@ -82,7 +92,9 @@ export default function DriverPersonalDetails(props) {
               driversEmail,
               300,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
             {Input(
               "driversLicenseNo",
@@ -90,9 +102,10 @@ export default function DriverPersonalDetails(props) {
               driversLicenseNo,
               200,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
-            {/* <DatePicker /> */}
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

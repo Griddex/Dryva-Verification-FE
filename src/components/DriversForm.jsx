@@ -5,19 +5,17 @@ import * as Yup from "yup";
 import Input from "./common/Input";
 import NextOfKin from "./common/NextOfKin";
 import Address from "./common/Address";
-import DatePicker from "./common/DatePicker";
-import Container from "@material-ui/core/Container";
 import DriverPersonalDetails from "./DriverPersonalDetails";
 
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
   form: {
-    width: "70%", // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(5)
   }
 }));
 
-export default function DriversForm(props) {
+export default function DriversForm(formikProps) {
   const {
     values: {
       driversFirstName,
@@ -27,16 +25,39 @@ export default function DriversForm(props) {
       driversEmail,
       driversLicenseNo,
       driversLicenseExpiryDate,
-      addressLine1,
-      addressLine2,
-      postalCode,
-      country,
-      state,
-      city
+
+      driversHomeAddressLine1,
+      driversHomeAddressLine2,
+      driversHomePostalCode,
+      driversHomeCountry,
+      driversHomeState,
+      driversHomeCity,
+
+      driversPermanentAddressLine1,
+      driversPermanentAddressLine2,
+      driversPermanentPostalCode,
+      driversPermanentCountry,
+      driversPermanentState,
+      driversPermanentCity,
+
+      //Next of Kin
+      nextOfKinFirstName,
+      nextOfKinMiddleName,
+      nextOfKinLastName,
+      nextOfKinPhoneNumber,
+
+      nextOfKinHomeAddressLine1,
+      nextOfKinHomeAddressLine2,
+      nextOfKinHomePostalCode,
+      nextOfKinHomeCountry,
+      nextOfKinHomeState,
+      nextOfKinHomeCity
     },
     errors,
-    handleChange
-  } = props;
+    handleChange,
+    touched,
+    handleBlur
+  } = formikProps;
 
   const classes = useStyles();
   return (
@@ -51,33 +72,64 @@ export default function DriversForm(props) {
         driversLicenseExpiryDate={driversLicenseExpiryDate}
         errors={errors}
         handleChange={handleChange}
+        touched={touched}
+        handleBlur={handleBlur}
       />
-      <NextOfKin
-        title="Next of Kin"
-        errors={errors}
-        handleChange={handleChange}
-      />
+
       <Address
         title="Home Address"
-        country={country}
-        state={state}
-        city={city}
-        addressLine1={addressLine1}
-        addressLine2={addressLine2}
-        postalCode={postalCode}
+        addressLine1Name="driversHomeAddressLine1Name"
+        addressLine2Name="driversHomeAddressLine2Name"
+        countryName="driversHomeCountryName"
+        stateName="driversHomeStateName"
+        cityName="driversHomeCityName"
+        postalCodeName="driversHomePostalCodeName"
+        country={driversHomeCountry}
+        state={driversHomeState}
+        city={driversHomeCity}
+        addressLine1={driversHomeAddressLine1}
+        addressLine2={driversHomeAddressLine2}
+        postalCode={driversHomePostalCode}
         errors={errors}
         handleChange={handleChange}
+        touched={touched}
+        handleBlur={handleBlur}
       />
       <Address
         title="Permanent Address"
-        country={country}
-        state={state}
-        city={city}
-        addressLine1={addressLine1}
-        addressLine2={addressLine2}
-        postalCode={postalCode}
+        addressLine1Name="driversPermanentAddressLine1Name"
+        addressLine2Name="driversPermanentAddressLine2Name"
+        countryName="driversPermanentCountryName"
+        stateName="driversPermanentStateName"
+        cityName="driversPermanentCityName"
+        postalCodeName="driversPermanentPostalCodeName"
+        country={driversPermanentCountry}
+        state={driversPermanentState}
+        city={driversPermanentCity}
+        addressLine1={driversPermanentAddressLine1}
+        addressLine2={driversPermanentAddressLine2}
+        postalCode={driversPermanentPostalCode}
         errors={errors}
         handleChange={handleChange}
+        touched={touched}
+        handleBlur={handleBlur}
+      />
+      <NextOfKin
+        title="Next of Kin"
+        nextOfKinFirstName={nextOfKinFirstName}
+        nextOfKinMiddleName={nextOfKinMiddleName}
+        nextOfKinLastName={nextOfKinLastName}
+        nextOfKinPhoneNumber={nextOfKinPhoneNumber}
+        nextOfKinHomeCountry={nextOfKinHomeCountry}
+        nextOfKinHomeState={nextOfKinHomeState}
+        nextOfKinHomeCity={nextOfKinHomeCity}
+        nextOfKinHomeAddressLine1={nextOfKinHomeAddressLine1}
+        nextOfKinHomeAddressLine2={nextOfKinHomeAddressLine2}
+        nextOfKinHomePostalCode={nextOfKinHomePostalCode}
+        errors={errors}
+        handleChange={handleChange}
+        touched={touched}
+        handleBlur={handleBlur}
       />
     </div>
   );

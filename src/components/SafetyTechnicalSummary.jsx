@@ -13,8 +13,8 @@ import MultiInput from "./common/MultiInput";
 const useStyles = makeStyles(theme => ({
   "@global": { body: { backgroundColor: "#FFF" } },
   form: {
-    width: "70%", // Fix IE 11 issue.
-    marginTop: theme.spacing(5)
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(10)
   }
 }));
 
@@ -22,7 +22,9 @@ export default function SafetyTechnicalSummary(props) {
   const {
     values: { noOfDefectsOnBus, hasSupervisorBeenNotified, generalRemarks },
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
 
   const classes = useStyles();
@@ -44,7 +46,9 @@ export default function SafetyTechnicalSummary(props) {
               noOfDefectsOnBus,
               100,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
 
             {Select(
@@ -62,7 +66,9 @@ export default function SafetyTechnicalSummary(props) {
               generalRemarks,
               500,
               errors,
-              handleChange
+              touched,
+              handleChange,
+              handleBlur
             )}
           </div>
         </ExpansionPanelDetails>

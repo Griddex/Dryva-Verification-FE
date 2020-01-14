@@ -13,27 +13,29 @@ export default function Select(
 ) {
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
-      <TextField
-        name={name}
-        label=""
-        value={value}
-        onChange={handleChange}
-        error={Boolean(errors[name])}
-        margin="normal"
-        variant="outlined"
-        size="small"
-        fullWidth
-        select
-      >
-        {values.map((v, i) => {
-          return (
-            <MenuItem key={i} value={v}>
-              {v}
-            </MenuItem>
-          );
-        })}
-      </TextField>
+      <div style={{ width: width }}>
+        <label htmlFor={name}>{label}</label>
+        <TextField
+          name={name}
+          label=""
+          value={value}
+          onChange={handleChange}
+          error={Boolean(errors[name])}
+          margin="normal"
+          variant="outlined"
+          size="small"
+          fullWidth
+          select
+        >
+          {values.map((v, i) => {
+            return (
+              <MenuItem key={i} value={v}>
+                {v}
+              </MenuItem>
+            );
+          })}
+        </TextField>
+      </div>
     </div>
   );
 }

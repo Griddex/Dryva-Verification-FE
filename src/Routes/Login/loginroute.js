@@ -8,7 +8,6 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 function LoginRoute(props) {
-  console.log("Logged output: LoginRoute -> props", props);
   const useStyles = makeStyles(theme => ({
     "@global": { body: { backgroundColor: "#EFEFEF" } },
     form: {

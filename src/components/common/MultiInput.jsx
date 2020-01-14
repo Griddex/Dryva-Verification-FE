@@ -8,7 +8,9 @@ export default function MultiInput(
   value,
   width,
   errors,
-  handleChange
+  touched,
+  handleChange,
+  handleBlur
 ) {
   return (
     <div style={{ marginTop: 20, width: width }}>
@@ -19,7 +21,7 @@ export default function MultiInput(
           label=""
           value={value}
           onChange={handleChange}
-          error={Boolean(errors[name])}
+          error={Boolean(errors[name] && touched[name])}
           margin="normal"
           variant="outlined"
           rows="10"

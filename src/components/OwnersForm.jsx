@@ -22,12 +22,14 @@ export default function OwnersForm(props) {
       ownersNextOfKinName
     },
     errors,
-    handleChange
+    touched,
+    handleChange,
+    handleBlur
   } = props;
 
   const classes = useStyles();
   return (
-    <Grid container direction="column" alignItems="center" spacing={10}>
+    <Grid container direction="column" justify="flex-start" spacing={10}>
       <Grid item>
         {Input(
           "nameOfOwner",
@@ -35,7 +37,9 @@ export default function OwnersForm(props) {
           nameOfOwner,
           500,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -45,7 +49,9 @@ export default function OwnersForm(props) {
           ownersHouseAddress,
           500,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
       <Grid item>
@@ -55,7 +61,9 @@ export default function OwnersForm(props) {
           ownersMobileNo,
           200,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
 
@@ -66,7 +74,9 @@ export default function OwnersForm(props) {
           ownersNextOfKinName,
           500,
           errors,
-          handleChange
+          touched,
+          handleChange,
+          handleBlur
         )}
       </Grid>
     </Grid>

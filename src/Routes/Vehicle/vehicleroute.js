@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
@@ -17,6 +17,10 @@ import StoreInitialValues from "./../../store/store";
 import ValidationSchema from "./../../ValidationSchema/validationSchema";
 import VerificationImagesForm from "../../components/VerificationImagesForm";
 import ReviseForm from "../../components/ReviseForm";
+import axios from "axios";
+import { connect } from "react-redux";
+import { submitAction } from "../../actions/submitAction";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,15 +68,14 @@ function getStepContent(step) {
   }
 }
 
-export default function VehicleRoute(props) {
-  const { match, history } = props;
+function VehicleRoute(reduxProps) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
   function isStepOptional(step) {
-    return step === 4;
+    return step === 5;
   }
 
   function isStepFailed(step) {
@@ -118,30 +121,71 @@ export default function VehicleRoute(props) {
     setActiveStep(0);
   }
 
-  function renderForm(activeStep) {
+  function divVisibility(activeStep, steps) {
+    return activeStep === steps.length - 1 ? "none" : "inline-block";
+  }
+
+  function SubmitFormControls(reduxProps) {
+    return (
+      <div
+        style={{
+          marginTop: 30
+        }}
+      >
+        <Button onClick={handleReset} className={classes.button}>
+          Reset
+        </Button>
+        <Button
+          disabled={activeStep === 0}
+          onClick={handleBack}
+          className={classes.button}
+        >
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={reduxProps.sendFormToServer}
+          className={classes.button}
+        >
+          Submit
+        </Button>
+      </div>
+    );
+  }
+
+  function renderForm(activeStep, reduxProps) {
     return (
       <Formik
         className={classes.form}
-        initialValues={StoreInitialValues}
+        initialValues={reduxProps.allData}
         validationSchema={ValidationSchema}
-        //onSubmit={handleSubmit}
+        validateOnBlur={true}
+        validateOnChange={false}
       >
-        {props => {
+        {formikProps => {
+          console.log("Logged output: renderForm -> reduxProps", reduxProps);
+          console.log("Logged output: renderForm -> formikProps", formikProps);
           switch (activeStep) {
             case 0:
-              return <InspectorForm {...props} />;
+              return <InspectorForm {...formikProps} />;
             case 1:
-              return <OwnersForm {...props} />;
+              return <OwnersForm {...formikProps} />;
             case 2:
-              return <DriversForm {...props} />;
+              return <DriversForm {...formikProps} />;
             case 3:
-              return <VehicleDetailsForm {...props} />;
+              return <VehicleDetailsForm {...formikProps} />;
             case 4:
-              return <SafetyTechnicalForm {...props} />;
+              return <SafetyTechnicalForm {...formikProps} />;
             case 5:
-              return <VerificationImagesForm {...props} />;
+              return <VerificationImagesForm {...formikProps} />;
             case 6:
-              return <ReviseForm {...props} />;
+              return (
+                <div>
+                  <ReviseForm {...formikProps} />
+                  <SubmitFormControls {...reduxProps} />
+                </div>
+              );
             default:
               return <h1>Congratulations!!!</h1>;
           }
@@ -176,55 +220,51 @@ export default function VehicleRoute(props) {
           );
         })}
       </Stepper>
-      <Container maxWidth="lg">{renderForm(activeStep)}</Container>
-      {/* {renderForm(activeStep)} */}
+      <Container maxWidth="lg">{renderForm(activeStep, reduxProps)}</Container>
       <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
+        <div
+          style={{
+            marginTop: 30,
+            display: divVisibility(activeStep, steps)
+          }}
+        >
+          <Button
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            className={classes.button}
+          >
+            Back
+          </Button>
+          {isStepOptional(activeStep) && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSkip}
+              className={classes.button}
+            >
+              Skip
             </Button>
-          </div>
-        ) : (
-          <div>
-            {/* <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography> */}
-
-            <div style={{ marginTop: 30 }}>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              {/* {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )} */}
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
-          </div>
-        )}
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            className={classes.button}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </Container>
   );
 }
+
+const mapStateToProps = state => {
+  return { allData: state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return { sendFormToServer: () => dispatch(submitAction()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleRoute);

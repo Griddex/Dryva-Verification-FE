@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 
 const VerificationImagesForm = props => {
-  console.log("Logged output: props", props);
   const useStyles = makeStyles(theme => ({
     root: {
       display: "flex"
@@ -28,7 +27,7 @@ const VerificationImagesForm = props => {
   } = props;
 
   const handleImagesSelected = imgs => {
-    console.log("Logged output: image", imgs);
+    //console.log("Logged output: image", imgs);
     images = imgs;
   };
 

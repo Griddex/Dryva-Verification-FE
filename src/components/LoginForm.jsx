@@ -14,6 +14,7 @@ function LoginForm(props) {
     touched,
     handleSubmit,
     handleChange,
+    handleBlur,
     isValid,
     setFieldTouched,
     isSubmitting,
@@ -28,7 +29,7 @@ function LoginForm(props) {
         <TextField
           name="username"
           helperText={touched.username ? errors.username : ""}
-          error={Boolean(errors.username)}
+          error={Boolean(errors.username && touched.username)}
           label="Username"
           margin="normal"
           fullWidth
@@ -47,7 +48,7 @@ function LoginForm(props) {
       <TextField
         name="password"
         helperText={touched.password ? errors.password : ""}
-        error={Boolean(errors.password)}
+        error={Boolean(errors.password && touched.password)}
         label="Password"
         margin="normal"
         fullWidth

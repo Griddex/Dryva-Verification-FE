@@ -25,6 +25,9 @@
     "react-select": "^3.0.8",
     "react-svg-loader": "^3.0.3",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "start": "^5.1.0",
     "yup": "^0.28.0"
   },
   "scripts": {
