@@ -6,7 +6,7 @@ const StoreInitialValues = {
   dateOfInspection: new Date(),
   vehiclePlateNumber: "",
   inspectionPassed: "No",
-  generalRemarks: "",
+  inspectorsGeneralRemarks: "",
 
   //Driver's Form
   driversFirstName: "",
@@ -108,12 +108,15 @@ const StoreInitialValues = {
   //Safety Technical Summary Form
   noOfDefectsOnBus: 0,
   hasSupervisorBeenNotified: "No",
-  generalRemarks: "",
+  safetyTechnicalGeneralRemarks: "",
 
   //Upload Images Form
   images: [],
 
-  errors: []
+  //User login
+  errors: [],
+  isSubmitting: false,
+  result: null
 };
 
 export default StoreInitialValues;

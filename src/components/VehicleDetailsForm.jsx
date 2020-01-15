@@ -34,7 +34,8 @@ export default function VehicleDetailsForm(props) {
     errors,
     touched,
     handleChange,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   const classes = useStyles();
@@ -48,7 +49,9 @@ export default function VehicleDetailsForm(props) {
           VehicleTypes,
           300,
           errors,
-          handleChange
+          handleChange,
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item xs={3}>
@@ -59,7 +62,9 @@ export default function VehicleDetailsForm(props) {
           VehicleMakes,
           300,
           errors,
-          handleChange
+          handleChange,
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item xs={3}>
@@ -70,7 +75,9 @@ export default function VehicleDetailsForm(props) {
           VehicleManufactureYears,
           100,
           errors,
-          handleChange
+          handleChange,
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
 
@@ -83,7 +90,8 @@ export default function VehicleDetailsForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -95,7 +103,8 @@ export default function VehicleDetailsForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item xs={3}>
@@ -103,6 +112,8 @@ export default function VehicleDetailsForm(props) {
           label="MOT Expiry"
           dateOfInspection={MOTExpiry}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          saveFormValuesInStore={saveFormValuesInStore}
         />
       </Grid>
       <Grid item xs={3}>
@@ -110,6 +121,8 @@ export default function VehicleDetailsForm(props) {
           label="Insurance Expiry"
           dateOfInspection={InsuranceExpiry}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          saveFormValuesInStore={saveFormValuesInStore}
         />
       </Grid>
     </Grid>

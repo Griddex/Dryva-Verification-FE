@@ -5,14 +5,22 @@ import App from "./App";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { submitReducer } from "./reducers/submitReducer";
+// import { submitReducer } from "./reducers/submitReducer";
+import { userReducer } from "./reducers/userReducer";
+import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+const rootReducer = combineReducers(
+  //submitReducer,
+  // userReducer,
+  saveOrSubmitReducer
+);
+
 const store = createStore(
-  submitReducer,
+  saveOrSubmitReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 

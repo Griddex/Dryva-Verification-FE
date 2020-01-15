@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(10)
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightBold
   }
 }));
 
@@ -23,8 +27,9 @@ export default function SafetyTechnicalSummary(props) {
     values: { noOfDefectsOnBus, hasSupervisorBeenNotified, generalRemarks },
     errors,
     touched,
+    handleBlur,
     handleChange,
-    handleBlur
+    saveFormValuesInStore
   } = props;
 
   const classes = useStyles();
@@ -48,7 +53,8 @@ export default function SafetyTechnicalSummary(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
 
             {Select(
@@ -58,7 +64,9 @@ export default function SafetyTechnicalSummary(props) {
               ["Yes", "No"],
               100,
               errors,
-              handleChange
+              handleChange,
+              handleBlur,
+              saveFormValuesInStore
             )}
             {MultiInput(
               "generalRemarks",
@@ -68,7 +76,8 @@ export default function SafetyTechnicalSummary(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
           </div>
         </ExpansionPanelDetails>

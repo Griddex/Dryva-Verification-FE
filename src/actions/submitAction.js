@@ -24,7 +24,6 @@ const submitFailureAction = errors => {
 };
 
 export const submitAction = () => {
-  console.log("From submit action");
   return (dispatch, getState) => {
     dispatch(submitRequestAction());
     alert("Form is being submitted");

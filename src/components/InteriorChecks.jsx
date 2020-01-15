@@ -5,11 +5,8 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import TextField from "@material-ui/core/TextField";
+import MultiInput from "./common/MultiInput";
+import CheckBox from "./common/CheckBox";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,34 +14,18 @@ const useStyles = makeStyles(theme => ({
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightBold
   }
 }));
 
 export default function InteriorChecks(props) {
   const {
-    values: {
-      Mirrors,
-      WindshieldWipers,
-      Horn,
-      ParkingBrake,
-      Fans,
-      AirConditioning,
-      RadioEquipmentCellphone,
-      CantheDoorsbeOpenedFreely,
-      FluidsLeakingUnderBus,
-      InteriorLights,
-      DriverSeatBelts,
-      PassengerSeats,
-      FireExtinguisher,
-      OtherEmergencyGear,
-      DestinationSignbox,
-      WindowsCleanandcanWindFreely,
-      InteriorClean,
-      WastebinAvailableOrEmptied,
-      OtherInteriorChecks
-    },
-    handleChange
+    values: { OtherInteriorChecks },
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    saveFormValuesInStore
   } = props;
 
   const classes = useStyles();
@@ -59,208 +40,110 @@ export default function InteriorChecks(props) {
           <Typography className={classes.heading}>Interior Checks</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={Mirrors}
-                    onChange={handleChange("Mirrors")}
-                    value="Mirrors"
-                  />
-                }
-                label="Mirrors"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={WindshieldWipers}
-                    onChange={handleChange("WindshieldWipers")}
-                    value="WindshieldWipers"
-                  />
-                }
-                label="Windshield Wipers"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={Horn}
-                    onChange={handleChange("Horn")}
-                    value="Horn"
-                  />
-                }
-                label="Horn"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={ParkingBrake}
-                    onChange={handleChange("ParkingBrake")}
-                    value="ParkingBrake"
-                  />
-                }
-                label="Parking Brake"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={Fans}
-                    onChange={handleChange("Fans")}
-                    value="Fans"
-                  />
-                }
-                label="Fans"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={AirConditioning}
-                    onChange={handleChange("AirConditioning")}
-                    value="AirConditioning"
-                  />
-                }
-                label="Air Conditioning"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={RadioEquipmentCellphone}
-                    onChange={handleChange("RadioEquipmentCellphone")}
-                    value="RadioEquipmentCellphone"
-                  />
-                }
-                label="Radio Equipment / Cellphone"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={CantheDoorsbeOpenedFreely}
-                    onChange={handleChange("CantheDoorsbeOpenedFreely")}
-                    value="CantheDoorsbeOpenedFreely"
-                  />
-                }
-                label="Radiator Fluid Level"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={FluidsLeakingUnderBus}
-                    onChange={handleChange("FluidsLeakingUnderBus")}
-                    value="FluidsLeakingUnderBus"
-                  />
-                }
-                label="Fluids Leaking Under Bus?"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={InteriorLights}
-                    onChange={handleChange("InteriorLights")}
-                    value="InteriorLights"
-                  />
-                }
-                label="Interior Lights"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={DriverSeatBelts}
-                    onChange={handleChange("DriverSeatBelts")}
-                    value="DriverSeatBelts"
-                  />
-                }
-                label="Driver Seat and Belts"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={PassengerSeats}
-                    onChange={handleChange("PassengerSeats")}
-                    value="PassengerSeats"
-                  />
-                }
-                label="Passenger Seats"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={FireExtinguisher}
-                    onChange={handleChange("FireExtinguisher")}
-                    value="FireExtinguisher"
-                  />
-                }
-                label="Fire Extinguisher"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={OtherEmergencyGear}
-                    onChange={handleChange("OtherEmergencyGear")}
-                    value="OtherEmergencyGear"
-                  />
-                }
-                label="Other Emergency Gear"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={DestinationSignbox}
-                    onChange={handleChange("DestinationSignbox")}
-                    value="DestinationSignbox"
-                  />
-                }
-                label="Destination Signbox?"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={WindowsCleanandcanWindFreely}
-                    onChange={handleChange("WindowsCleanandcanWindFreely")}
-                    value="WindowsCleanandcanWindFreely"
-                  />
-                }
-                label="Windows Clean and can wind freely?"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={InteriorClean}
-                    onChange={handleChange("InteriorClean")}
-                    value="InteriorClean"
-                  />
-                }
-                label="Interior Clean?"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={WastebinAvailableOrEmptied}
-                    onChange={handleChange("WastebinAvailableOrEmptied")}
-                    value="WastebinAvailableOrEmptied"
-                  />
-                }
-                label="Waste bin available/emptied?"
-              />
+          <div component="fieldset" className={classes.formControl}>
+            <CheckBox
+              name="Mirrors"
+              label="Mirrors okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="WindshieldWipers"
+              label="WindshieldWipers okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="Horn"
+              label="Horn okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="ParkingBrake"
+              label="ParkingBrake okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="Fans"
+              label="Fans okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="AirConditioning"
+              label="AirConditioning okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="RadioEquipmentCellphone"
+              label="RadioEquipment/Cellphone present?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="CantheDoorsbeOpenedFreely"
+              label="Can the Doors be Opened Freely?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="FluidsLeakingUnderBus"
+              label="Fluids Leaking Under Bus?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="InteriorLights"
+              label="Interior Lights Functional?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="DriverSeatBelts"
+              label="Driver SeatBelts Functional?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="PassengerSeats"
+              label="Passenger Seats okay?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="FireExtinguisher"
+              label="Fire Extinguisher Present?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="OtherEmergencyGear"
+              label="Other Emergency Gear Present?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="DestinationSignbox"
+              label="Destination Signbox Present?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="WindowsCleanandcanWindFreely"
+              label="Windows Clean and can wind freely?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="InteriorClean"
+              label="Interior Clean?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
+            <CheckBox
+              name="WastebinAvailableOrEmptied"
+              label="Waste bin available/emptied?"
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
 
-              <div style={{ marginTop: 20 }}>
-                <label htmlFor={OtherInteriorChecks}>Other</label>
-                <div className="form-group">
-                  <TextField
-                    name={OtherInteriorChecks}
-                    label=""
-                    margin="normal"
-                    fullWidth
-                    variant="outlined"
-                    value={OtherInteriorChecks}
-                    onChange={handleChange}
-                    multiline
-                    rows="10"
-                    size="small"
-                  />
-                </div>
-              </div>
-            </FormGroup>
-          </FormControl>
+            {MultiInput(
+              "OtherInteriorChecks",
+              "Other",
+              OtherInteriorChecks,
+              400,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              saveFormValuesInStore
+            )}
+          </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

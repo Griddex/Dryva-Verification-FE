@@ -9,7 +9,9 @@ export default function Select(
   values,
   width,
   errors,
-  handleChange
+  handleChange,
+  handleBlur,
+  saveFormValuesInStore = null
 ) {
   return (
     <div>
@@ -20,7 +22,13 @@ export default function Select(
           label=""
           value={value}
           onChange={handleChange}
-          error={Boolean(errors[name])}
+          onBlur={e => {
+            handleBlur(e);
+            let inputValue = e.target.value;
+            let inputName = e.target.name;
+            if (inputValue !== "") saveFormValuesInStore(inputName, inputValue);
+          }}
+          //error={Boolean(errors[name])}
           margin="normal"
           variant="outlined"
           size="small"

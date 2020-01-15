@@ -7,6 +7,8 @@ import Select from "./common/Select";
 import MultiInput from "./common/MultiInput";
 import DatePicker from "./common/DatePicker";
 import Grid from "@material-ui/core/Grid";
+import { connect } from "react-redux";
+import { Button } from "@material-ui/core";
 
 function InspectorForm(props) {
   const {
@@ -22,7 +24,8 @@ function InspectorForm(props) {
     errors,
     touched,
     handleChange,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   const useStyles = makeStyles(theme => ({
@@ -38,7 +41,6 @@ function InspectorForm(props) {
 
   const classes = useStyles();
   return (
-    // <Grid container direction="column" spacing={10}>
     <Grid container spacing={10} direction="column" justify="flex-start">
       <Grid item>
         {Input(
@@ -49,7 +51,8 @@ function InspectorForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -61,7 +64,8 @@ function InspectorForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -73,14 +77,17 @@ function InspectorForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
         <DatePicker
+          name="dateOfInspection"
           label="Date of Inspection"
-          dateOfInspection={dateOfInspection}
+          handleBlur={handleBlur}
           handleChange={handleChange}
+          saveFormValuesInStore={saveFormValuesInStore}
         />
       </Grid>
       <Grid item>
@@ -92,7 +99,8 @@ function InspectorForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -103,7 +111,9 @@ function InspectorForm(props) {
           ["Yes", "No"],
           100,
           errors,
-          handleChange
+          handleChange,
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -115,11 +125,16 @@ function InspectorForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
     </Grid>
   );
 }
 
-export default InspectorForm;
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(null, mapDispatchToProps)(InspectorForm);

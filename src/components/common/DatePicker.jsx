@@ -8,12 +8,19 @@ import {
 } from "@material-ui/pickers";
 
 export default function DatePicker(props) {
-  const { label, handleChange } = props;
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const {
+    name,
+    label,
+    handleChange,
+    handleBlur,
+    saveFormValuesInStore
+  } = props;
+
+  const [date, setDate] = React.useState(new Date());
 
   const handleDateChange = date => {
-    setSelectedDate(date);
-    //handleChange(date);
+    // console.log("Logged output: DatePicker -> date", date);
+    setDate(date);
   };
 
   return (
@@ -21,10 +28,14 @@ export default function DatePicker(props) {
       <div style={{ width: 200 }}>
         <label>{label}</label>
         <KeyboardDatePicker
+          name={name}
           format="dd-MM-yyyy"
           margin="normal"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={date}
+          onChange={date => {
+            handleDateChange(date);
+            saveFormValuesInStore(name, date);
+          }}
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}

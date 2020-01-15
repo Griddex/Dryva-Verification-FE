@@ -10,7 +10,8 @@ export default function Input(
   errors,
   touched,
   handleChange,
-  handleBlur
+  handleBlur,
+  saveFormValuesInStore = null
 ) {
   return (
     <div>
@@ -21,7 +22,12 @@ export default function Input(
           label=""
           value={value}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={e => {
+            handleBlur(e);
+            let inputValue = e.target.value;
+            let inputName = e.target.name;
+            if (inputValue !== "") saveFormValuesInStore(inputName, inputValue);
+          }}
           error={Boolean(errors[name] && touched[name])}
           margin="normal"
           variant="outlined"

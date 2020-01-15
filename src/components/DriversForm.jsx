@@ -56,7 +56,8 @@ export default function DriversForm(formikProps) {
     errors,
     handleChange,
     touched,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = formikProps;
 
   const classes = useStyles();
@@ -74,6 +75,7 @@ export default function DriversForm(formikProps) {
         handleChange={handleChange}
         touched={touched}
         handleBlur={handleBlur}
+        saveFormValuesInStore={saveFormValuesInStore}
       />
 
       <Address
@@ -94,6 +96,7 @@ export default function DriversForm(formikProps) {
         handleChange={handleChange}
         touched={touched}
         handleBlur={handleBlur}
+        saveFormValuesInStore={saveFormValuesInStore}
       />
       <Address
         title="Permanent Address"
@@ -113,6 +116,7 @@ export default function DriversForm(formikProps) {
         handleChange={handleChange}
         touched={touched}
         handleBlur={handleBlur}
+        saveFormValuesInStore={saveFormValuesInStore}
       />
       <NextOfKin
         title="Next of Kin"
@@ -130,6 +134,7 @@ export default function DriversForm(formikProps) {
         handleChange={handleChange}
         touched={touched}
         handleBlur={handleBlur}
+        saveFormValuesInStore={saveFormValuesInStore}
       />
     </div>
   );

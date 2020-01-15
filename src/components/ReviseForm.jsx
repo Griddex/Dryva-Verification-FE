@@ -32,7 +32,7 @@ const ReviseForm = props => {
 
             return (
               <Grid item key={i}>
-                <Grid container direction="row">
+                <Grid container direction="row" spacing={4}>
                   <Grid item style={{ fontWeight: "bold" }}>{`${key}: `}</Grid>
                   <Grid item>{`${v[1]}`}</Grid>
                   {/* How to separate key and value with white space, Search for the last items on each form and put in a line break */}

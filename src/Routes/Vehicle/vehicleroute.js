@@ -21,6 +21,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { submitAction } from "../../actions/submitAction";
 import SelectInput from "@material-ui/core/Select/SelectInput";
+import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
+
+let formValues = {};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -155,30 +158,64 @@ function VehicleRoute(reduxProps) {
   }
 
   function renderForm(activeStep, reduxProps) {
+    const { saveFormValuesInStore } = reduxProps;
+
     return (
       <Formik
         className={classes.form}
-        initialValues={reduxProps.allData}
+        initialValues={StoreInitialValues}
         validationSchema={ValidationSchema}
         validateOnBlur={true}
         validateOnChange={false}
+        onSubmit={(values, formiKBag) => {}}
       >
         {formikProps => {
-          console.log("Logged output: renderForm -> reduxProps", reduxProps);
-          console.log("Logged output: renderForm -> formikProps", formikProps);
           switch (activeStep) {
             case 0:
-              return <InspectorForm {...formikProps} />;
+              return (
+                <InspectorForm
+                  {...formikProps}
+                  saveFormValuesInStore={saveFormValuesInStore}
+                />
+              );
             case 1:
-              return <OwnersForm {...formikProps} />;
+              return (
+                <OwnersForm
+                  {...formikProps}
+                  saveFormValuesInStore={saveFormValuesInStore}
+                />
+              );
             case 2:
-              return <DriversForm {...formikProps} />;
+              return (
+                <DriversForm
+                  {...formikProps}
+                  saveFormValuesInStore={saveFormValuesInStore}
+                />
+              );
             case 3:
-              return <VehicleDetailsForm {...formikProps} />;
+              return (
+                <VehicleDetailsForm
+                  {...formikProps}
+                  saveFormValuesInStore={saveFormValuesInStore}
+                />
+              );
+
             case 4:
-              return <SafetyTechnicalForm {...formikProps} />;
+              return (
+                <SafetyTechnicalForm
+                  {...formikProps}
+                  saveFormValuesInStore={saveFormValuesInStore}
+                />
+              );
+
             case 5:
-              return <VerificationImagesForm {...formikProps} />;
+              return (
+                <VerificationImagesForm
+                  {...formikProps}
+                  saveFormValuesInStore
+                />
+              );
+
             case 6:
               return (
                 <div>
@@ -248,7 +285,7 @@ function VehicleRoute(reduxProps) {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleNext}
+            onClick={() => handleNext()}
             className={classes.button}
           >
             Next
@@ -259,12 +296,16 @@ function VehicleRoute(reduxProps) {
   );
 }
 
-const mapStateToProps = state => {
-  return { allData: state };
-};
+// const mapStateToProps = state => {
+//   return { allData: state };
+// };
 
 const mapDispatchToProps = dispatch => {
-  return { sendFormToServer: () => dispatch(submitAction()) };
+  return {
+    saveFormValuesInStore: (name, value) =>
+      dispatch(sendValuesToStoreAction(name, value)),
+    sendFormToServer: () => dispatch(submitAction())
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehicleRoute);
+export default connect(null, mapDispatchToProps)(VehicleRoute);

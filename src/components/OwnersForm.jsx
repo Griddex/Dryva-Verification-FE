@@ -24,7 +24,8 @@ export default function OwnersForm(props) {
     errors,
     touched,
     handleChange,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   const classes = useStyles();
@@ -39,7 +40,8 @@ export default function OwnersForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -51,7 +53,8 @@ export default function OwnersForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
       <Grid item>
@@ -63,7 +66,8 @@ export default function OwnersForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
 
@@ -76,7 +80,8 @@ export default function OwnersForm(props) {
           errors,
           touched,
           handleChange,
-          handleBlur
+          handleBlur,
+          saveFormValuesInStore
         )}
       </Grid>
     </Grid>
