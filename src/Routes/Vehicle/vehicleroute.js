@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
@@ -6,24 +6,19 @@ import Container from "@material-ui/core/Container";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import InspectorForm from "./../../components/InspectorForm";
 import OwnersForm from "./../../components/OwnersForm";
 import DriversForm from "./../../components/DriversForm";
 import VehicleDetailsForm from "./../../components/VehicleDetailsForm";
 import SafetyTechnicalForm from "./../../components/SafetyTechnicalForm";
-import { CssBaseline } from "@material-ui/core";
 import StoreInitialValues from "./../../store/store";
 import ValidationSchema from "./../../ValidationSchema/validationSchema";
 import VerificationImagesForm from "../../components/VerificationImagesForm";
 import ReviseForm from "../../components/ReviseForm";
-import axios from "axios";
 import { connect } from "react-redux";
 import { submitAction } from "../../actions/submitAction";
-import SelectInput from "@material-ui/core/Select/SelectInput";
 import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
-
-let formValues = {};
+import { toggleStepErrorAction } from "./../../actions/toggleStepErrorAction";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -167,59 +162,26 @@ function VehicleRoute(reduxProps) {
         validationSchema={ValidationSchema}
         validateOnBlur={true}
         validateOnChange={false}
-        onSubmit={(values, formiKBag) => {}}
       >
         {formikProps => {
+          const formProps = { ...formikProps, saveFormValuesInStore };
           switch (activeStep) {
             case 0:
-              return (
-                <InspectorForm
-                  {...formikProps}
-                  saveFormValuesInStore={saveFormValuesInStore}
-                />
-              );
+              return <InspectorForm {...formProps} />;
             case 1:
-              return (
-                <OwnersForm
-                  {...formikProps}
-                  saveFormValuesInStore={saveFormValuesInStore}
-                />
-              );
+              return <OwnersForm {...formProps} />;
             case 2:
-              return (
-                <DriversForm
-                  {...formikProps}
-                  saveFormValuesInStore={saveFormValuesInStore}
-                />
-              );
+              return <DriversForm {...formProps} />;
             case 3:
-              return (
-                <VehicleDetailsForm
-                  {...formikProps}
-                  saveFormValuesInStore={saveFormValuesInStore}
-                />
-              );
-
+              return <VehicleDetailsForm {...formProps} />;
             case 4:
-              return (
-                <SafetyTechnicalForm
-                  {...formikProps}
-                  saveFormValuesInStore={saveFormValuesInStore}
-                />
-              );
-
+              return <SafetyTechnicalForm {...formProps} />;
             case 5:
-              return (
-                <VerificationImagesForm
-                  {...formikProps}
-                  saveFormValuesInStore
-                />
-              );
-
+              return <VerificationImagesForm {...formProps} />;
             case 6:
               return (
                 <div>
-                  <ReviseForm {...formikProps} />
+                  <ReviseForm {...formProps} />
                   <SubmitFormControls {...reduxProps} />
                 </div>
               );
@@ -237,19 +199,14 @@ function VehicleRoute(reduxProps) {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          // if (isStepOptional(index)) {
-          //   labelProps.optional = (
-          //     <Typography variant="caption" color="error">
-          //       Alert message
-          //     </Typography>
-          //   );
-          // }
-          // if (isStepFailed(index)) {
-          //   labelProps.error = true;
-          // }
-          // if (isStepSkipped(index)) {
-          //   stepProps.completed = false;
-          // }
+
+          if (isStepFailed(index)) {
+            labelProps.error = true;
+          }
+          if (isStepSkipped(index)) {
+            stepProps.completed = false;
+          }
+
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -296,15 +253,12 @@ function VehicleRoute(reduxProps) {
   );
 }
 
-// const mapStateToProps = state => {
-//   return { allData: state };
-// };
-
 const mapDispatchToProps = dispatch => {
   return {
     saveFormValuesInStore: (name, value) =>
       dispatch(sendValuesToStoreAction(name, value)),
-    sendFormToServer: () => dispatch(submitAction())
+    sendFormToServer: () => dispatch(submitAction()),
+    toggleStepError: () => dispatch(toggleStepErrorAction())
   };
 };
 

@@ -11,7 +11,9 @@ export default function Input(
   touched,
   handleChange,
   handleBlur,
-  saveFormValuesInStore = null
+  saveFormValuesInStore = null,
+  type = null,
+  saveLoginValuesInStore = null
 ) {
   return (
     <div>
@@ -27,11 +29,14 @@ export default function Input(
             let inputValue = e.target.value;
             let inputName = e.target.name;
             if (inputValue !== "") saveFormValuesInStore(inputName, inputValue);
+            if (inputValue !== "")
+              saveLoginValuesInStore(inputName, inputValue);
           }}
           error={Boolean(errors[name] && touched[name])}
           margin="normal"
           variant="outlined"
           size="small"
+          type={type}
           fullWidth
         />
       </div>

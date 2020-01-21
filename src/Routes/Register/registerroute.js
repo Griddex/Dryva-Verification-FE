@@ -3,16 +3,15 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { makeStyles } from "@material-ui/core/styles";
-import LoginForm from "./../../components/LoginForm";
+import RegisterForm from "./../../components/RegisterForm";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
-import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
 import { loginUserAction } from "./../../actions/userAction";
 import { connect } from "react-redux";
 
-function LoginRoute(props) {
+function RegisterRoute(props) {
   const useStyles = makeStyles(theme => ({
     "@global": { body: { backgroundColor: "#FFF" } },
     form: {
@@ -31,21 +30,24 @@ function LoginRoute(props) {
         <Formik
           initialValues={{
             email: "",
-            password: ""
+            password: "",
+            confirmpassword: ""
           }}
           validationSchema={Yup.object().shape({
             email: Yup.string().required("Email is required"),
-            password: Yup.string().required("Password is required")
+            password: Yup.string().required("Password is required"),
+            confirmpassword: Yup.string().required(
+              "Confirmation Password is required"
+            )
           })}
-          onSubmit={(values, formikBag) => {
-            const { rememberMe } = props;
-            const { email, password } = values;
-            const { setStatus, setSubmitting } = formikBag;
+          onSubmit={(
+            { email, password, rememberMe },
+            { setStatus, setSubmitting }
+          ) => {
             loginUser(email, password, rememberMe);
-            console.log("Logged output: LoginRoute -> rememberMe", rememberMe);
           }}
         >
-          {formikProps => <LoginForm {...formikProps} {...props} />}
+          {formikProps => <RegisterForm {...formikProps} {...props} />}
         </Formik>
       </Container>
     </>
@@ -54,7 +56,9 @@ function LoginRoute(props) {
 
 const mapStateToProps = state => {
   return {
-    rememberMe: state.userReducer.rememberMe
+    email: state.email,
+    password: state.password,
+    rememberMe: state.rememberMe
   };
 };
 
@@ -62,11 +66,9 @@ const mapDispatchToProps = dispatch => {
   return {
     saveFormValuesInStore: (name, value) =>
       dispatch(sendValuesToStoreAction(name, value)),
-    saveLoginValuesInStore: (name, value) =>
-      dispatch(sendLoginToStoreAction(name, value)),
     loginUser: (email, password, rememberMe) =>
       dispatch(loginUserAction(email, password, rememberMe))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginRoute);
+export default connect(null, mapDispatchToProps)(RegisterRoute);

@@ -8,24 +8,20 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-// import { submitReducer } from "./reducers/submitReducer";
 import { userReducer } from "./reducers/userReducer";
 import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
+import http from "./services/httpService";
 
-const rootReducer = combineReducers(
-  //submitReducer,
-  // userReducer,
-  saveOrSubmitReducer
-);
+const rootReducer = combineReducers({ userReducer, saveOrSubmitReducer });
 
 const store = createStore(
-  saveOrSubmitReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ http })))
 );
 
 const theme = createMuiTheme({
-  palette: { primary: { main: "#005337" } },
+  palette: { primary: { main: "#6192A6" } },
   background: "#EFEFEF",
   spacing: 2
 });

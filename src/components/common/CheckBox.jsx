@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const CheckBox = props => {
-  const { name, label, saveFormValuesInStore } = props;
+  const { name, label, saveLoginValuesInStore } = props;
   const [checkBoxValue, setcheckBoxValue] = useState(false);
 
   const handleChange = name => e => {
     const value = e.target.checked;
     setcheckBoxValue(value);
-    saveFormValuesInStore(name, value);
+    saveLoginValuesInStore(name, value);
   };
 
   return (
@@ -18,9 +17,7 @@ const CheckBox = props => {
         name={name}
         checked={checkBoxValue}
         onChange={handleChange(name)}
-        value="FuelGaugeWorking"
       />
-
       <label htmlFor={name}>{label}</label>
     </div>
   );
