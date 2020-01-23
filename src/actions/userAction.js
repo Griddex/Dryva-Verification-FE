@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
@@ -12,90 +10,82 @@ export const loginUserAction = (email, password, rememberMe) => (
   getState,
   { http }
 ) => {
-  console.log("Logged output: rememberMe", rememberMe);
-  console.log("Logged output: loginUserAction -> password", password);
-  console.log("Logged output: loginUserAction -> email", email);
   dispatch({
     type: LOGIN_USER_COMMENCE,
     payload: { isSubmitting: true, errors: [] }
   });
 
   http
-    .httpLogin("post", "/Account/Login", {
+    .httpLoginOrRegister("post", "/Account/Login", {
       email: email,
       password: password,
       rememberMe: rememberMe
     })
     .then(response => {
-      // const token = response.data.token;
-      // const username = response.data.username;
-
-      // localStorage.setItem("token", token);
-      // localStorage.setItem("username", username);
+      const { token, email } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("email", email);
       console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
       dispatch({
-        type: LOGIN_USER_FAILURE,
-        payload: error
+        type: LOGIN_USER_SUCCESS,
+        payload: { token, loginSucceeded: true }
       });
+    })
+    .catch(errors => {
+      if (errors.response) {
+        console.log("Logged output: errors.response", errors.response);
+        const responseErrors = errors.response.data[""];
+        dispatch({
+          type: LOGIN_USER_FAILURE,
+          payload: responseErrors
+        });
+      }
     });
-
-  // axios
-  //   .post("https://jsonplaceholder.typicode.com/posts", {
-  //     title: "Gideon title",
-  //     body: "Gideon body"
-  //   })
-  //   .then(response => {
-  //     console.log("Logged output: response", response);
-  //     //   dispatch({
-  //     //     type: LOGIN_USER_SUCCESS,
-  //     //     payload: { token: response.token }
-  //     //   });
-  //     //   localStorage.setItem("token", "token");
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     dispatch({
-  //       type: LOGIN_USER_FAILURE,
-  //       payload: error
-  //     });
-  //   });
 };
 
-export const registerUserAction = (
-  email,
-  password,
-  confirmpassword
-) => dispatch => {
+export const registerUserAction = (email, password, confirmpassword) => (
+  dispatch,
+  getState,
+  { http }
+) => {
   dispatch({
     type: REGISTER_USER_COMMENCE,
-    payload: {
+    payload: { isSubmitting: true, errors: [] }
+  });
+
+  http
+    .httpLoginOrRegister("post", "/Account/Register", {
       email: email,
       password: password,
       confirmpassword: confirmpassword
-    }
-  });
-
-  axios
-    .post("https://jsonplaceholder.typicode.com/posts", {
-      title: "Gideon title",
-      body: "Gideon body"
     })
     .then(response => {
       console.log("Logged output: response", response);
-      //   dispatch({
-      //     type: REGISTER_USER_SUCCESS,
-      //     payload: { token: response.token }
-      //   });
-      //   localStorage.setItem("token", "token");
+      if (
+        response.data === "Registration Succeeded!" &&
+        response.status === 200
+      ) {
+        dispatch({
+          type: REGISTER_USER_SUCCESS,
+          payload: {
+            isSubmitting: false,
+            errors: [],
+            registrationSucceeded: true
+          }
+        });
+      }
+      //Load registration succeeded page with link to goto login page
+      //history.push("/register/success");
     })
-    .catch(error => {
-      console.log(error);
-      dispatch({
-        type: REGISTER_USER_FAILURE,
-        payload: error
-      });
+    .catch(errors => {
+      //Hook into the error coming back, use the error obj to update the errors
+      //obj in the redux store
+      if (errors.response) {
+        const responseErrors = errors.response.data[""];
+        dispatch({
+          type: REGISTER_USER_FAILURE,
+          payload: responseErrors
+        });
+      }
     });
 };

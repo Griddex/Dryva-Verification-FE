@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
@@ -12,6 +12,7 @@ import { userReducer } from "./reducers/userReducer";
 import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import http from "./services/httpService";
+import history from "./services/historyService";
 
 const rootReducer = combineReducers({ userReducer, saveOrSubmitReducer });
 
@@ -29,9 +30,9 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <Router history={history}>
         <App />
-      </BrowserRouter>
+      </Router>
     </ThemeProvider>
   </Provider>,
   document.getElementById("root")

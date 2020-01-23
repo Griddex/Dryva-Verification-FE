@@ -13,7 +13,7 @@ export default function Input(
   handleBlur,
   saveFormValuesInStore = null,
   type = null,
-  saveLoginValuesInStore = null
+  saveFormLoginInStore = null
 ) {
   return (
     <div>
@@ -28,9 +28,10 @@ export default function Input(
             handleBlur(e);
             let inputValue = e.target.value;
             let inputName = e.target.name;
-            if (inputValue !== "") saveFormValuesInStore(inputName, inputValue);
-            if (inputValue !== "")
-              saveLoginValuesInStore(inputName, inputValue);
+            if (inputValue !== "" && saveFormValuesInStore !== null)
+              saveFormValuesInStore(inputName, inputValue);
+            if (inputValue !== "" && saveFormLoginInStore !== null)
+              saveFormLoginInStore(inputName, inputValue);
           }}
           error={Boolean(errors[name] && touched[name])}
           margin="normal"

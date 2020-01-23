@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import RegisterForm from "./../../components/RegisterForm";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
-import { loginUserAction } from "./../../actions/userAction";
+import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
+import { registerUserAction } from "./../../actions/userAction";
 import { connect } from "react-redux";
+import { RegistrationSuccess } from "./registrationSuccess";
 
 function RegisterRoute(props) {
   const useStyles = makeStyles(theme => ({
@@ -17,38 +17,65 @@ function RegisterRoute(props) {
     form: {
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(5)
-    }
+    },
+    error: { color: "red" }
   }));
 
-  const { match, history, location, loginUser } = props;
+  const { formErrors, registerUser, registrationSucceeded, history } = props;
+  //console.log("Logged output: props", props);
   const classes = useStyles();
 
   return (
     <>
       <Container maxwidth="sm" fixed>
         <Logo />
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-            confirmpassword: ""
-          }}
-          validationSchema={Yup.object().shape({
-            email: Yup.string().required("Email is required"),
-            password: Yup.string().required("Password is required"),
-            confirmpassword: Yup.string().required(
-              "Confirmation Password is required"
-            )
-          })}
-          onSubmit={(
-            { email, password, rememberMe },
-            { setStatus, setSubmitting }
-          ) => {
-            loginUser(email, password, rememberMe);
-          }}
-        >
-          {formikProps => <RegisterForm {...formikProps} {...props} />}
-        </Formik>
+        {registrationSucceeded ? (
+          <RegistrationSuccess {...props} />
+        ) : (
+          <div>
+            <div>
+              {formErrors &&
+                formErrors.map((e, i) => {
+                  return (
+                    <p key={i} className={classes.error}>
+                      {e}
+                    </p>
+                  );
+                })}
+            </div>
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+                confirmpassword: ""
+              }}
+              validationSchema={Yup.object().shape({
+                email: Yup.string().required("Email is required"),
+                password: Yup.string().required("Password is required"),
+                confirmpassword: Yup.string().oneOf(
+                  [Yup.ref("password"), null],
+                  "Passwords must match"
+                )
+              })}
+              onSubmit={(
+                { email, password, confirmpassword },
+                { setSubmitting }
+              ) => {
+                registerUser(email, password, confirmpassword);
+                setSubmitting(false);
+              }}
+            >
+              {formikProps => <RegisterForm {...formikProps} {...props} />}
+            </Formik>
+            <Link
+              onClick={() => history.push("/login")}
+              style={{ cursor: "pointer" }}
+              className="btn btn-secondary"
+            >
+              Already registered? Login
+            </Link>
+          </div>
+        )}
       </Container>
     </>
   );
@@ -56,19 +83,18 @@ function RegisterRoute(props) {
 
 const mapStateToProps = state => {
   return {
-    email: state.email,
-    password: state.password,
-    rememberMe: state.rememberMe
+    formErrors: state.userReducer.formErrors,
+    registrationSucceeded: state.userReducer.registrationSucceeded
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveFormValuesInStore: (name, value) =>
-      dispatch(sendValuesToStoreAction(name, value)),
-    loginUser: (email, password, rememberMe) =>
-      dispatch(loginUserAction(email, password, rememberMe))
+    saveFormLoginInStore: (name, value) =>
+      dispatch(sendLoginToStoreAction(name, value)),
+    registerUser: (email, password, confirmpassword) =>
+      dispatch(registerUserAction(email, password, confirmpassword))
   };
 };
 
-export default connect(null, mapDispatchToProps)(RegisterRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterRoute);

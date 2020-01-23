@@ -2,36 +2,33 @@ import axios from "axios";
 import baseURL from "./../utils/config";
 
 //(A) Axios Login Configuration
-const axiosLogin = axios.create({
+const axiosLoginOrRegister = axios.create({
   baseURL: baseURL,
-  timeout: 1000
+  headers: { "Access-Control-Allow-Origin": "*" }
 });
-axiosLogin.interceptors.request.use(
+axiosLoginOrRegister.interceptors.request.use(
   config => config,
   error => {
     alert("Something is wrong with your Login request");
     return Promise.reject(error);
   }
 );
-axiosLogin.interceptors.response.use(
-  response => console.log(response),
-  error => {
-    const expectedError =
-      error.response &&
-      error.response.status >= 400 &&
-      error.response.status < 500;
-    if (!expectedError) {
-      console.log(error);
-    }
-    return Promise.reject(error);
+axiosLoginOrRegister.interceptors.response.use(null, error => {
+  const expectedError =
+    error.response &&
+    error.response.status >= 400 &&
+    error.response.status < 500;
+  if (!expectedError) {
+    console.log(error);
   }
-);
+  return Promise.reject(error);
+});
 
 //(B) Axios Others Configuration
 const AUTH_TOKEN = `Bearer ` + localStorage.getItem("token");
 const axiosOthers = axios.create({
   baseURL: baseURL,
-  timeout: 1000
+  headers: { "Access-Control-Allow-Origin": "*" }
 });
 axiosOthers.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 axiosOthers.defaults.headers.post["Content-Type"] = "multipart/form-data";
@@ -51,8 +48,8 @@ axiosOthers.interceptors.response.use(null, error => {
   return Promise.reject(error);
 });
 
-const axiosLoginFunc = (method, url, data = null) => {
-  return axiosLogin({
+const axiosLoginOrRegisterFunc = (method, url, data = null) => {
+  return axiosLoginOrRegister({
     method: method,
     url: url,
     data: data
@@ -67,10 +64,10 @@ const axiosOthersFunc = (method, url, data = null) => {
 };
 
 export default {
-  httpLogin: axiosLoginFunc,
+  httpLoginOrRegister: axiosLoginOrRegisterFunc,
   httpOthers: axiosOthersFunc
 };
 // export default {
-//   httpLogin: axiosLogin.post,
+//   httpLogin: axiosLoginOrRegister.post,
 //   httpOthers: axiosOthersFunc
 // };

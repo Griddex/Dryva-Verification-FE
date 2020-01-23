@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import LoginForm from "./../../components/LoginForm";
@@ -18,16 +20,27 @@ function LoginRoute(props) {
     form: {
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(5)
-    }
+    },
+    error: { color: "red" }
   }));
 
-  const { match, history, location, loginUser } = props;
+  const { history, formErrors, loginUser } = props;
   const classes = useStyles();
 
   return (
     <>
       <Container maxwidth="sm" fixed>
         <Logo />
+        <div>
+          {formErrors &&
+            formErrors.map((e, i) => {
+              return (
+                <p key={i} className={classes.error}>
+                  {e}
+                </p>
+              );
+            })}
+        </div>
         <Formik
           initialValues={{
             email: "",
@@ -40,13 +53,20 @@ function LoginRoute(props) {
           onSubmit={(values, formikBag) => {
             const { rememberMe } = props;
             const { email, password } = values;
-            const { setStatus, setSubmitting } = formikBag;
+            const { setSubmitting } = formikBag;
             loginUser(email, password, rememberMe);
-            console.log("Logged output: LoginRoute -> rememberMe", rememberMe);
+            setSubmitting(false);
           }}
         >
           {formikProps => <LoginForm {...formikProps} {...props} />}
         </Formik>
+        <Link
+          onClick={() => history.push("/register")}
+          style={{ cursor: "pointer" }}
+          className="btn btn-secondary"
+        >
+          Not yet a verification officer? Register
+        </Link>
       </Container>
     </>
   );
@@ -54,7 +74,8 @@ function LoginRoute(props) {
 
 const mapStateToProps = state => {
   return {
-    rememberMe: state.userReducer.rememberMe
+    rememberMe: state.userReducer.rememberMe,
+    formErrors: state.userReducer.formErrors
   };
 };
 
