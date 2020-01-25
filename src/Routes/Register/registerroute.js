@@ -49,8 +49,13 @@ function RegisterRoute(props) {
                 password: "",
                 confirmpassword: ""
               }}
+              //IdentityOptions validation needed here
               validationSchema={Yup.object().shape({
-                email: Yup.string().required("Email is required"),
+                firstname: Yup.string().required("Firstname is required"),
+                lastname: Yup.string().required("Lastname is required"),
+                mobilenumber: Yup.string().required(
+                  "Mobile number is required"
+                ),
                 password: Yup.string().required("Password is required"),
                 confirmpassword: Yup.string().oneOf(
                   [Yup.ref("password"), null],
@@ -58,10 +63,26 @@ function RegisterRoute(props) {
                 )
               })}
               onSubmit={(
-                { email, password, confirmpassword },
+                {
+                  firstname,
+                  lastname,
+                  middlename,
+                  mobilenumber,
+                  email,
+                  password,
+                  confirmpassword
+                },
                 { setSubmitting }
               ) => {
-                registerUser(email, password, confirmpassword);
+                registerUser(
+                  firstname,
+                  lastname,
+                  middlename,
+                  mobilenumber,
+                  email,
+                  password,
+                  confirmpassword
+                );
                 setSubmitting(false);
               }}
             >
@@ -92,8 +113,26 @@ const mapDispatchToProps = dispatch => {
   return {
     saveFormLoginInStore: (name, value) =>
       dispatch(sendLoginToStoreAction(name, value)),
-    registerUser: (email, password, confirmpassword) =>
-      dispatch(registerUserAction(email, password, confirmpassword))
+    registerUser: (
+      firstname,
+      lastname,
+      middlename,
+      mobilenumber,
+      email,
+      password,
+      confirmpassword
+    ) =>
+      dispatch(
+        registerUserAction(
+          firstname,
+          lastname,
+          middlename,
+          mobilenumber,
+          email,
+          password,
+          confirmpassword
+        )
+      )
   };
 };
 

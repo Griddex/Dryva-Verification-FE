@@ -12,6 +12,7 @@ export default function DriversListRoute() {
       lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
     }
   ]);
+
   const [data, setData] = React.useState([
     { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 },
     {

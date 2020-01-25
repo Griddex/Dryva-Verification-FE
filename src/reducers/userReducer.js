@@ -19,8 +19,8 @@ export const userReducer = (state = UserState, action) => {
     case LOGIN_USER_COMMENCE:
       return {
         ...state,
-        isSubmitting: action.payload.isSubmitting,
-        formErrors: action.payload.errors
+        Submitting: action.payload.Submitting,
+        formErrors: action.payload.formErrors
       };
     case LOGIN_USER_SUCCESS:
       return {
@@ -31,19 +31,19 @@ export const userReducer = (state = UserState, action) => {
     case LOGIN_USER_FAILURE:
       return {
         ...state,
-        formErrors: action.payload.errors
+        formErrors: action.payload
       };
     case REGISTER_USER_COMMENCE:
       return {
         ...state,
-        isSubmitting: action.payload.isSubmitting,
-        formErrors: action.payload.errors
+        Submitting: action.payload.Submitting,
+        formErrors: action.payload.formErrors
       };
     case REGISTER_USER_SUCCESS:
       return {
         ...state,
-        isSubmitting: false,
-        errors: [],
+        Submitting: false,
+        formErrors: [],
         registrationSucceeded: true
       };
     case REGISTER_USER_FAILURE:

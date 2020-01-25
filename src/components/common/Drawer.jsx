@@ -9,6 +9,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -81,13 +83,16 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3)
+  },
+  link: {
+    margin: theme.spacing(1, 1.5)
   }
 }));
 
 export default function MiniDrawer(props) {
+  const { history } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const { history } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -99,6 +104,7 @@ export default function MiniDrawer(props) {
   };
 
   const handleListItem = text => {
+    console.log("Logged output: MiniDrawer -> text", text);
     switch (text) {
       case "Driver Verification":
         history.push("/");
@@ -136,6 +142,23 @@ export default function MiniDrawer(props) {
           <Typography variant="h6" noWrap>
             Dryva Driver Verification
           </Typography>
+          <div
+            style={{
+              marginLeft: "auto",
+              marginRight: 0
+            }}
+          >
+            <Typography variant="h6" color="inherit">
+              Welcome {localStorage.getItem("nickName")}
+            </Typography>
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => history.replace("/logout")}
+            >
+              Logout
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -175,7 +198,7 @@ export default function MiniDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route exact path="/vehicle" component={VehicleRoute} />
+          <Route exact path="/verification" component={VehicleRoute} />
           <Route exact path="/DriversList" component={DriversListRoute} />
         </Switch>
       </main>

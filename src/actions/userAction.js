@@ -1,3 +1,5 @@
+import history from "./../services/historyService";
+
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
@@ -12,7 +14,7 @@ export const loginUserAction = (email, password, rememberMe) => (
 ) => {
   dispatch({
     type: LOGIN_USER_COMMENCE,
-    payload: { isSubmitting: true, errors: [] }
+    payload: { Submitting: true, formErrors: [] }
   });
 
   http
@@ -30,6 +32,7 @@ export const loginUserAction = (email, password, rememberMe) => (
         type: LOGIN_USER_SUCCESS,
         payload: { token, loginSucceeded: true }
       });
+      history.replace("/verification");
     })
     .catch(errors => {
       if (errors.response) {
@@ -43,18 +46,26 @@ export const loginUserAction = (email, password, rememberMe) => (
     });
 };
 
-export const registerUserAction = (email, password, confirmpassword) => (
-  dispatch,
-  getState,
-  { http }
-) => {
+export const registerUserAction = (
+  firstname,
+  middlename,
+  lastname,
+  mobilenumber,
+  email,
+  password,
+  confirmpassword
+) => (dispatch, getState, { http }) => {
   dispatch({
     type: REGISTER_USER_COMMENCE,
-    payload: { isSubmitting: true, errors: [] }
+    payload: { Submitting: true, errors: [] }
   });
 
   http
     .httpLoginOrRegister("post", "/Account/Register", {
+      firstname: firstname,
+      middlename: middlename,
+      lastname: lastname,
+      mobilenumber: mobilenumber,
       email: email,
       password: password,
       confirmpassword: confirmpassword
@@ -62,13 +73,14 @@ export const registerUserAction = (email, password, confirmpassword) => (
     .then(response => {
       console.log("Logged output: response", response);
       if (
-        response.data === "Registration Succeeded!" &&
+        response.data.message === "Registration Succeeded!" &&
         response.status === 200
       ) {
+        localStorage.setItem("nickName", response.data.applicationUser);
         dispatch({
           type: REGISTER_USER_SUCCESS,
           payload: {
-            isSubmitting: false,
+            Submitting: false,
             errors: [],
             registrationSucceeded: true
           }

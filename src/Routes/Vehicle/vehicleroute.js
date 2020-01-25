@@ -77,7 +77,7 @@ function VehicleRoute(reduxProps) {
   }
 
   function isStepFailed(step) {
-    return step === 1;
+    return step === 100;
   }
 
   function isStepSkipped(step) {

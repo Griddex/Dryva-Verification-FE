@@ -13,13 +13,17 @@ function App() {
       <Switch>
         <Route exact path="/" component={LoginRoute} />
         <Route exact path="/login" component={LoginRoute} />
+        <Route exact path="/logout" component={LoginRoute} />
         <Route
           exact
           path="/register"
           render={props => <RegisterRoute {...props} />}
         />
 
-        <Route render={props => <MiniDrawer {...props} />} />
+        <Route
+          path="/verification"
+          render={props => <MiniDrawer {...props} />}
+        />
       </Switch>
     </React.Fragment>
   );

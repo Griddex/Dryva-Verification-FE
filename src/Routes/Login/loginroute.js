@@ -53,9 +53,7 @@ function LoginRoute(props) {
           onSubmit={(values, formikBag) => {
             const { rememberMe } = props;
             const { email, password } = values;
-            const { setSubmitting } = formikBag;
             loginUser(email, password, rememberMe);
-            setSubmitting(false);
           }}
         >
           {formikProps => <LoginForm {...formikProps} {...props} />}
@@ -75,7 +73,8 @@ function LoginRoute(props) {
 const mapStateToProps = state => {
   return {
     rememberMe: state.userReducer.rememberMe,
-    formErrors: state.userReducer.formErrors
+    formErrors: state.userReducer.formErrors,
+    Submitting: state.userReducer.Submitting
   };
 };
 

@@ -5,7 +5,15 @@ import CheckBox from "./common/CheckBox";
 
 function RegisterForm(props) {
   const {
-    values: { email, password, confirmpassword },
+    values: {
+      firstname,
+      lastname,
+      middlename,
+      mobilenumber,
+      email,
+      password,
+      confirmpassword
+    },
     errors,
     touched,
     handleSubmit,
@@ -19,6 +27,50 @@ function RegisterForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
+      {Input(
+        "firstname",
+        "Firstname",
+        firstname,
+        400,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        saveFormLoginInStore
+      )}
+      {Input(
+        "lastname",
+        "Lastname",
+        lastname,
+        400,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        saveFormLoginInStore
+      )}
+      {Input(
+        "middlename",
+        "Middlename",
+        middlename,
+        400,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        saveFormLoginInStore
+      )}
+      {Input(
+        "mobilenumber",
+        "Mobile number",
+        mobilenumber,
+        400,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        saveFormLoginInStore
+      )}
       {Input(
         "email",
         "Email",
