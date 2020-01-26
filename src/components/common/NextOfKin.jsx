@@ -24,16 +24,16 @@ const useStyles = makeStyles(theme => ({
 export default function NextOfKin(props) {
   const classes = useStyles();
   const {
-    nextOfKinFirstName,
-    nextOfKinMiddleName,
-    nextOfKinLastName,
-    nextOfKinPhoneNumber,
-    nextOfKinHomeCountry,
-    nextOfKinHomeState,
-    nextOfKinHomeCity,
-    nextOfKinHomeAddressLine1,
-    nextOfKinHomeAddressLine2,
-    nextOfKinHomePostalCode,
+    NextOfKinFirstName,
+    NextOfKinMiddleName,
+    NextOfKinLastName,
+    NextOfKinPhoneNumber,
+    NextOfKinHomeCountry,
+    NextOfKinHomeState,
+    NextOfKinHomeCity,
+    NextOfKinHomeAddressLine1,
+    NextOfKinHomeAddressLine2,
+    NextOfKinHomePostalCode,
     errors,
     touched,
     handleChange,
@@ -53,9 +53,9 @@ export default function NextOfKin(props) {
         <ExpansionPanelDetails>
           <div>
             {Input(
-              "nextOfKinFirstName",
+              "NextOfKinFirstName",
               "First Name",
-              nextOfKinFirstName,
+              NextOfKinFirstName,
               400,
               errors,
               touched,
@@ -63,9 +63,9 @@ export default function NextOfKin(props) {
               handleBlur
             )}
             {Input(
-              "nextOfKinMiddleName",
+              "NextOfKinMiddleName",
               "Middle Name",
-              nextOfKinMiddleName,
+              NextOfKinMiddleName,
               400,
               errors,
               touched,
@@ -73,9 +73,9 @@ export default function NextOfKin(props) {
               handleBlur
             )}
             {Input(
-              "nextOfKinLastName",
+              "NextOfKinLastName",
               "Last Name",
-              nextOfKinLastName,
+              NextOfKinLastName,
               400,
               errors,
               touched,
@@ -83,9 +83,9 @@ export default function NextOfKin(props) {
               handleBlur
             )}
             {Input(
-              "nextOfKinHomeAddressLine1",
+              "NextOfKinHomeAddressLine1",
               "Address Line1",
-              nextOfKinHomeAddressLine1,
+              NextOfKinHomeAddressLine1,
               450,
               errors,
               touched,
@@ -93,9 +93,9 @@ export default function NextOfKin(props) {
               handleBlur
             )}
             {Input(
-              "nextOfKinHomeAddressLine2",
+              "NextOfKinHomeAddressLine2",
               "Address Line2",
-              nextOfKinHomeAddressLine2,
+              NextOfKinHomeAddressLine2,
               450,
               errors,
               touched,
@@ -104,36 +104,36 @@ export default function NextOfKin(props) {
             )}
 
             {Select(
-              "nextOfKinHomeCountry",
+              "NextOfKinHomeCountry",
               "Country",
-              nextOfKinHomeCountry,
+              NextOfKinHomeCountry,
               Countries,
               220,
               errors,
               handleChange
             )}
             {Select(
-              "nextOfKinHomeState",
+              "NextOfKinHomeState",
               "State",
-              nextOfKinHomeState,
+              NextOfKinHomeState,
               States,
               220,
               errors,
               handleChange
             )}
             {Select(
-              "nextOfKinHomeCity",
+              "NextOfKinHomeCity",
               "City",
-              nextOfKinHomeCity,
+              NextOfKinHomeCity,
               Cities,
               200,
               errors,
               handleChange
             )}
             {Input(
-              "nextOfKinHomePostalCode",
+              "NextOfKinHomePostalCode",
               "PostalCode",
-              nextOfKinHomePostalCode,
+              NextOfKinHomePostalCode,
               150,
               errors,
               touched,
@@ -141,9 +141,9 @@ export default function NextOfKin(props) {
               handleBlur
             )}
             {Input(
-              "nextOfKinPhoneNumber",
+              "NextOfKinPhoneNumber",
               "Phone Number",
-              nextOfKinPhoneNumber,
+              NextOfKinPhoneNumber,
               200,
               errors,
               touched,

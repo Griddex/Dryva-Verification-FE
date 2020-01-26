@@ -1,8 +1,5 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import * as Yup from "yup";
-import Input from "./common/Input";
 import NextOfKin from "./common/NextOfKin";
 import Address from "./common/Address";
 import DriverPersonalDetails from "./DriverPersonalDetails";
@@ -18,44 +15,44 @@ const useStyles = makeStyles(theme => ({
 export default function DriversForm(formikProps) {
   const {
     values: {
-      driversFirstName,
-      driversMiddleName,
-      driversSurname,
-      driversMobile,
-      driversEmail,
-      driversLicenseNo,
-      driversLicenseExpiryDate,
+      DriversFirstName,
+      DriversMiddleName,
+      DriversSurname,
+      DriversMobile,
+      DriversEmail,
+      DriversLicenseNo,
+      DriversLicenseExpiryDate,
 
-      driversHomeAddressLine1,
-      driversHomeAddressLine2,
-      driversHomePostalCode,
-      driversHomeCountry,
-      driversHomeState,
-      driversHomeCity,
+      DriversHomeAddressLine1,
+      DriversHomeAddressLine2,
+      DriversHomePostalCode,
+      DriversHomeCountry,
+      DriversHomeState,
+      DriversHomeCity,
 
-      driversPermanentAddressLine1,
-      driversPermanentAddressLine2,
-      driversPermanentPostalCode,
-      driversPermanentCountry,
-      driversPermanentState,
-      driversPermanentCity,
+      DriversPermanentAddressLine1,
+      DriversPermanentAddressLine2,
+      DriversPermanentPostalCode,
+      DriversPermanentCountry,
+      DriversPermanentState,
+      DriversPermanentCity,
 
       //Next of Kin
-      nextOfKinFirstName,
-      nextOfKinMiddleName,
-      nextOfKinLastName,
-      nextOfKinPhoneNumber,
+      NextOfKinFirstName,
+      NextOfKinMiddleName,
+      NextOfKinLastName,
+      NextOfKinPhoneNumber,
 
-      nextOfKinHomeAddressLine1,
-      nextOfKinHomeAddressLine2,
-      nextOfKinHomePostalCode,
-      nextOfKinHomeCountry,
-      nextOfKinHomeState,
-      nextOfKinHomeCity
+      NextOfKinHomeAddressLine1,
+      NextOfKinHomeAddressLine2,
+      NextOfKinHomePostalCode,
+      NextOfKinHomeCountry,
+      NextOfKinHomeState,
+      NextOfKinHomeCity
     },
     errors,
-    handleChange,
     touched,
+    handleChange,
     handleBlur,
     saveFormValuesInStore
   } = formikProps;
@@ -64,13 +61,13 @@ export default function DriversForm(formikProps) {
   return (
     <div className={classes.form}>
       <DriverPersonalDetails
-        driversFirstName={driversFirstName}
-        driversMiddleName={driversMiddleName}
-        driversSurname={driversSurname}
-        driversMobile={driversMobile}
-        driversEmail={driversEmail}
-        driversLicenseNo={driversLicenseNo}
-        driversLicenseExpiryDate={driversLicenseExpiryDate}
+        DriversFirstName={DriversFirstName}
+        DriversMiddleName={DriversMiddleName}
+        DriversSurname={DriversSurname}
+        DriversMobile={DriversMobile}
+        DriversEmail={DriversEmail}
+        DriversLicenseNo={DriversLicenseNo}
+        DriversLicenseExpiryDate={DriversLicenseExpiryDate}
         errors={errors}
         handleChange={handleChange}
         touched={touched}
@@ -79,19 +76,19 @@ export default function DriversForm(formikProps) {
       />
 
       <Address
-        title="Home Address"
-        addressLine1Name="driversHomeAddressLine1Name"
-        addressLine2Name="driversHomeAddressLine2Name"
-        countryName="driversHomeCountryName"
-        stateName="driversHomeStateName"
-        cityName="driversHomeCityName"
-        postalCodeName="driversHomePostalCodeName"
-        country={driversHomeCountry}
-        state={driversHomeState}
-        city={driversHomeCity}
-        addressLine1={driversHomeAddressLine1}
-        addressLine2={driversHomeAddressLine2}
-        postalCode={driversHomePostalCode}
+        Title="Home Address"
+        AddressLine1="DriversHomeAddressLine1"
+        AddressLine2="DriversHomeAddressLine2"
+        Country="DriversHomeCountry"
+        State="DriversHomeState"
+        City="DriversHomeCity"
+        PostalCode="DriversHomePostalCode"
+        CountryValue={DriversHomeCountry}
+        StateValue={DriversHomeState}
+        CityValue={DriversHomeCity}
+        AddressLine1Value={DriversHomeAddressLine1}
+        AddressLine2Value={DriversHomeAddressLine2}
+        PostalCodeValue={DriversHomePostalCode}
         errors={errors}
         handleChange={handleChange}
         touched={touched}
@@ -99,19 +96,19 @@ export default function DriversForm(formikProps) {
         saveFormValuesInStore={saveFormValuesInStore}
       />
       <Address
-        title="Permanent Address"
-        addressLine1Name="driversPermanentAddressLine1Name"
-        addressLine2Name="driversPermanentAddressLine2Name"
-        countryName="driversPermanentCountryName"
-        stateName="driversPermanentStateName"
-        cityName="driversPermanentCityName"
-        postalCodeName="driversPermanentPostalCodeName"
-        country={driversPermanentCountry}
-        state={driversPermanentState}
-        city={driversPermanentCity}
-        addressLine1={driversPermanentAddressLine1}
-        addressLine2={driversPermanentAddressLine2}
-        postalCode={driversPermanentPostalCode}
+        Title="Permanent Address"
+        AddressLine1="DriversPermanentAddressLine1"
+        AddressLine2="DriversPermanentAddressLine2"
+        Country="DriversPermanentCountry"
+        State="DriversPermanentState"
+        City="DriversPermanentCity"
+        PostalCode="DriversPermanentPostalCode"
+        CountryValue={DriversPermanentCountry}
+        StateValue={DriversPermanentState}
+        CityValue={DriversPermanentCity}
+        AddressLine1Value={DriversPermanentAddressLine1}
+        AddressLine2Value={DriversPermanentAddressLine2}
+        PostalCodeValue={DriversPermanentPostalCode}
         errors={errors}
         handleChange={handleChange}
         touched={touched}
@@ -120,16 +117,16 @@ export default function DriversForm(formikProps) {
       />
       <NextOfKin
         title="Next of Kin"
-        nextOfKinFirstName={nextOfKinFirstName}
-        nextOfKinMiddleName={nextOfKinMiddleName}
-        nextOfKinLastName={nextOfKinLastName}
-        nextOfKinPhoneNumber={nextOfKinPhoneNumber}
-        nextOfKinHomeCountry={nextOfKinHomeCountry}
-        nextOfKinHomeState={nextOfKinHomeState}
-        nextOfKinHomeCity={nextOfKinHomeCity}
-        nextOfKinHomeAddressLine1={nextOfKinHomeAddressLine1}
-        nextOfKinHomeAddressLine2={nextOfKinHomeAddressLine2}
-        nextOfKinHomePostalCode={nextOfKinHomePostalCode}
+        NextOfKinFirstName={NextOfKinFirstName}
+        NextOfKinMiddleName={NextOfKinMiddleName}
+        NextOfKinLastName={NextOfKinLastName}
+        NextOfKinPhoneNumber={NextOfKinPhoneNumber}
+        NextOfKinHomeCountry={NextOfKinHomeCountry}
+        NextOfKinHomeState={NextOfKinHomeState}
+        NextOfKinHomeCity={NextOfKinHomeCity}
+        NextOfKinHomeAddressLine1={NextOfKinHomeAddressLine1}
+        NextOfKinHomeAddressLine2={NextOfKinHomeAddressLine2}
+        NextOfKinHomePostalCode={NextOfKinHomePostalCode}
         errors={errors}
         handleChange={handleChange}
         touched={touched}

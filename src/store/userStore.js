@@ -7,8 +7,6 @@ const UserState = {
   email: "",
   password: "",
   confirmpassword: "",
-  registrationSucceeded: false,
-  loginSucceeded: false,
   rememberMe: false,
   token: "",
   Submitting: false,

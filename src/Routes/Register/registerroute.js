@@ -1,15 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { Formik } from "formik";
+import { makeStyles } from "@material-ui/core/styles";
+import * as Yup from "yup";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
-import { ReactComponent as Logo } from "../../images/logo.svg";
-import { makeStyles } from "@material-ui/core/styles";
-import RegisterForm from "./../../components/RegisterForm";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
 import { registerUserAction } from "./../../actions/userAction";
-import { connect } from "react-redux";
 import { RegistrationSuccess } from "./registrationSuccess";
+import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
+import RegisterForm from "./../../components/RegisterForm";
+import { ReactComponent as Logo } from "../../images/logo.svg";
+import UserState from "./../../store/userStore";
 
 function RegisterRoute(props) {
   const useStyles = makeStyles(theme => ({
@@ -44,11 +45,7 @@ function RegisterRoute(props) {
                 })}
             </div>
             <Formik
-              initialValues={{
-                email: "",
-                password: "",
-                confirmpassword: ""
-              }}
+              initialValues={UserState}
               //IdentityOptions validation needed here
               validationSchema={Yup.object().shape({
                 firstname: Yup.string().required("Firstname is required"),
@@ -72,7 +69,7 @@ function RegisterRoute(props) {
                   password,
                   confirmpassword
                 },
-                { setSubmitting }
+                formikBag
               ) => {
                 registerUser(
                   firstname,
@@ -83,7 +80,6 @@ function RegisterRoute(props) {
                   password,
                   confirmpassword
                 );
-                setSubmitting(false);
               }}
             >
               {formikProps => <RegisterForm {...formikProps} {...props} />}
@@ -105,6 +101,7 @@ function RegisterRoute(props) {
 const mapStateToProps = state => {
   return {
     formErrors: state.userReducer.formErrors,
+    Submitted: state.userReducer.Submitted,
     registrationSucceeded: state.userReducer.registrationSucceeded
   };
 };

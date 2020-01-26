@@ -24,23 +24,24 @@ const useStyles = makeStyles(theme => ({
 export default function Address(props) {
   const classes = useStyles();
   const {
-    addressLine1Name,
-    addressLine2Name,
-    countryName,
-    stateName,
-    cityName,
-    postalCodeName,
-    country,
-    state,
-    city,
-    addressLine1,
-    addressLine2,
-    postalCode,
-    title,
+    Title,
+    AddressLine1,
+    AddressLine2,
+    Country,
+    State,
+    City,
+    PostalCode,
+    CountryValue,
+    StateValue,
+    CityValue,
+    AddressLine1Value,
+    AddressLine2Value,
+    PostalCodeValue,
     errors,
-    touched,
     handleChange,
-    handleBlur
+    touched,
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   return (
@@ -51,59 +52,76 @@ export default function Address(props) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>{title}</Typography>
+          <Typography className={classes.heading}>{Title}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <div>
             {Input(
-              addressLine1Name,
+              AddressLine1,
               "Address Line1",
-              addressLine1,
+              AddressLine1Value,
               450,
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
-              addressLine2Name,
+              AddressLine2,
               "Address Line2",
-              addressLine2,
+              AddressLine2Value,
               450,
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
 
             {Select(
-              countryName,
+              Country,
               "Country",
-              country,
+              CountryValue,
               Countries,
               220,
               errors,
-              handleChange
+              handleChange,
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Select(
-              stateName,
+              State,
               "State",
-              state,
+              StateValue,
               States,
               220,
               errors,
-              handleChange
+              handleChange,
+              handleBlur,
+              saveFormValuesInStore
             )}
-            {Select(cityName, "City", city, Cities, 200, errors, handleChange)}
+            {Select(
+              City,
+              "City",
+              CityValue,
+              Cities,
+              200,
+              errors,
+              handleChange,
+              handleBlur,
+              saveFormValuesInStore
+            )}
             {Input(
-              postalCodeName,
+              PostalCode,
               "PostalCode",
-              postalCode,
+              PostalCodeValue,
               150,
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
           </div>
         </ExpansionPanelDetails>

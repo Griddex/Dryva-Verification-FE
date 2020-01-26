@@ -1,8 +1,5 @@
 import React from "react";
-import { Formik, Form } from "formik";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import * as Yup from "yup";
 import Input from "./common/Input";
 import Select from "./common/Select";
 import DatePicker from "./common/DatePicker";
@@ -12,24 +9,14 @@ import {
   VehicleManufactureYears
 } from "./../services/vehicleService";
 
-const useStyles = makeStyles(theme => ({
-  "@global": { body: { backgroundColor: "#FFF" } },
-  form: {
-    width: "70%", // Fix IE 11 issue.
-    marginTop: theme.spacing(5)
-  }
-}));
-
 export default function VehicleDetailsForm(props) {
   const {
     values: {
-      vehicleType,
-      vehicleMake,
-      yearOfManufacture,
+      VehicleType,
+      VehicleMake,
+      YearOfManufacture,
       ChassisNo,
-      EngineNo,
-      MOTExpiry,
-      InsuranceExpiry
+      EngineNo
     },
     errors,
     touched,
@@ -38,14 +25,13 @@ export default function VehicleDetailsForm(props) {
     saveFormValuesInStore
   } = props;
 
-  const classes = useStyles();
   return (
     <Grid container direction="column" spacing={4}>
       <Grid item xs={3}>
         {Select(
-          "vehicleType",
+          "VehicleType",
           "Vehicle Type",
-          vehicleType,
+          VehicleType,
           VehicleTypes,
           300,
           errors,
@@ -56,9 +42,9 @@ export default function VehicleDetailsForm(props) {
       </Grid>
       <Grid item xs={3}>
         {Select(
-          "vehicleMake",
+          "VehicleMake",
           "Vehicle Make",
-          vehicleMake,
+          VehicleMake,
           VehicleMakes,
           300,
           errors,
@@ -69,9 +55,9 @@ export default function VehicleDetailsForm(props) {
       </Grid>
       <Grid item xs={3}>
         {Select(
-          "yearOfManufacture",
+          "YearOfManufacture",
           "Year of Manufacture",
-          yearOfManufacture,
+          YearOfManufacture,
           VehicleManufactureYears,
           100,
           errors,
@@ -86,7 +72,7 @@ export default function VehicleDetailsForm(props) {
           "ChassisNo",
           "Chassis Number",
           ChassisNo,
-          250,
+          300,
           errors,
           touched,
           handleChange,
@@ -99,7 +85,7 @@ export default function VehicleDetailsForm(props) {
           "EngineNo",
           "Engine Number",
           EngineNo,
-          250,
+          300,
           errors,
           touched,
           handleChange,
@@ -109,19 +95,15 @@ export default function VehicleDetailsForm(props) {
       </Grid>
       <Grid item xs={3}>
         <DatePicker
+          name="MOTExpiry"
           label="MOT Expiry"
-          dateOfInspection={MOTExpiry}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
           saveFormValuesInStore={saveFormValuesInStore}
         />
       </Grid>
       <Grid item xs={3}>
         <DatePicker
+          name="InsuranceExpiry"
           label="Insurance Expiry"
-          dateOfInspection={InsuranceExpiry}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
           saveFormValuesInStore={saveFormValuesInStore}
         />
       </Grid>

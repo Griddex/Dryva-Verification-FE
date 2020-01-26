@@ -1,25 +1,21 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import * as Yup from "yup";
 import Input from "./common/Input";
 import Select from "./common/Select";
 import MultiInput from "./common/MultiInput";
 import DatePicker from "./common/DatePicker";
 import Grid from "@material-ui/core/Grid";
-import { connect } from "react-redux";
-import { Button } from "@material-ui/core";
 
 function InspectorForm(props) {
   const {
     values: {
-      nameOfInspector,
-      nameOfSupervisor,
-      placeOfInspection,
-      dateOfInspection,
-      vehiclePlateNumber,
-      inspectionPassed,
-      generalRemarks
+      NameOfInspector,
+      NameOfSupervisor,
+      PlaceOfInspection,
+      DateOfInspection,
+      VehiclePlateNumber,
+      InspectionPassed,
+      GeneralRemarks
     },
     errors,
     touched,
@@ -44,9 +40,9 @@ function InspectorForm(props) {
     <Grid container spacing={10} direction="column" justify="flex-start">
       <Grid item>
         {Input(
-          "nameOfInspector",
+          "NameOfInspector",
           "Name of Inspector",
-          nameOfInspector,
+          NameOfInspector,
           400,
           errors,
           touched,
@@ -57,9 +53,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {Input(
-          "nameOfSupervisor",
+          "NameOfSupervisor",
           "Name of Supervisor",
-          nameOfSupervisor,
+          NameOfSupervisor,
           400,
           errors,
           touched,
@@ -70,9 +66,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {Input(
-          "placeOfInspection",
+          "PlaceOfInspection",
           "Place of Inspection",
-          placeOfInspection,
+          PlaceOfInspection,
           300,
           errors,
           touched,
@@ -92,9 +88,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {Input(
-          "vehiclePlateNumber",
+          "VehiclePlateNumber",
           "Vehicle Plate Number",
-          vehiclePlateNumber,
+          VehiclePlateNumber,
           200,
           errors,
           touched,
@@ -105,9 +101,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {Select(
-          "inspectionPassed",
+          "InspectionPassed",
           "Inspection Passed?",
-          inspectionPassed,
+          InspectionPassed,
           ["Yes", "No"],
           100,
           errors,
@@ -118,9 +114,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {MultiInput(
-          "generalRemarks",
+          "GeneralRemarks",
           "General Remarks",
-          generalRemarks,
+          GeneralRemarks,
           500,
           errors,
           touched,
@@ -133,8 +129,4 @@ function InspectorForm(props) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(null, mapDispatchToProps)(InspectorForm);
+export default InspectorForm;

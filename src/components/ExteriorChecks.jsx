@@ -41,7 +41,6 @@ export default function ExteriorChecks(props) {
           <Typography className={classes.heading}>Exterior Checks</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          d
           <div>
             <CheckBox
               name="HeadlightsHiLow"

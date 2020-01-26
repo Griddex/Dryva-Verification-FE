@@ -2,6 +2,7 @@ import React from "react";
 import MaterialTable from "material-table";
 
 export default function DriversListRoute() {
+  console.log("hello");
   const [columns, setColumns] = React.useState([
     { title: "Name", field: "name" },
     { title: "Surname", field: "surname" },

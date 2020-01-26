@@ -20,12 +20,12 @@ const useStyles = makeStyles(theme => ({
 export default function DriverPersonalDetails(props) {
   const classes = useStyles();
   const {
-    driversFirstName,
-    driversMiddleName,
-    driversSurname,
-    driversMobile,
-    driversEmail,
-    driversLicenseNo,
+    DriversFirstName,
+    DriversMiddleName,
+    DriversSurname,
+    DriversMobile,
+    DriversEmail,
+    DriversLicenseNo,
     errors,
     touched,
     handleChange,
@@ -47,9 +47,9 @@ export default function DriverPersonalDetails(props) {
         <ExpansionPanelDetails>
           <div>
             {Input(
-              "driversFirstName",
+              "DriversFirstName",
               "Driver's First Name",
-              driversFirstName,
+              DriversFirstName,
               400,
               errors,
               touched,
@@ -57,9 +57,9 @@ export default function DriverPersonalDetails(props) {
               handleBlur
             )}
             {Input(
-              "driversMiddleName",
+              "DriversMiddleName",
               "Driver's Middle Name",
-              driversMiddleName,
+              DriversMiddleName,
               400,
               errors,
               touched,
@@ -67,9 +67,9 @@ export default function DriverPersonalDetails(props) {
               handleBlur
             )}
             {Input(
-              "driversSurname",
+              "DriversSurname",
               "Driver's Surname",
-              driversSurname,
+              DriversSurname,
               400,
               errors,
               touched,
@@ -77,9 +77,9 @@ export default function DriverPersonalDetails(props) {
               handleBlur
             )}
             {Input(
-              "driversMobile",
+              "DriversMobile",
               "Driver's Mobile Number",
-              driversMobile,
+              DriversMobile,
               200,
               errors,
               touched,
@@ -87,9 +87,9 @@ export default function DriverPersonalDetails(props) {
               handleBlur
             )}
             {Input(
-              "driversEmail",
+              "DriversEmail",
               "Driver's Email",
-              driversEmail,
+              DriversEmail,
               300,
               errors,
               touched,
@@ -97,9 +97,9 @@ export default function DriverPersonalDetails(props) {
               handleBlur
             )}
             {Input(
-              "driversLicenseNo",
+              "DriversLicenseNo",
               "Driver's License Number",
-              driversLicenseNo,
+              DriversLicenseNo,
               200,
               errors,
               touched,

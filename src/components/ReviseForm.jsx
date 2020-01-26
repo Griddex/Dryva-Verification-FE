@@ -1,12 +1,11 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import PreSubmitValues from "./../services/preSubmitValuesService";
-import Divider from "@material-ui/core/Divider";
 
 const ReviseForm = props => {
   const { values } = props;
   const {
-    values: { images }
+    values: { Images }
   } = props;
 
   const formLastFields = [
@@ -28,7 +27,7 @@ const ReviseForm = props => {
           .filter(v => v[0] !== "errors")
           .map((v, i) => {
             let key = PreSubmitValues[v[0]];
-            if (key === "Verification Images") v[1] = images.length;
+            if (key === "Verification Images") v[1] = Images.length;
 
             return (
               <Grid item key={i}>
@@ -36,7 +35,7 @@ const ReviseForm = props => {
                   <Grid item style={{ fontWeight: "bold" }}>{`${key}: `}</Grid>
                   <Grid item>{`${v[1]}`}</Grid>
                   {/* How to separate key and value with white space, Search for the last items on each form and put in a line break */}
-                  {formLastFields.some(v => v === key) ? <hr /> : <h6></h6>}
+                  {formLastFields.some(v => v === key) ? <br /> : <h6></h6>}
                 </Grid>
               </Grid>
             );

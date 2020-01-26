@@ -1,5 +1,4 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -24,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SafetyTechnicalSummary(props) {
   const {
-    values: { noOfDefectsOnBus, hasSupervisorBeenNotified, generalRemarks },
+    values: { NoOfDefectsOnBus, HasSupervisorBeenNotified, GeneralRemarks },
     errors,
     touched,
     handleBlur,
@@ -46,9 +45,9 @@ export default function SafetyTechnicalSummary(props) {
         <ExpansionPanelDetails>
           <div style={{ width: "80%" }} className={classes.form}>
             {Input(
-              "noOfDefectsOnBus",
+              "NoOfDefectsOnBus",
               "Number of Defects on Bus",
-              noOfDefectsOnBus,
+              NoOfDefectsOnBus,
               100,
               errors,
               touched,
@@ -56,11 +55,10 @@ export default function SafetyTechnicalSummary(props) {
               handleBlur,
               saveFormValuesInStore
             )}
-
             {Select(
-              "hasSupervisorBeenNotified",
+              "HasSupervisorBeenNotified",
               "Has a Supervisor been notified?",
-              hasSupervisorBeenNotified,
+              HasSupervisorBeenNotified,
               ["Yes", "No"],
               100,
               errors,
@@ -69,9 +67,9 @@ export default function SafetyTechnicalSummary(props) {
               saveFormValuesInStore
             )}
             {MultiInput(
-              "generalRemarks",
+              "GeneralRemarks",
               "General Remarks",
-              generalRemarks,
+              GeneralRemarks,
               500,
               errors,
               touched,

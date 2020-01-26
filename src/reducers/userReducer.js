@@ -26,12 +26,13 @@ export const userReducer = (state = UserState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        loginSucceeded: action.payload.loginSucceeded
+        Submitting: action.payload.Submitting
       };
     case LOGIN_USER_FAILURE:
       return {
         ...state,
-        formErrors: action.payload
+        formErrors: action.payload.formErrors,
+        Submitting: action.payload.Submitting
       };
     case REGISTER_USER_COMMENCE:
       return {
@@ -42,14 +43,14 @@ export const userReducer = (state = UserState, action) => {
     case REGISTER_USER_SUCCESS:
       return {
         ...state,
-        Submitting: false,
-        formErrors: [],
+        Submitting: action.payload.Submitting,
+        formErrors: action.payload.formErrors,
         registrationSucceeded: true
       };
     case REGISTER_USER_FAILURE:
       return {
         ...state,
-        formErrors: action.payload
+        formErrors: action.payload.responseErrors
       };
     default:
       return { ...state };

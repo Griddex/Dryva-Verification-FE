@@ -24,23 +24,23 @@ export const loginUserAction = (email, password, rememberMe) => (
       rememberMe: rememberMe
     })
     .then(response => {
-      const { token, email } = response.data;
+      const { token, expiration, email } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("email", email);
-      console.log(response);
+      localStorage.setItem("expiration", expiration);
+
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { token, loginSucceeded: true }
+        payload: { token: token, Submitting: false }
       });
       history.replace("/verification");
     })
     .catch(errors => {
       if (errors.response) {
-        console.log("Logged output: errors.response", errors.response);
         const responseErrors = errors.response.data[""];
         dispatch({
           type: LOGIN_USER_FAILURE,
-          payload: responseErrors
+          payload: { responseErrors: responseErrors, Submitting: false }
         });
       }
     });
@@ -57,7 +57,7 @@ export const registerUserAction = (
 ) => (dispatch, getState, { http }) => {
   dispatch({
     type: REGISTER_USER_COMMENCE,
-    payload: { Submitting: true, errors: [] }
+    payload: { Submitting: true, formErrors: [] }
   });
 
   http
@@ -71,7 +71,6 @@ export const registerUserAction = (
       confirmpassword: confirmpassword
     })
     .then(response => {
-      console.log("Logged output: response", response);
       if (
         response.data.message === "Registration Succeeded!" &&
         response.status === 200
@@ -81,7 +80,7 @@ export const registerUserAction = (
           type: REGISTER_USER_SUCCESS,
           payload: {
             Submitting: false,
-            errors: [],
+            formErrors: [],
             registrationSucceeded: true
           }
         });
@@ -96,7 +95,7 @@ export const registerUserAction = (
         const responseErrors = errors.response.data[""];
         dispatch({
           type: REGISTER_USER_FAILURE,
-          payload: responseErrors
+          payload: { Submitting: false, responseErrors: responseErrors }
         });
       }
     });

@@ -1,25 +1,14 @@
 import React from "react";
-import { Formik, Form } from "formik";
-import { makeStyles } from "@material-ui/core/styles";
-import * as Yup from "yup";
 import Input from "./common/Input";
-import { Grid } from "@material-ui/core";
-
-const useStyles = makeStyles(theme => ({
-  "@global": { body: { backgroundColor: "#FFF" } },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(5)
-  }
-}));
+import Grid from "@material-ui/core/Grid";
 
 export default function OwnersForm(props) {
   const {
     values: {
-      nameOfOwner,
-      ownersHouseAddress,
-      ownersMobileNo,
-      ownersNextOfKinName
+      NameOfOwner,
+      OwnersHouseAddress,
+      OwnersMobileNo,
+      OwnersNextOfKinName
     },
     errors,
     touched,
@@ -28,14 +17,13 @@ export default function OwnersForm(props) {
     saveFormValuesInStore
   } = props;
 
-  const classes = useStyles();
   return (
     <Grid container direction="column" justify="flex-start" spacing={10}>
       <Grid item>
         {Input(
-          "nameOfOwner",
+          "NameOfOwner",
           "Name of Owner",
-          nameOfOwner,
+          NameOfOwner,
           500,
           errors,
           touched,
@@ -46,9 +34,9 @@ export default function OwnersForm(props) {
       </Grid>
       <Grid item>
         {Input(
-          "ownersHouseAddress",
+          "OwnersHouseAddress",
           "Owner's house address",
-          ownersHouseAddress,
+          OwnersHouseAddress,
           500,
           errors,
           touched,
@@ -59,9 +47,9 @@ export default function OwnersForm(props) {
       </Grid>
       <Grid item>
         {Input(
-          "ownersMobileNo",
+          "OwnersMobileNo",
           "Owner's Mobile No.",
-          ownersMobileNo,
+          OwnersMobileNo,
           200,
           errors,
           touched,
@@ -73,9 +61,9 @@ export default function OwnersForm(props) {
 
       <Grid item>
         {Input(
-          "ownersNextOfKinName",
+          "OwnersNextOfKinName",
           "Owner's Next of Kin Name",
-          ownersNextOfKinName,
+          OwnersNextOfKinName,
           500,
           errors,
           touched,
