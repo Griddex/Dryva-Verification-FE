@@ -6,6 +6,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Input from "./../components/common/Input";
+import DatePicker from "./common/DatePicker";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,10 +27,12 @@ export default function DriverPersonalDetails(props) {
     DriversMobile,
     DriversEmail,
     DriversLicenseNo,
+    DriversLicenseExpiryDate,
     errors,
     touched,
     handleChange,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   return (
@@ -106,6 +109,13 @@ export default function DriverPersonalDetails(props) {
               handleChange,
               handleBlur
             )}
+            <DatePicker
+              name="DriversLicenseExpiryDate"
+              label="Driver's License Expiry Date"
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              saveFormValuesInStore={saveFormValuesInStore}
+            />
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

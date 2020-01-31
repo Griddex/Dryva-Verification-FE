@@ -1,4 +1,5 @@
 const StoreInitialValues = {
+  DataUniqueNumber: "",
   //Inspector's Form
   NameOfInspector: "",
   NameOfSupervisor: "",
@@ -15,7 +16,7 @@ const StoreInitialValues = {
   DriversMobile: "",
   DriversEmail: "",
   DriversLicenseNo: "",
-  DriversLicenseExpiryDate: "",
+  DriversLicenseExpiryDate: new Date(),
   DriversHomeAddressLine1: "",
   DriversHomeAddressLine2: "",
   DriversHomePostalCode: "",
@@ -115,7 +116,7 @@ const StoreInitialValues = {
 
   //User login
   Errors: [],
-  IsSubmitting: false,
+  Submitting: false,
   Result: null
 };
 

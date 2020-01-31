@@ -104,7 +104,6 @@ export default function MiniDrawer(props) {
   };
 
   const handleListItem = text => {
-    console.log("Logged output: MiniDrawer -> text", text);
     switch (text) {
       case "Driver Verification":
         history.push("/");
@@ -154,7 +153,10 @@ export default function MiniDrawer(props) {
             <Button
               size="small"
               variant="outlined"
-              onClick={() => history.replace("/logout")}
+              onClick={() => {
+                localStorage.clear();
+                history.replace("/logout");
+              }}
             >
               Logout
             </Button>

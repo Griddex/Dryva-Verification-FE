@@ -1,10 +1,11 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import ImageUploader from "react-images-upload";
 import { makeStyles } from "@material-ui/core/styles";
-import ButtonBase from "@material-ui/core/ButtonBase";
+import { connect } from "react-redux";
+import { sendValuesToStoreAction } from "../actions/sendValuesToStoreAction";
 
 const VerificationImagesForm = props => {
+  const { saveFormValuesInStore } = props;
   const useStyles = makeStyles(theme => ({
     root: {
       display: "flex"
@@ -27,8 +28,7 @@ const VerificationImagesForm = props => {
   } = props;
 
   const handleImagesSelected = imgs => {
-    //console.log("Logged output: image", imgs);
-    images = imgs;
+    saveFormValuesInStore("Images", imgs);
   };
 
   const classes = useStyles();
@@ -67,4 +67,11 @@ const VerificationImagesForm = props => {
   );
 };
 
-export default VerificationImagesForm;
+const mapDispatchToProps = dispatch => {
+  return {
+    saveFormValuesInStore: (name, value) =>
+      dispatch(sendValuesToStoreAction(name, value))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(VerificationImagesForm);

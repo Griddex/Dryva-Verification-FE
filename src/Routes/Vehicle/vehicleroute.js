@@ -91,7 +91,6 @@ function VehicleRoute(reduxProps) {
       newSkipped.delete(activeStep);
     }
     if (activeStep === steps.length - 1) {
-      console.log(activeStep);
     }
     setActiveStep(prevActiveStep => prevActiveStep + 1);
     setSkipped(newSkipped);

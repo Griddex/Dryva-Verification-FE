@@ -1,14 +1,10 @@
 import React, { Fragment } from "react";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import LoginForm from "./../../components/LoginForm";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
 import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
 import { loginUserAction } from "./../../actions/userAction";
@@ -28,19 +24,20 @@ function LoginRoute(props) {
   const classes = useStyles();
 
   return (
-    <>
-      <Container maxwidth="sm" fixed>
-        <Logo />
-        <div>
-          {formErrors &&
-            formErrors.map((e, i) => {
-              return (
-                <p key={i} className={classes.error}>
-                  {e}
-                </p>
-              );
-            })}
-        </div>
+    <div>
+      <Logo />
+      <h1>Dryva</h1>
+      <div>
+        {formErrors &&
+          formErrors.map((e, i) => {
+            return (
+              <p key={i} className={classes.error}>
+                {e}
+              </p>
+            );
+          })}
+      </div>
+      <div>
         <Formik
           initialValues={{
             email: "",
@@ -65,8 +62,8 @@ function LoginRoute(props) {
         >
           Not yet a verification officer? Register
         </Link>
-      </Container>
-    </>
+      </div>
+    </div>
   );
 }
 

@@ -30,7 +30,6 @@ export default function EngineFluidLevels(props) {
     handleChange,
     saveFormValuesInStore
   } = props;
-  console.log("Logged output -->: EngineFluidLevels -> props", props);
 
   const classes = useStyles();
   return (

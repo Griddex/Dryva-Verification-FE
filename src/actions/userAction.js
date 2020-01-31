@@ -24,10 +24,12 @@ export const loginUserAction = (email, password, rememberMe) => (
       rememberMe: rememberMe
     })
     .then(response => {
-      const { token, expiration, email } = response.data;
+      const { token, expiration, email, applicationUser } = response.data;
+      localStorage.clear();
       localStorage.setItem("token", token);
       localStorage.setItem("email", email);
       localStorage.setItem("expiration", expiration);
+      localStorage.setItem("nickName", applicationUser);
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
@@ -75,7 +77,6 @@ export const registerUserAction = (
         response.data.message === "Registration Succeeded!" &&
         response.status === 200
       ) {
-        localStorage.setItem("nickName", response.data.applicationUser);
         dispatch({
           type: REGISTER_USER_SUCCESS,
           payload: {

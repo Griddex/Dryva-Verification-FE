@@ -28,7 +28,7 @@ function RegisterRoute(props) {
 
   return (
     <>
-      <Container maxwidth="sm" fixed>
+      <div>
         <Logo />
         {registrationSucceeded ? (
           <RegistrationSuccess {...props} />
@@ -46,7 +46,7 @@ function RegisterRoute(props) {
             </div>
             <Formik
               initialValues={UserState}
-              //IdentityOptions validation needed here
+              //IdentityOptions validation needed here for password
               validationSchema={Yup.object().shape({
                 firstname: Yup.string().required("Firstname is required"),
                 lastname: Yup.string().required("Lastname is required"),
@@ -93,7 +93,7 @@ function RegisterRoute(props) {
             </Link>
           </div>
         )}
-      </Container>
+      </div>
     </>
   );
 }
