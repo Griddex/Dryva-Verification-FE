@@ -19,9 +19,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import VehicleRoute from "./../../Routes/Vehicle/vehicleroute";
+import VehicleRoute from "../Routes/Vehicle/vehicleroute";
 import { Route, Switch, Redirect } from "react-router-dom";
-import DriversListRoute from "./../../Routes/DriversList/DriversListRoute";
+import DriversListRoute from "../Routes/DriversList/DriversListRoute";
 
 const drawerWidth = 240;
 
@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MiniDrawer(props) {
+export default function UserDrawer(props) {
   const { history } = props;
   const classes = useStyles();
   const theme = useTheme();

@@ -10,26 +10,25 @@ export const REGISTER_USER_FAILURE = "REGISTER_USER_FAILURE";
 export const loginUserAction = (email, password, rememberMe) => (
   dispatch,
   getState,
-  { http }
+  http
 ) => {
   dispatch({
     type: LOGIN_USER_COMMENCE,
     payload: { Submitting: true, formErrors: [] }
   });
-
-  http
-    .httpLoginOrRegister("post", "/Account/Login", {
-      email: email,
-      password: password,
-      rememberMe: rememberMe
-    })
+  const { httpLoginOrRegister } = http;
+  httpLoginOrRegister("post", "/Account/Login", {
+    email: email,
+    password: password,
+    rememberMe: rememberMe
+  })
     .then(response => {
-      const { token, expiration, email, applicationUser } = response.data;
+      const { token, expiration, nickName, userId } = response.data;
       localStorage.clear();
       localStorage.setItem("token", token);
-      localStorage.setItem("email", email);
       localStorage.setItem("expiration", expiration);
-      localStorage.setItem("nickName", applicationUser);
+      localStorage.setItem("nickName", nickName);
+      localStorage.setItem("userId", userId);
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
@@ -52,26 +51,28 @@ export const registerUserAction = (
   firstname,
   middlename,
   lastname,
+  nickname,
   mobilenumber,
   email,
   password,
   confirmpassword
-) => (dispatch, getState, { http }) => {
+) => (dispatch, getState, http) => {
+  const { httpLoginOrRegister } = http;
   dispatch({
     type: REGISTER_USER_COMMENCE,
     payload: { Submitting: true, formErrors: [] }
   });
 
-  http
-    .httpLoginOrRegister("post", "/Account/Register", {
-      firstname: firstname,
-      middlename: middlename,
-      lastname: lastname,
-      mobilenumber: mobilenumber,
-      email: email,
-      password: password,
-      confirmpassword: confirmpassword
-    })
+  httpLoginOrRegister("post", "/Account/Register", {
+    firstname: firstname,
+    middlename: middlename,
+    lastname: lastname,
+    nickname: nickname,
+    mobilenumber: mobilenumber,
+    email: email,
+    password: password,
+    confirmpassword: confirmpassword
+  })
     .then(response => {
       if (
         response.data.message === "Registration Succeeded!" &&
@@ -94,6 +95,7 @@ export const registerUserAction = (
       //obj in the redux store
       if (errors.response) {
         const responseErrors = errors.response.data[""];
+        console.log("Logged output -->: responseErrors", responseErrors);
         dispatch({
           type: REGISTER_USER_FAILURE,
           payload: { Submitting: false, responseErrors: responseErrors }

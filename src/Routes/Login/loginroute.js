@@ -26,7 +26,6 @@ function LoginRoute(props) {
   return (
     <div>
       <Logo />
-      <h1>Dryva</h1>
       <div>
         {formErrors &&
           formErrors.map((e, i) => {

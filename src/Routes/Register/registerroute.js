@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
-import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import { registerUserAction } from "./../../actions/userAction";
 import { RegistrationSuccess } from "./registrationSuccess";
@@ -23,7 +22,6 @@ function RegisterRoute(props) {
   }));
 
   const { formErrors, registerUser, registrationSucceeded, history } = props;
-  //console.log("Logged output: props", props);
   const classes = useStyles();
 
   return (
@@ -62,8 +60,9 @@ function RegisterRoute(props) {
               onSubmit={(
                 {
                   firstname,
-                  lastname,
                   middlename,
+                  lastname,
+                  nickname,
                   mobilenumber,
                   email,
                   password,
@@ -73,8 +72,9 @@ function RegisterRoute(props) {
               ) => {
                 registerUser(
                   firstname,
-                  lastname,
                   middlename,
+                  lastname,
+                  nickname,
                   mobilenumber,
                   email,
                   password,
@@ -112,8 +112,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(sendLoginToStoreAction(name, value)),
     registerUser: (
       firstname,
-      lastname,
       middlename,
+      lastname,
+      nickname,
       mobilenumber,
       email,
       password,
@@ -122,8 +123,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         registerUserAction(
           firstname,
-          lastname,
           middlename,
+          lastname,
+          nickname,
           mobilenumber,
           email,
           password,

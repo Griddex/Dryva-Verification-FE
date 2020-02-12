@@ -23,7 +23,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function SafetyTechnicalSummary(props) {
   const {
-    values: { NoOfDefectsOnBus, HasSupervisorBeenNotified, GeneralRemarks },
+    values: {
+      NoOfDefectsOnBus,
+      HasSupervisorBeenNotified,
+      SafetyTechnicalGeneralRemarks
+    },
     errors,
     touched,
     handleBlur,
@@ -67,9 +71,9 @@ export default function SafetyTechnicalSummary(props) {
               saveFormValuesInStore
             )}
             {MultiInput(
-              "GeneralRemarks",
-              "General Remarks",
-              GeneralRemarks,
+              "SafetyTechnicalGeneralRemarks",
+              "Safety & Technical General Remarks",
+              SafetyTechnicalGeneralRemarks,
               500,
               errors,
               touched,

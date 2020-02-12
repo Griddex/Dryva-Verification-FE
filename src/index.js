@@ -11,14 +11,19 @@ import thunk from "redux-thunk";
 import { userReducer } from "./reducers/userReducer";
 import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
-import http from "./services/httpService";
 import history from "./services/historyService";
+import httpLoginOrRegister from "./services/httpService/httpLogin";
+import httpOthers from "./services/httpService/httpOthers";
 
 const rootReducer = combineReducers({ userReducer, saveOrSubmitReducer });
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument({ http })))
+  composeWithDevTools(
+    applyMiddleware(
+      thunk.withExtraArgument({ httpLoginOrRegister, httpOthers })
+    )
+  )
 );
 
 const theme = createMuiTheme({

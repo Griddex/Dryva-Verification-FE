@@ -27,11 +27,11 @@ const submitFailureAction = errors => {
 };
 
 export const submitAction = () => {
-  return (dispatch, getState, { http }) => {
+  return (dispatch, getState, http) => {
+    const { httpOthers } = http;
     dispatch(submitRequestAction());
     const data = dataService(getState().saveOrSubmitReducer);
-    http
-      .httpOthers("post", "Data/PostData", data)
+    httpOthers("post", "Data/PostData", data)
       .then(response => {
         if (response.status === 201) {
           submitSuccessAction(response.data);

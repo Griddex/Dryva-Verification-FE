@@ -57,7 +57,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "DriversMiddleName",
@@ -67,7 +68,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "DriversSurname",
@@ -77,7 +79,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "DriversMobile",
@@ -87,7 +90,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "DriversEmail",
@@ -97,7 +101,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "DriversLicenseNo",
@@ -107,7 +112,8 @@ export default function DriverPersonalDetails(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             <DatePicker
               name="DriversLicenseExpiryDate"

@@ -1,5 +1,6 @@
 const StoreInitialValues = {
   DataUniqueNumber: "",
+  
   //Inspector's Form
   NameOfInspector: "",
   NameOfSupervisor: "",
@@ -51,7 +52,6 @@ const StoreInitialValues = {
   //Vehicle Details Form
   VehicleType: "",
   VehicleMake: "",
-  VehicleModel: "",
   YearOfManufacture: "",
   ChassisNo: "",
   EngineNo: "",

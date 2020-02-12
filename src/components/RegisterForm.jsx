@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import Input from "./common/Input";
-import CheckBox from "./common/CheckBox";
 
 function RegisterForm(props) {
   const {
     values: {
       firstname,
-      lastname,
       middlename,
+      lastname,
+      nickname,
       mobilenumber,
       email,
       password,
@@ -39,6 +39,17 @@ function RegisterForm(props) {
         saveFormLoginInStore
       )}
       {Input(
+        "middlename",
+        "Middlename",
+        middlename,
+        400,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        saveFormLoginInStore
+      )}
+      {Input(
         "lastname",
         "Lastname",
         lastname,
@@ -50,9 +61,9 @@ function RegisterForm(props) {
         saveFormLoginInStore
       )}
       {Input(
-        "middlename",
-        "Middlename",
-        middlename,
+        "nickname",
+        "Nickname",
+        nickname,
         400,
         errors,
         touched,
@@ -60,6 +71,8 @@ function RegisterForm(props) {
         handleBlur,
         saveFormLoginInStore
       )}
+      <br />
+      <br />
       {Input(
         "mobilenumber",
         "Mobile number",

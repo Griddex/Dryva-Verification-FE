@@ -1,8 +1,8 @@
 const UserState = {
-  nickName: "",
   firstName: "",
   middleName: "",
   lastName: "",
+  nickName: "",
   mobileNumber: "",
   email: "",
   password: "",

@@ -37,7 +37,8 @@ export default function NextOfKin(props) {
     errors,
     touched,
     handleChange,
-    handleBlur
+    handleBlur,
+    saveFormValuesInStore
   } = props;
 
   return (
@@ -60,7 +61,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "NextOfKinMiddleName",
@@ -70,7 +72,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "NextOfKinLastName",
@@ -80,7 +83,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "NextOfKinHomeAddressLine1",
@@ -90,7 +94,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "NextOfKinHomeAddressLine2",
@@ -100,7 +105,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
 
             {Select(
@@ -138,7 +144,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
             {Input(
               "NextOfKinPhoneNumber",
@@ -148,7 +155,8 @@ export default function NextOfKin(props) {
               errors,
               touched,
               handleChange,
-              handleBlur
+              handleBlur,
+              saveFormValuesInStore
             )}
           </div>
         </ExpansionPanelDetails>

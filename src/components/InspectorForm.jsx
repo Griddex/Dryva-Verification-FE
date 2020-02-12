@@ -15,7 +15,7 @@ function InspectorForm(props) {
       DateOfInspection,
       VehiclePlateNumber,
       InspectionPassed,
-      GeneralRemarks
+      InspectorsGeneralRemarks
     },
     errors,
     touched,
@@ -114,9 +114,9 @@ function InspectorForm(props) {
       </Grid>
       <Grid item>
         {MultiInput(
-          "GeneralRemarks",
-          "General Remarks",
-          GeneralRemarks,
+          "InspectorsGeneralRemarks",
+          "Inspector's General Remarks",
+          InspectorsGeneralRemarks,
           500,
           errors,
           touched,
