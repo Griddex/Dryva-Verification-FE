@@ -31,7 +31,12 @@ export const submitAction = () => {
     const { httpOthers } = http;
     dispatch(submitRequestAction());
     const data = dataService(getState().saveOrSubmitReducer);
-    httpOthers("post", "Data/PostData", data)
+    httpOthers(
+      "post",
+      "Data/PostData",
+      { "Content-type": "multipart/form-data" },
+      data
+    )
       .then(response => {
         if (response.status === 201) {
           submitSuccessAction(response.data);
@@ -41,10 +46,6 @@ export const submitAction = () => {
       })
       .catch(errors => {
         if (errors.response) {
-          console.log(
-            "Logged output -->: submitAction -> errors.response",
-            errors.response
-          );
           const responseErrors = errors.response.data[""];
           submitFailureAction(responseErrors);
         }

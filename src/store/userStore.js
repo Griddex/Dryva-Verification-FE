@@ -9,7 +9,10 @@ const UserState = {
   confirmpassword: "",
   rememberMe: false,
   token: "",
+  role: "User",
   Submitting: false,
-  formErrors: []
+  formErrors: [],
+  IsAdmin: false,
+  IsAthenticated: false
 };
 export default UserState;

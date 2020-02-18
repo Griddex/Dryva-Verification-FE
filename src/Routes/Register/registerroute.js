@@ -27,7 +27,7 @@ function RegisterRoute(props) {
   return (
     <>
       <div>
-        <Logo />
+        {/* <Logo /> */}
         {registrationSucceeded ? (
           <RegistrationSuccess {...props} />
         ) : (
@@ -63,6 +63,7 @@ function RegisterRoute(props) {
                   middlename,
                   lastname,
                   nickname,
+                  role,
                   mobilenumber,
                   email,
                   password,
@@ -75,6 +76,7 @@ function RegisterRoute(props) {
                   middlename,
                   lastname,
                   nickname,
+                  role,
                   mobilenumber,
                   email,
                   password,
@@ -84,13 +86,13 @@ function RegisterRoute(props) {
             >
               {formikProps => <RegisterForm {...formikProps} {...props} />}
             </Formik>
-            <Link
+            {/* <Link
               onClick={() => history.push("/login")}
               style={{ cursor: "pointer" }}
               className="btn btn-secondary"
             >
               Already registered? Login
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
@@ -115,6 +117,7 @@ const mapDispatchToProps = dispatch => {
       middlename,
       lastname,
       nickname,
+      role,
       mobilenumber,
       email,
       password,
@@ -126,6 +129,7 @@ const mapDispatchToProps = dispatch => {
           middlename,
           lastname,
           nickname,
+          role,
           mobilenumber,
           email,
           password,

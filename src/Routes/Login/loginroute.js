@@ -54,13 +54,13 @@ function LoginRoute(props) {
         >
           {formikProps => <LoginForm {...formikProps} {...props} />}
         </Formik>
-        <Link
+        {/* <Link
           onClick={() => history.push("/register")}
           style={{ cursor: "pointer" }}
           className="btn btn-secondary"
         >
           Not yet a verification officer? Register
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

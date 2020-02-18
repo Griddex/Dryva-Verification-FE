@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,9 +19,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import VehicleRoute from "../Routes/Vehicle/vehicleroute";
-import { Route, Switch, Redirect } from "react-router-dom";
-import DriversListRoute from "../Routes/DriversList/DriversListRoute";
+import { Route, Switch } from "react-router-dom";
+import ProtectedRoute from "./../Routes/ProtectedRoute";
+import authService from "./../services/authService";
+
+const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
+const DriversListRoute = lazy(() =>
+  import("../Routes/DriversList/DriversListRoute")
+);
+const RegisterRoute = lazy(() => import("../Routes/Register/registerroute"));
 
 const drawerWidth = 240;
 
@@ -111,6 +117,9 @@ export default function UserDrawer(props) {
       case "Drivers List":
         history.push("/DriversList");
         break;
+      case "Registration":
+        history.push("/Register");
+        break;
       default:
         history.push("/");
         break;
@@ -186,23 +195,51 @@ export default function UserDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {["Driver Verification", "Drivers List"].map((text, index) => (
-            <ListItem button key={text} onClick={() => handleListItem(text)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        {authService.Role && authService.Role === "Admin" ? (
+          <List>
+            {["Registration"].map((text, index) => (
+              <ListItem button key={text} onClick={() => handleListItem(text)}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <List>
+            {["Driver Verification", "Drivers List"].map((text, index) => (
+              <ListItem button key={text} onClick={() => handleListItem(text)}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Switch>
-          <Route exact path="/verification" component={VehicleRoute} />
-          <Route exact path="/DriversList" component={DriversListRoute} />
-        </Switch>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <ProtectedRoute
+              exact
+              path="/verification"
+              render={props => <VehicleRoute roles={["User"]} {...props} />}
+            />
+            <ProtectedRoute
+              exact
+              path="/DriversList"
+              render={props => <DriversListRoute roles={["User"]} {...props} />}
+            />
+            <ProtectedRoute
+              exact
+              path="/register"
+              render={props => <RegisterRoute roles={["Admin"]} {...props} />}
+            />
+          </Switch>
+        </Suspense>
       </main>
     </div>
   );

@@ -32,7 +32,7 @@ export const loginUserAction = (email, password, rememberMe) => (
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { token: token, Submitting: false }
+        payload: { token: token, Submitting: false, isAuthenticated: true }
       });
       history.replace("/verification");
     })
@@ -41,7 +41,11 @@ export const loginUserAction = (email, password, rememberMe) => (
         const responseErrors = errors.response.data[""];
         dispatch({
           type: LOGIN_USER_FAILURE,
-          payload: { responseErrors: responseErrors, Submitting: false }
+          payload: {
+            formErrors: responseErrors,
+            Submitting: false,
+            isAuthenticated: false
+          }
         });
       }
     });
@@ -52,6 +56,7 @@ export const registerUserAction = (
   middlename,
   lastname,
   nickname,
+  role,
   mobilenumber,
   email,
   password,
@@ -68,6 +73,7 @@ export const registerUserAction = (
     middlename: middlename,
     lastname: lastname,
     nickname: nickname,
+    role: role,
     mobilenumber: mobilenumber,
     email: email,
     password: password,
