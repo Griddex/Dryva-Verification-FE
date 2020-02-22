@@ -1,4 +1,5 @@
 import history from "./../services/historyService";
+import authService from "./../services/authService";
 
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
@@ -23,18 +24,17 @@ export const loginUserAction = (email, password, rememberMe) => (
     rememberMe: rememberMe
   })
     .then(response => {
-      const { token, expiration, nickName, userId } = response.data;
+      const { token } = response.data;
       localStorage.clear();
       localStorage.setItem("token", token);
-      localStorage.setItem("expiration", expiration);
-      localStorage.setItem("nickName", nickName);
-      localStorage.setItem("userId", userId);
+
+      const currentRole = authService().Role;
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, Submitting: false, isAuthenticated: true }
       });
-      history.replace("/verification");
+      history.replace(`/${currentRole}`);
     })
     .catch(errors => {
       if (errors.response) {

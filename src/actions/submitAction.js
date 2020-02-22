@@ -1,5 +1,6 @@
 import history from "./../services/historyService";
 import dataService from "./../services/dataService";
+import authService from "./../services/authService";
 
 export const FORM_SUBMISSION_REQUEST = "FORM_SUBMISSION_REQUEST";
 export const FORM_SUBMISSION_SUCCESS = "FORM_SUBMISSION_SUCCESS";
@@ -27,6 +28,8 @@ const submitFailureAction = errors => {
 };
 
 export const submitAction = () => {
+  const currentRole = authService().Role;
+
   return (dispatch, getState, http) => {
     const { httpOthers } = http;
     dispatch(submitRequestAction());
@@ -38,15 +41,14 @@ export const submitAction = () => {
       data
     )
       .then(response => {
-        if (response.status === 201) {
+        if (response.status === 200) {
           submitSuccessAction(response.data);
-          history.replace("/driverslist");
-          alert("Successfully submitted");
+          history.replace(`/${currentRole}/driverslist`);
         }
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data[""];
+          const responseErrors = errors.response.data["Errors"];
           submitFailureAction(responseErrors);
         }
       });

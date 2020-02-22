@@ -1,14 +1,15 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
-import UserDrawer from "./components/AppUserDrawer";
+import OfficerDrawer from "./components/AppUserDrawer";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import Grid from "@material-ui/core/Grid";
+import authService from "./services/authService";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));
 const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
-const RolesRoute = lazy(() => import("./Routes/Admin/rolesroute"));
 
 const App = () => {
+  const currentRole = authService().Role;
   return (
     <Grid
       container
@@ -16,19 +17,19 @@ const App = () => {
       alignItems="center"
       spacing={0}
       direction="column"
-      style={{ minHeight: "100vh" }}
+      style={{ minWidth: 800 }}
     >
       <React.Fragment>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
-            <Route exact path="/" component={RolesRoute} />
+            <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />
             <ProtectedRoute
-              path="/verification"
-              render={props => (
-                <UserDrawer roles={["Officer", "Admin"]} {...props} />
-              )}
+              path={`/${currentRole}`}
+              //path={"/account"}
+              roles={["Officer", "Admin"]} //Need to store all roles in redux store on app startup
+              component={OfficerDrawer}
             />
           </Switch>
         </Suspense>

@@ -60,6 +60,8 @@ export default function DriversForm(formikProps) {
   const classes = useStyles();
   return (
     <div className={classes.form}>
+      <br />
+      <br />
       <DriverPersonalDetails
         DriversFirstName={DriversFirstName}
         DriversMiddleName={DriversMiddleName}

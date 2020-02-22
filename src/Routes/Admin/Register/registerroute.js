@@ -4,12 +4,12 @@ import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import Link from "@material-ui/core/Link";
-import { registerUserAction } from "./../../actions/userAction";
+import { registerUserAction } from "../../../actions/userAction";
 import { RegistrationSuccess } from "./registrationSuccess";
-import { sendLoginToStoreAction } from "./../../actions/sendLoginToStoreAction";
-import RegisterForm from "./../../components/RegisterForm";
-import { ReactComponent as Logo } from "../../images/logo.svg";
-import UserState from "./../../store/userStore";
+import { sendLoginToStoreAction } from "../../../actions/sendLoginToStoreAction";
+import RegisterForm from "../../../components/RegisterForm";
+import { ReactComponent as Logo } from "../../../images/logo.svg";
+import UserState from "../../../store/userStore";
 
 function RegisterRoute(props) {
   const useStyles = makeStyles(theme => ({

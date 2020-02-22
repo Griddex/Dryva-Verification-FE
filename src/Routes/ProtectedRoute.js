@@ -3,23 +3,25 @@ import { Route, Redirect } from "react-router-dom";
 import authService from "./../services/authService";
 
 const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
+  const auth = authService();
+
   return (
-    <Route {...rest}>
-      {props => {
-        if (!authService.IsAuthenticated)
+    <Route
+      {...rest}
+      render={props => {
+        if (!(auth.IsAuthenticated === "True"))
           return (
             <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );
 
-        if (roles && roles.indexOf(authService.Role) === -1)
+        if (roles && roles.indexOf(auth.Role) === -1)
           return (
-            <Component {...props} />
-            //<Redirect to={{ pathname: "/", state: { from: props.location } }} />
+            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );
 
         return <Component {...props} />;
       }}
-    </Route>
+    />
   );
 };
 

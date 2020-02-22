@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
+import MenuList from "@material-ui/core/MenuList";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -14,12 +14,10 @@ import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import ProtectedRoute from "./../Routes/ProtectedRoute";
 import authService from "./../services/authService";
 
@@ -27,7 +25,10 @@ const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
 const DriversListRoute = lazy(() =>
   import("../Routes/DriversList/DriversListRoute")
 );
-const RegisterRoute = lazy(() => import("../Routes/Register/registerroute"));
+const RegisterRoute = lazy(() =>
+  import("../Routes/Admin/Register/registerroute")
+);
+const RolesRoute = lazy(() => import("../Routes/Admin/rolesroute"));
 
 const drawerWidth = 240;
 
@@ -95,8 +96,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function UserDrawer(props) {
+export default function OfficerDrawer(props) {
   const { history } = props;
+  const auth = authService();
+  const currentRole = auth.Role;
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -109,21 +113,16 @@ export default function UserDrawer(props) {
     setOpen(false);
   };
 
-  const handleListItem = text => {
-    switch (text) {
-      case "Driver Verification":
-        history.push("/");
-        break;
-      case "Drivers List":
-        history.push("/DriversList");
-        break;
-      case "Registration":
-        history.push("/Register");
-        break;
-      default:
-        history.push("/");
-        break;
-    }
+  const menuText = (link, currentRole) => {
+    const menuLinkText = {
+      [`/${currentRole}/register`]: "Register",
+      [`/${currentRole}/roles_and_permissions`]: "Roles and Permissions",
+      [`/${currentRole}/officers_management`]: "Officers Management",
+      [`/${currentRole}/DriversList`]: "Drivers Records",
+      [`/${currentRole}/verification`]: "Drivers Verification"
+    };
+
+    return menuLinkText[link];
   };
 
   return (
@@ -157,7 +156,7 @@ export default function UserDrawer(props) {
             }}
           >
             <Typography variant="h6" color="inherit">
-              Welcome {localStorage.getItem("nickName")}
+              Welcome {auth.sub} [{auth.Role}]
             </Typography>
             <Button
               size="small"
@@ -195,52 +194,91 @@ export default function UserDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        {authService.Role && authService.Role === "Admin" ? (
-          <List>
-            {["Registration"].map((text, index) => (
-              <ListItem button key={text} onClick={() => handleListItem(text)}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
+        {currentRole && currentRole === "Admin" ? (
+          <MenuList>
+            {[
+              `/${currentRole}/register`,
+              `/${currentRole}/roles_and_permissions`,
+              `/${currentRole}/officers_management`,
+              `/${currentRole}/DriversList`,
+              `/${currentRole}/verification`
+            ].map((text, index) => (
+              <MenuItem component={Link} key={text} to={text}>
+                {menuText(text, currentRole)}
+              </MenuItem>
             ))}
-          </List>
+          </MenuList>
         ) : (
-          <List>
-            {["Driver Verification", "Drivers List"].map((text, index) => (
-              <ListItem button key={text} onClick={() => handleListItem(text)}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
+          <MenuList>
+            {[
+              `/${currentRole}/DriversList`,
+              `/${currentRole}/verification`
+            ].map((text, index) => (
+              <MenuItem component={Link} key={text} to={text}>
+                {menuText(text, currentRole)}
+              </MenuItem>
             ))}
-          </List>
+          </MenuList>
         )}
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <ProtectedRoute
-              exact
-              path="/verification"
-              render={props => <VehicleRoute roles={["User"]} {...props} />}
-            />
-            <ProtectedRoute
-              exact
-              path="/DriversList"
-              render={props => <DriversListRoute roles={["User"]} {...props} />}
-            />
-            <ProtectedRoute
-              exact
-              path="/register"
-              render={props => <RegisterRoute roles={["Admin"]} {...props} />}
-            />
-          </Switch>
-        </Suspense>
-      </main>
+      {currentRole && currentRole === "Admin" ? (
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route exact path={`/${currentRole}`} component={RegisterRoute} />
+              <Route
+                exact
+                path={`/${currentRole}/register`}
+                component={RegisterRoute}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/roles_and_permissions`}
+                render={props => <RolesRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/officers_management`}
+                render={props => <RolesRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/DriversList`}
+                render={props => <DriversListRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/verification`}
+                render={props => <VehicleRoute {...props} />}
+              />
+            </Switch>
+          </Suspense>
+        </main>
+      ) : (
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route
+                exact
+                path={`/${currentRole}`}
+                render={props => <VehicleRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/verification`}
+                render={props => <VehicleRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/DriversList`}
+                render={props => <DriversListRoute {...props} />}
+              />
+            </Switch>
+          </Suspense>
+        </main>
+      )}
     </div>
   );
 }

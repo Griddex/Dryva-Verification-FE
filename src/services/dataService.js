@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import { dateTransformationService } from "./dateTransformationService";
 import uuid from "uuid/v4";
+import authService from "./authService";
 
 const dataService = storeValues => {
   let formData = new FormData();
@@ -8,15 +9,7 @@ const dataService = storeValues => {
 
   const filteredSubmitData = _.pickBy(
     SubmitData,
-    (value, key) =>
-      ![
-        "Errors",
-        "Submitting",
-        "Result",
-        "email",
-        "password",
-        "rememberMe"
-      ].includes(key)
+    (value, key) => !["Errors", "Submitting", "Result"].includes(key)
   );
 
   const filteredSubmitDataWithTrfmdDates = _.transform(
@@ -36,6 +29,8 @@ const dataService = storeValues => {
       }
     }
   );
+
+  const userID = authService().Sid;
   for (const key in filteredSubmitDataWithTrfmdDates) {
     if (key === "Images") {
       const Images = filteredSubmitDataWithTrfmdDates[key];
@@ -48,6 +43,8 @@ const dataService = storeValues => {
       formData.append(key, filteredSubmitDataWithTrfmdDates[key]);
     }
   }
+  formData.append("userId", userID);
+
   return formData;
 };
 

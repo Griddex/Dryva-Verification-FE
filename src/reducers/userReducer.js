@@ -26,7 +26,8 @@ export const userReducer = (state = UserState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        Submitting: action.payload.Submitting
+        Submitting: action.payload.Submitting,
+        isAuthenticated: action.payload.isAuthenticated
       };
     case LOGIN_USER_FAILURE:
       return {

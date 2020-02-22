@@ -8,6 +8,8 @@ import SafetyTechnicalSummary from "./SafetyTechnicalSummary";
 function SafetyTechnicalForm(props) {
   return (
     <Container>
+      <br />
+      <br />
       <EngineFluidLevels {...props} />
       <InteriorChecks {...props} />
       <ExteriorChecks {...props} />

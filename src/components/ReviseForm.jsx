@@ -21,6 +21,8 @@ const ReviseForm = props => {
 
   return (
     <div>
+      <br />
+      <br />
       <h1>Please review information before submission</h1>
       <Grid container direction="column" spacing={8}>
         {Object.entries(values)
