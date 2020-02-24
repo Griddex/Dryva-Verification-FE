@@ -26,7 +26,8 @@ export default function Select(
             handleBlur(e);
             let inputValue = e.target.value;
             let inputName = e.target.name;
-            if (inputValue !== "") saveFormValuesInStore(inputName, inputValue);
+            if (inputValue !== "" && saveFormValuesInStore !== null)
+              saveFormValuesInStore(inputName, inputValue);
           }}
           //error={Boolean(errors[name])}
           margin="normal"

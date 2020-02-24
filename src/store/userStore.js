@@ -9,7 +9,7 @@ const UserState = {
   confirmpassword: "",
   rememberMe: false,
   token: "",
-  role: "User",
+  role: "Officer",
   Submitting: false,
   formErrors: [],
   IsAdmin: false,

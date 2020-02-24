@@ -1,19 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { registerRoleAction } from "./../../actions/rolesAction";
-import NewRoleForm from "../../components/NewRoleForm";
 import ManageRolesForm from "../../components/ManageRolesForm";
 
 const RolesRoute = props => {
-  return (
-    <div>
-      {/* <NewRoleForm {...props} />
-      <br />
-      <br />
-      <br /> */}
-      <ManageRolesForm {...props} />
-    </div>
-  );
+  return <ManageRolesForm {...props} />;
 };
 
 const mapStateToProps = state => {

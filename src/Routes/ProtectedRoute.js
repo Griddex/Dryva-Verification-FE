@@ -11,12 +11,23 @@ const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
       render={props => {
         if (!(auth.IsAuthenticated === "True"))
           return (
-            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+            <Redirect
+              to={{
+                pathname: `/`,
+                state: { from: props.location }
+              }}
+            />
           );
 
         if (roles && roles.indexOf(auth.Role) === -1)
           return (
-            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+            <Redirect
+              to={{
+                // pathname: `/${auth.Role}/unauthorized`,
+                pathname: `/unauthorized`,
+                state: { from: props.location }
+              }}
+            />
           );
 
         return <Component {...props} />;

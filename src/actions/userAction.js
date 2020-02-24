@@ -27,7 +27,6 @@ export const loginUserAction = (email, password, rememberMe) => (
       const { token } = response.data;
       localStorage.clear();
       localStorage.setItem("token", token);
-
       const currentRole = authService().Role;
 
       dispatch({
@@ -38,7 +37,7 @@ export const loginUserAction = (email, password, rememberMe) => (
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data[""];
+        const responseErrors = errors.response.data["Errors"];
         dispatch({
           type: LOGIN_USER_FAILURE,
           payload: {
@@ -63,6 +62,7 @@ export const registerUserAction = (
   confirmpassword
 ) => (dispatch, getState, http) => {
   const { httpLoginOrRegister } = http;
+
   dispatch({
     type: REGISTER_USER_COMMENCE,
     payload: { Submitting: true, formErrors: [] }
@@ -93,8 +93,9 @@ export const registerUserAction = (
           }
         });
       }
-      //Load registration succeeded page with link to goto login page
-      //history.push("/register/success");
+      const currentRole = authService().Role;
+
+      history.replace(`/${currentRole}/registration_success`);
     })
     .catch(errors => {
       //Hook into the error coming back, use the error obj to update the errors

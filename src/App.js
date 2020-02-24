@@ -7,6 +7,9 @@ import authService from "./services/authService";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));
 const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
+const RegisterRoute = lazy(() =>
+  import("./Routes/Admin/Register/registerroute")
+);
 
 const App = () => {
   const currentRole = authService().Role;
@@ -25,9 +28,9 @@ const App = () => {
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />
+            <Route exact path="/register" component={RegisterRoute} />
             <ProtectedRoute
               path={`/${currentRole}`}
-              //path={"/account"}
               roles={["Officer", "Admin"]} //Need to store all roles in redux store on app startup
               component={OfficerDrawer}
             />

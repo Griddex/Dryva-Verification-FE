@@ -43,7 +43,11 @@ export const submitAction = () => {
       .then(response => {
         if (response.status === 200) {
           submitSuccessAction(response.data);
-          history.replace(`/${currentRole}/driverslist`);
+          console.log(
+            "Logged output -->: submitAction -> response.data",
+            response.data
+          );
+          //history.replace(`/${currentRole}/driverslist`);
         }
       })
       .catch(errors => {

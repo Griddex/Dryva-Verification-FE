@@ -15,10 +15,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuItem from "@material-ui/core/MenuItem";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import { Route, Switch, Link } from "react-router-dom";
-import ProtectedRoute from "./../Routes/ProtectedRoute";
+import { Route, Switch, Link, Redirect } from "react-router-dom";
+import unauthorized from "./unauthorized";
 import authService from "./../services/authService";
 
 const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
@@ -29,6 +27,12 @@ const RegisterRoute = lazy(() =>
   import("../Routes/Admin/Register/registerroute")
 );
 const RolesRoute = lazy(() => import("../Routes/Admin/rolesroute"));
+const RegistrationSuccess = lazy(() =>
+  import("./../Routes/Admin/Register/registrationSuccess")
+);
+const EmailSettingsRoute = lazy(() =>
+  import("./../Routes/Admin/Settings/SmtpRoute")
+);
 
 const drawerWidth = 240;
 
@@ -118,6 +122,7 @@ export default function OfficerDrawer(props) {
       [`/${currentRole}/register`]: "Register",
       [`/${currentRole}/roles_and_permissions`]: "Roles and Permissions",
       [`/${currentRole}/officers_management`]: "Officers Management",
+      [`/${currentRole}/settings`]: "Settings",
       [`/${currentRole}/DriversList`]: "Drivers Records",
       [`/${currentRole}/verification`]: "Drivers Verification"
     };
@@ -200,6 +205,7 @@ export default function OfficerDrawer(props) {
               `/${currentRole}/register`,
               `/${currentRole}/roles_and_permissions`,
               `/${currentRole}/officers_management`,
+              `/${currentRole}/settings`,
               `/${currentRole}/DriversList`,
               `/${currentRole}/verification`
             ].map((text, index) => (
@@ -234,6 +240,11 @@ export default function OfficerDrawer(props) {
               />
               <Route
                 exact
+                path={`/${currentRole}/registration_success`}
+                component={RegistrationSuccess}
+              />
+              <Route
+                exact
                 path={`/${currentRole}/roles_and_permissions`}
                 render={props => <RolesRoute {...props} />}
               />
@@ -241,6 +252,11 @@ export default function OfficerDrawer(props) {
                 exact
                 path={`/${currentRole}/officers_management`}
                 render={props => <RolesRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/${currentRole}/settings`}
+                render={props => <EmailSettingsRoute {...props} />}
               />
               <Route
                 exact
@@ -275,6 +291,11 @@ export default function OfficerDrawer(props) {
                 path={`/${currentRole}/DriversList`}
                 render={props => <DriversListRoute {...props} />}
               />
+              <Route
+                path={`/${currentRole}/unauthorized`}
+                component={unauthorized}
+              />
+              <Redirect from="*" to={`/${currentRole}/unauthorized`} />
             </Switch>
           </Suspense>
         </main>

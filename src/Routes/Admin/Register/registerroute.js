@@ -3,12 +3,9 @@ import { connect } from "react-redux";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
-import Link from "@material-ui/core/Link";
 import { registerUserAction } from "../../../actions/userAction";
-import { RegistrationSuccess } from "./registrationSuccess";
 import { sendLoginToStoreAction } from "../../../actions/sendLoginToStoreAction";
 import RegisterForm from "../../../components/RegisterForm";
-import { ReactComponent as Logo } from "../../../images/logo.svg";
 import UserState from "../../../store/userStore";
 
 function RegisterRoute(props) {
@@ -25,78 +22,60 @@ function RegisterRoute(props) {
   const classes = useStyles();
 
   return (
-    <>
+    <div>
       <div>
-        {/* <Logo /> */}
-        {registrationSucceeded ? (
-          <RegistrationSuccess {...props} />
-        ) : (
-          <div>
-            <div>
-              {formErrors &&
-                formErrors.map((e, i) => {
-                  return (
-                    <p key={i} className={classes.error}>
-                      {e}
-                    </p>
-                  );
-                })}
-            </div>
-            <Formik
-              initialValues={UserState}
-              //IdentityOptions validation needed here for password
-              validationSchema={Yup.object().shape({
-                firstname: Yup.string().required("Firstname is required"),
-                lastname: Yup.string().required("Lastname is required"),
-                mobilenumber: Yup.string().required(
-                  "Mobile number is required"
-                ),
-                password: Yup.string().required("Password is required"),
-                confirmpassword: Yup.string().oneOf(
-                  [Yup.ref("password"), null],
-                  "Passwords must match"
-                )
-              })}
-              onSubmit={(
-                {
-                  firstname,
-                  middlename,
-                  lastname,
-                  nickname,
-                  role,
-                  mobilenumber,
-                  email,
-                  password,
-                  confirmpassword
-                },
-                formikBag
-              ) => {
-                registerUser(
-                  firstname,
-                  middlename,
-                  lastname,
-                  nickname,
-                  role,
-                  mobilenumber,
-                  email,
-                  password,
-                  confirmpassword
-                );
-              }}
-            >
-              {formikProps => <RegisterForm {...formikProps} {...props} />}
-            </Formik>
-            {/* <Link
-              onClick={() => history.push("/login")}
-              style={{ cursor: "pointer" }}
-              className="btn btn-secondary"
-            >
-              Already registered? Login
-            </Link> */}
-          </div>
-        )}
+        {formErrors &&
+          formErrors.map((e, i) => {
+            return (
+              <p key={i} className={classes.error}>
+                {e}
+              </p>
+            );
+          })}
       </div>
-    </>
+      <Formik
+        initialValues={UserState}
+        //IdentityOptions validation needed here for password
+        validationSchema={Yup.object().shape({
+          firstname: Yup.string().required("Firstname is required"),
+          lastname: Yup.string().required("Lastname is required"),
+          mobilenumber: Yup.string().required("Mobile number is required"),
+          password: Yup.string().required("Password is required"),
+          confirmpassword: Yup.string().oneOf(
+            [Yup.ref("password"), null],
+            "Passwords must match"
+          )
+        })}
+        onSubmit={(
+          {
+            firstname,
+            middlename,
+            lastname,
+            nickname,
+            role,
+            mobilenumber,
+            email,
+            password,
+            confirmpassword
+          },
+          formikBag
+        ) => {
+          registerUser(
+            firstname,
+            middlename,
+            lastname,
+            nickname,
+            role,
+            mobilenumber,
+            email,
+            password,
+            confirmpassword
+          );
+        }}
+      >
+        {formikProps => <RegisterForm {...formikProps} {...props} />}
+      </Formik>
+    </div>
   );
 }
 

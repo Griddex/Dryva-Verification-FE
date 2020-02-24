@@ -14,12 +14,14 @@ function RegisterForm(props) {
       .then(response => {
         if (response.status === 200) {
           setrolesData(response.data);
+          console.log("Logged output -->: response.data", response.data);
         }
       })
       .catch(errors => {
         if (errors.response) {
           const responseErrors = errors.response.data["Errors"];
           setErrors(responseErrors);
+          console.log("Logged output -->: responseErrors", responseErrors);
         }
       });
   }, []);
