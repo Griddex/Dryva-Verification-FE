@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Input from "./common/Input";
 import Select from "./common/Select";
-import { GetRoles } from "./../services/rolesServices";
 import httpOthers from "./../services/httpService/httpOthers";
 
 function RegisterForm(props) {
   const [rolesData, setrolesData] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [RegistrationErrors, setRegistrationErrors] = useState({});
 
   useEffect(() => {
     httpOthers("get", "Admin/GetAllRoles", null, null)
@@ -20,7 +19,7 @@ function RegisterForm(props) {
       .catch(errors => {
         if (errors.response) {
           const responseErrors = errors.response.data["Errors"];
-          setErrors(responseErrors);
+          setRegistrationErrors(responseErrors);
           console.log("Logged output -->: responseErrors", responseErrors);
         }
       });
@@ -38,6 +37,7 @@ function RegisterForm(props) {
       password,
       confirmpassword
     },
+    errors,
     touched,
     handleSubmit,
     handleChange,
@@ -48,12 +48,21 @@ function RegisterForm(props) {
     saveFormLoginInStore
   } = props;
 
+  let errorsChecked = errors ? { ...errors } : {};
+  let registrationErrorsChecked = RegistrationErrors
+    ? { ...RegistrationErrors }
+    : {};
+  const allErrors = Object.values({
+    ...errorsChecked,
+    ...registrationErrorsChecked
+  });
+
   return (
     <div>
       <br />
       <br />
-      {errors &&
-        errors.map((e, i) => {
+      {allErrors &&
+        allErrors.map((e, i) => {
           return (
             <p key={i} style={{ color: "red" }}>
               {e}

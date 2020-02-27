@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
-import AdminSettings from "./../../../store/AdminSettings";
 import { updateEmailSettingsAction } from "./../../../actions/emailSettingsAction";
 import httpOthers from "./../../../services/httpService/httpOthers";
 import Input from "./../../../components/common/Input";
@@ -19,7 +18,14 @@ const SmtpRoute = () => {
     error: { color: "red" }
   }));
 
-  const [emailSettingsData, setemailSettingsData] = useState({});
+  const [emailSettingsData, setemailSettingsData] = useState({
+    from: "",
+    smtpServer: "",
+    port: 0,
+    userName: "",
+    password: "",
+    enableSSL: "false"
+  });
   const [errors, setErrors] = useState([]);
   const classes = useStyles();
 
@@ -27,11 +33,7 @@ const SmtpRoute = () => {
     httpOthers("get", "Admin/GetEmailSettings", null, null)
       .then(response => {
         if (response.status === 200) {
-          const { enableSSL } = response.data;
-          setemailSettingsData(prevData => {
-            const enableSSLString = enableSSL.toString();
-            return { ...response.data, enableSSL: enableSSLString };
-          });
+          setemailSettingsData(response.data);
         }
       })
       .catch(errors => {
@@ -51,6 +53,8 @@ const SmtpRoute = () => {
     enableSSL
   } = emailSettingsData;
 
+  if (enableSSL === undefined) enableSSL = false;
+
   return (
     <div>
       <div>
@@ -64,39 +68,46 @@ const SmtpRoute = () => {
           })}
       </div>
       <Formik
-        initialValues={AdminSettings}
+        initialValues={emailSettingsData}
         validationSchema={Yup.object().shape({
           from: Yup.string().required("Email sender is required"),
           smtpServer: Yup.string().required("Email SMTP Server is required"),
           port: Yup.number().required("Port number is required"),
-          userName: Yup.number().required("Email account userName is required"),
+          userName: Yup.string().required("Email account userName is required"),
           password: Yup.string().required("Email account password is required")
         })}
+        validateOnBlur
         onSubmit={(
           { from, smtpServer, port, userName, password, enableSSL },
           formikBag
         ) => {
+          const { SetSubmitting } = formikBag;
           updateEmailSettingsAction(
             from,
             smtpServer,
             port,
             userName,
             password,
-            enableSSL
+            enableSSL,
+            SetSubmitting
           );
         }}
       >
-        {props => {
+        {formikProps => {
           const {
+            values,
+            errors,
             touched,
             handleSubmit,
             handleChange,
             handleBlur,
             isValid,
             status,
-            isSubmitting
-          } = props;
-          console.log("Logged output -->: props", props);
+            isSubmitting,
+            isValidating,
+
+            setValues
+          } = formikProps;
 
           return (
             <form onSubmit={handleSubmit}>
@@ -107,17 +118,6 @@ const SmtpRoute = () => {
               </h2>
               <hr />
               {Input(
-                "from",
-                "Sender's Email",
-                from,
-                400,
-                errors,
-                touched,
-                handleChange,
-                handleBlur
-              )}
-              <br />
-              {Input(
                 "smtpServer",
                 "SMTP Email Server",
                 smtpServer,
@@ -125,7 +125,13 @@ const SmtpRoute = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur
+                handleBlur,
+                null,
+                null,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
               )}
               <br />
               {Input(
@@ -136,7 +142,30 @@ const SmtpRoute = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur
+                handleBlur,
+                null,
+                null,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
+              )}
+              <br />
+              {Input(
+                "from",
+                "Sender's Email",
+                from,
+                400,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                null,
+                null,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
               )}
               <br />
               {Input(
@@ -147,7 +176,13 @@ const SmtpRoute = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur
+                handleBlur,
+                null,
+                null,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
               )}
               <br />
               {Input(
@@ -158,7 +193,13 @@ const SmtpRoute = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur
+                handleBlur,
+                null,
+                null,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
               )}
               <br />
               {Select(
@@ -169,7 +210,11 @@ const SmtpRoute = () => {
                 100,
                 errors,
                 handleChange,
-                handleBlur
+                handleBlur,
+                null,
+                setemailSettingsData,
+                emailSettingsData,
+                setValues
               )}
               <br />
               <br />
@@ -181,7 +226,11 @@ const SmtpRoute = () => {
                 width={400}
                 variant="contained"
                 color="primary"
-                disabled={!isValid || isSubmitting}
+                disabled={
+                  Object.values(touched).every(v => v === false) ||
+                  !isValid ||
+                  isSubmitting
+                }
               >
                 Update
               </Button>

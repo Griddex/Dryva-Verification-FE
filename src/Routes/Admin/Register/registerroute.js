@@ -18,7 +18,7 @@ function RegisterRoute(props) {
     error: { color: "red" }
   }));
 
-  const { formErrors, registerUser, registrationSucceeded, history } = props;
+  const { formErrors, registerUser } = props;
   const classes = useStyles();
 
   return (

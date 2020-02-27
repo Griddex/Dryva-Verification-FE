@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { registerRoleAction } from "./../../actions/rolesAction";
+// import { registerRoleAction } from "./../../actions/rolesAction";
 import ManageRolesForm from "../../components/ManageRolesForm";
 
 const RolesRoute = props => {

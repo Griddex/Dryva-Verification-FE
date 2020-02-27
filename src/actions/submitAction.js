@@ -1,6 +1,5 @@
-import history from "./../services/historyService";
 import dataService from "./../services/dataService";
-import authService from "./../services/authService";
+// import authService from "./../services/authService";
 
 export const FORM_SUBMISSION_REQUEST = "FORM_SUBMISSION_REQUEST";
 export const FORM_SUBMISSION_SUCCESS = "FORM_SUBMISSION_SUCCESS";
@@ -28,7 +27,7 @@ const submitFailureAction = errors => {
 };
 
 export const submitAction = () => {
-  const currentRole = authService().Role;
+  //const currentRole = authService().Role;
 
   return (dispatch, getState, http) => {
     const { httpOthers } = http;

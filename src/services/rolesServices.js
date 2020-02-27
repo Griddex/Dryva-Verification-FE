@@ -1,8 +1,7 @@
 import httpOthers from "./httpService/httpOthers";
-import { useState } from "react";
 
 export const GetRoles = () => {
-  const rolesData = [];
+  let rolesData = [];
 
   httpOthers("get", "Admin/GetAllRoles", null, null)
     .then(response => {
@@ -13,6 +12,10 @@ export const GetRoles = () => {
     .catch(errors => {
       if (errors.response) {
         const responseErrors = errors.response.data[""];
+        console.log(
+          "Logged output -->: GetRoles -> responseErrors",
+          responseErrors
+        );
       }
     });
 

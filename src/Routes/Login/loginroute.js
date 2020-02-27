@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import Link from "@material-ui/core/Link";
+import React from "react";
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import LoginForm from "./../../components/LoginForm";
@@ -20,7 +19,7 @@ function LoginRoute(props) {
     error: { color: "red" }
   }));
 
-  const { history, formErrors, loginUser } = props;
+  const { formErrors, loginUser } = props;
   const classes = useStyles();
 
   return (

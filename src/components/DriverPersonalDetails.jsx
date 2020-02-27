@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -27,7 +27,7 @@ export default function DriverPersonalDetails(props) {
     DriversMobile,
     DriversEmail,
     DriversLicenseNo,
-    DriversLicenseExpiryDate,
+
     errors,
     touched,
     handleChange,

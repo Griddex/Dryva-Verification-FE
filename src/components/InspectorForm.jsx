@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Input from "./common/Input";
 import Select from "./common/Select";
 import MultiInput from "./common/MultiInput";
@@ -12,7 +11,6 @@ function InspectorForm(props) {
       NameOfInspector,
       NameOfSupervisor,
       PlaceOfInspection,
-      DateOfInspection,
       VehiclePlateNumber,
       InspectionPassed,
       InspectorsGeneralRemarks
@@ -24,18 +22,6 @@ function InspectorForm(props) {
     saveFormValuesInStore
   } = props;
 
-  const useStyles = makeStyles(theme => ({
-    "@global": { body: { backgroundColor: "#FFF" } },
-    form: {
-      display: "flex",
-      width: "100%", // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-      flexFlow: "column" || "wrap",
-      justifyContent: "flex-start"
-    }
-  }));
-
-  const classes = useStyles();
   return (
     <Grid container spacing={10} direction="column" justify="flex-start">
       <Grid item>

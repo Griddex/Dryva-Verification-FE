@@ -1,13 +1,14 @@
 import httpOthers from "./../services/httpService/httpOthers";
 
-export const updateEmailSettingsAction = ({
+export const updateEmailSettingsAction = (
   from,
   smtpserver,
   port,
   username,
   password,
-  enablessl
-}) => {
+  enablessl,
+  SetSubmitting
+) => {
   httpOthers(
     "post",
     "/Admin/UpdateEmailSettings",
@@ -15,11 +16,8 @@ export const updateEmailSettingsAction = ({
     { from, smtpserver, port, username, password, enablessl }
   )
     .then(response => {
-      if (
-        response.data.message === "Role Created!" &&
-        response.status === 200
-      ) {
-        console.log("Logged output -->: response.data", response.data);
+      if (response.status === 200) {
+        SetSubmitting(false);
       }
     })
     .catch(errors => {

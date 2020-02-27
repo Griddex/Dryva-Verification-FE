@@ -11,26 +11,55 @@ export default function Select(
   errors,
   handleChange,
   handleBlur,
-  saveFormValuesInStore = null
+  saveFormValuesInStore = null,
+  setemailSettingsData = null,
+  emailSettingsData = null,
+
+  setValues = null
 ) {
   return (
     <div>
       <div style={{ width: width }}>
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={name}>
+          <b>{label}</b>
+        </label>
         <TextField
           name={name}
           label=""
           value={value}
-          onChange={handleChange}
+          onChange={e => {
+            handleChange(e);
+            let inputValue = e.target.value;
+            let inputName = e.target.name;
+
+            if (setemailSettingsData !== null)
+              setemailSettingsData({
+                ...emailSettingsData,
+                [name]: inputValue
+              });
+
+            if (emailSettingsData !== null) setValues(emailSettingsData);
+
+            if (inputValue !== "" && saveFormValuesInStore !== null)
+              saveFormValuesInStore(inputName, inputValue);
+          }}
           onBlur={e => {
             handleBlur(e);
             let inputValue = e.target.value;
             let inputName = e.target.name;
+
+            if (setemailSettingsData !== null)
+              setemailSettingsData({
+                ...emailSettingsData,
+                [name]: inputValue
+              });
+
+            if (emailSettingsData !== null) setValues(emailSettingsData);
+
             if (inputValue !== "" && saveFormValuesInStore !== null)
               saveFormValuesInStore(inputName, inputValue);
           }}
-          //error={Boolean(errors[name])}
-          margin="normal"
+          margin="dense"
           variant="outlined"
           size="small"
           fullWidth

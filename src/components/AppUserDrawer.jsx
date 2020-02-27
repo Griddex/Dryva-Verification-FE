@@ -9,7 +9,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -33,6 +32,7 @@ const RegistrationSuccess = lazy(() =>
 const EmailSettingsRoute = lazy(() =>
   import("./../Routes/Admin/Settings/SmtpRoute")
 );
+const OfficersManagementRoute = lazy(() => import("./OfficerManagementForm"));
 
 const drawerWidth = 240;
 
@@ -119,10 +119,10 @@ export default function OfficerDrawer(props) {
 
   const menuText = (link, currentRole) => {
     const menuLinkText = {
-      [`/${currentRole}/register`]: "Register",
+      [`/${currentRole}/register`]: "User Register",
       [`/${currentRole}/roles_and_permissions`]: "Roles and Permissions",
       [`/${currentRole}/officers_management`]: "Officers Management",
-      [`/${currentRole}/settings`]: "Settings",
+      [`/${currentRole}/settings`]: "Email Settings",
       [`/${currentRole}/DriversList`]: "Drivers Records",
       [`/${currentRole}/verification`]: "Drivers Verification"
     };
@@ -251,7 +251,7 @@ export default function OfficerDrawer(props) {
               <Route
                 exact
                 path={`/${currentRole}/officers_management`}
-                render={props => <RolesRoute {...props} />}
+                render={props => <OfficersManagementRoute {...props} />}
               />
               <Route
                 exact
