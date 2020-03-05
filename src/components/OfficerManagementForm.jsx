@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import httpOthers from "../services/httpService/httpOthers";
-import PermissionsForm from "./PermissionsForm";
+import Brightness1Icon from "@material-ui/icons/Brightness1";
+import * as _ from "lodash";
 
 const OfficerManagementForm = props => {
   const [Officers, setOfficers] = useState([]);
   const [Errors, setErrors] = useState([]);
 
+  let officersDataSorted;
   let officersData;
 
   useEffect(() => {
     httpOthers("get", "Admin/GetAllOfficers", null, null)
       .then(response => {
         if (response.status === 200) {
-          officersData = response.data.map(officerInfo => {
+          officersDataSorted = _.sortBy(response.data, "role");
+          officersData = officersDataSorted.map(officerInfo => {
             const officerInfoValues = Object.values(officerInfo);
             return {
               id: officerInfoValues[0],
               firstName: officerInfoValues[1],
               lastName: officerInfoValues[2],
               role: officerInfoValues[3],
-              loginStatus: officerInfoValues[4]
+              loginStatus:
+                officerInfoValues[4] === true ? (
+                  <Brightness1Icon htmlColor="green" fontSize="small" />
+                ) : (
+                  <Brightness1Icon htmlColor="red" fontSize="small" />
+                )
             };
           });
           setOfficers(officersData);
@@ -68,8 +76,8 @@ const OfficerManagementForm = props => {
         title=""
         columns={columns}
         data={Officers}
-        //options={{ actionsColumnIndex: -1 }}
         options={{
+          actionsColumnIndex: -1,
           exportButton: true
         }}
         editable={{
@@ -173,24 +181,9 @@ const OfficerManagementForm = props => {
         }}
         actions={[
           {
-            icon: "RotateLeft",
+            icon: "rotate_left",
             tooltip: "Reset Password",
             onClick: (event, rowData) => alert("You saved " + rowData.role)
-          }
-        ]}
-        detailPanel={[
-          {
-            icon: "account_circle",
-            tooltip: "Show permissions",
-            render: rowData => {
-              return (
-                <PermissionsForm
-                  rowData={rowData}
-                  Officers={Officers}
-                  officersData={officersData}
-                />
-              );
-            }
           }
         ]}
       />

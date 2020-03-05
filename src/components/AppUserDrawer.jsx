@@ -14,9 +14,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
 import unauthorized from "./unauthorized";
 import authService from "./../services/authService";
+import iconsService from "./../services/iconsService";
 
 const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
 const DriversListRoute = lazy(() =>
@@ -79,9 +81,9 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: "hidden",
-    width: theme.spacing(7) + 1,
+    width: theme.spacing(24) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
+      width: theme.spacing(24) + 1
     }
   },
   toolbar: {
@@ -117,14 +119,14 @@ export default function OfficerDrawer(props) {
     setOpen(false);
   };
 
-  const menuText = (link, currentRole) => {
+  const menuText = link => {
     const menuLinkText = {
-      [`/${currentRole}/register`]: "User Register",
-      [`/${currentRole}/roles_and_permissions`]: "Roles and Permissions",
-      [`/${currentRole}/officers_management`]: "Officers Management",
-      [`/${currentRole}/settings`]: "Email Settings",
-      [`/${currentRole}/DriversList`]: "Drivers Records",
-      [`/${currentRole}/verification`]: "Drivers Verification"
+      "/Auth/register": "Users Registration",
+      "/Auth/roles_and_permissions": "Roles and Permissions",
+      "/Auth/officers_management": "Officers Management",
+      "/Auth/settings": "Email Settings",
+      "/Auth/DriversList": "Drivers Records",
+      "/Auth/verification": "Drivers Verification"
     };
 
     return menuLinkText[link];
@@ -202,26 +204,25 @@ export default function OfficerDrawer(props) {
         {currentRole && currentRole === "Admin" ? (
           <MenuList>
             {[
-              `/${currentRole}/register`,
-              `/${currentRole}/roles_and_permissions`,
-              `/${currentRole}/officers_management`,
-              `/${currentRole}/settings`,
-              `/${currentRole}/DriversList`,
-              `/${currentRole}/verification`
+              `/Auth/register`,
+              `/Auth/roles_and_permissions`,
+              `/Auth/officers_management`,
+              `/Auth/settings`,
+              `/Auth/DriversList`,
+              `/Auth/verification`
             ].map((text, index) => (
               <MenuItem component={Link} key={text} to={text}>
-                {menuText(text, currentRole)}
+                <ListItemIcon>{iconsService(text)}</ListItemIcon>
+                <Typography>{menuText(text)}</Typography>
               </MenuItem>
             ))}
           </MenuList>
         ) : (
           <MenuList>
-            {[
-              `/${currentRole}/DriversList`,
-              `/${currentRole}/verification`
-            ].map((text, index) => (
+            {[`/Auth/DriversList`, `/Auth/verification`].map((text, index) => (
               <MenuItem component={Link} key={text} to={text}>
-                {menuText(text, currentRole)}
+                <ListItemIcon>{iconsService(text)}</ListItemIcon>
+                <Typography>{menuText(text)}</Typography>
               </MenuItem>
             ))}
           </MenuList>
@@ -232,40 +233,51 @@ export default function OfficerDrawer(props) {
           <div className={classes.toolbar} />
           <Suspense fallback={<div>Loading...</div>}>
             <Switch>
-              <Route exact path={`/${currentRole}`} component={RegisterRoute} />
               <Route
                 exact
-                path={`/${currentRole}/register`}
-                component={RegisterRoute}
+                path={`/Auth`}
+                render={props => (
+                  <div>
+                    <h1>Welcome Admin!</h1>
+                  </div>
+                )}
               />
               <Route
                 exact
-                path={`/${currentRole}/registration_success`}
+                path={`/Auth/register`}
+                render={props => <RegisterRoute {...props} />}
+              />
+              <Route
+                exact
+                path={`/Auth/registration_success`}
                 component={RegistrationSuccess}
               />
+
               <Route
                 exact
-                path={`/${currentRole}/roles_and_permissions`}
+                path={`/Auth/roles_and_permissions`}
                 render={props => <RolesRoute {...props} />}
               />
               <Route
                 exact
-                path={`/${currentRole}/officers_management`}
+                path={`/Auth/officers_management`}
                 render={props => <OfficersManagementRoute {...props} />}
               />
               <Route
                 exact
-                path={`/${currentRole}/settings`}
+                path={`/Auth/settings`}
                 render={props => <EmailSettingsRoute {...props} />}
               />
               <Route
                 exact
-                path={`/${currentRole}/DriversList`}
-                render={props => <DriversListRoute {...props} />}
+                path={`/Auth/DriversList`}
+                render={props => (
+                  <DriversListRoute {...props} currentRole={currentRole} />
+                )}
               />
               <Route
                 exact
-                path={`/${currentRole}/verification`}
+                path={`/Auth/verification`}
                 render={props => <VehicleRoute {...props} />}
               />
             </Switch>
@@ -278,24 +290,16 @@ export default function OfficerDrawer(props) {
             <Switch>
               <Route
                 exact
-                path={`/${currentRole}`}
+                path={`/Auth/verification`}
                 render={props => <VehicleRoute {...props} />}
               />
               <Route
                 exact
-                path={`/${currentRole}/verification`}
-                render={props => <VehicleRoute {...props} />}
-              />
-              <Route
-                exact
-                path={`/${currentRole}/DriversList`}
+                path={`/Auth/DriversList`}
                 render={props => <DriversListRoute {...props} />}
               />
-              <Route
-                path={`/${currentRole}/unauthorized`}
-                component={unauthorized}
-              />
-              <Redirect from="*" to={`/${currentRole}/unauthorized`} />
+              <Route path={`/Auth/unauthorized`} component={unauthorized} />
+              <Redirect from="*" to={`/Auth/unauthorized`} />
             </Switch>
           </Suspense>
         </main>

@@ -18,7 +18,7 @@ export const RegistrationSuccess = props => {
       <br />
       <br />
       <Button
-        onClick={() => history.replace(`/${currentRole}/register`)}
+        onClick={() => history.replace(`/Auth/register`)}
         style={{ cursor: "pointer" }}
         variant="outlined"
       >

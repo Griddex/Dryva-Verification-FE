@@ -28,9 +28,8 @@ const App = () => {
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />
-            <Route exact path="/register" component={RegisterRoute} />
             <ProtectedRoute
-              path={`/${currentRole}`}
+              path={`/Auth`}
               roles={["Officer", "Admin"]} //Need to store all roles in redux store on app startup
               component={OfficerDrawer}
             />

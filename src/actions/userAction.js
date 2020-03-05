@@ -17,8 +17,8 @@ export const loginUserAction = (email, password, rememberMe) => (
     type: LOGIN_USER_COMMENCE,
     payload: { Submitting: true, formErrors: [] }
   });
-  const { httpLoginOrRegister } = http;
-  httpLoginOrRegister("post", "/Account/Login", {
+  const { httpLogin } = http;
+  httpLogin("post", "/Account/Login", {
     email: email,
     password: password,
     rememberMe: rememberMe
@@ -33,7 +33,7 @@ export const loginUserAction = (email, password, rememberMe) => (
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, Submitting: false, isAuthenticated: true }
       });
-      history.replace(`/${currentRole}`);
+      history.replace(`/Auth`);
     })
     .catch(errors => {
       if (errors.response) {
@@ -61,14 +61,14 @@ export const registerUserAction = (
   password,
   confirmpassword
 ) => (dispatch, getState, http) => {
-  const { httpLoginOrRegister } = http;
+  const { httpRegister } = http;
 
   dispatch({
     type: REGISTER_USER_COMMENCE,
     payload: { Submitting: true, formErrors: [] }
   });
 
-  httpLoginOrRegister("post", "/Account/Register", {
+  httpRegister("post", "Admin/Register", null, {
     firstname: firstname,
     middlename: middlename,
     lastname: lastname,
@@ -94,15 +94,13 @@ export const registerUserAction = (
         });
       }
       const currentRole = authService().Role;
-
-      history.replace(`/${currentRole}/registration_success`);
+      //Define the route where this route will be
+      //rendered or use dialog box
+      history.replace(`/Auth/registration_success`);
     })
     .catch(errors => {
-      //Hook into the error coming back, use the error obj to update the errors
-      //obj in the redux store
       if (errors.response) {
         const responseErrors = errors.response.data[""];
-        console.log("Logged output -->: responseErrors", responseErrors);
         dispatch({
           type: REGISTER_USER_FAILURE,
           payload: { Submitting: false, responseErrors: responseErrors }

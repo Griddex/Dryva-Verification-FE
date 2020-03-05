@@ -3,11 +3,9 @@ import Grid from "@material-ui/core/Grid";
 
 const ReviseForm = props => {
   const { values } = props;
-  console.log("Logged output -->: props", props);
   const {
     values: { Images }
   } = props;
-  console.log("Logged output -->: Images", Images);
 
   const formLastFields = [
     "InspectorsGeneralRemarks",

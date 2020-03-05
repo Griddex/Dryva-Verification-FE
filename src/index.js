@@ -13,8 +13,9 @@ import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { rolesReducer } from "./reducers/rolesReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import history from "./services/historyService";
-import httpLoginOrRegister from "./services/httpService/httpLogin";
+import httpLogin from "./services/httpService/httpLogin";
 import httpOthers from "./services/httpService/httpOthers";
+import httpRegister from "./services/httpService/httpRegister";
 
 const rootReducer = combineReducers({
   userReducer,
@@ -26,7 +27,7 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
-      thunk.withExtraArgument({ httpLoginOrRegister, httpOthers })
+      thunk.withExtraArgument({ httpLogin, httpRegister, httpOthers })
     )
   )
 );

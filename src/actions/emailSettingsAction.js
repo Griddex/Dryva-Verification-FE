@@ -23,7 +23,6 @@ export const updateEmailSettingsAction = (
     .catch(errors => {
       if (errors.response) {
         const responseErrors = errors.response.data[""];
-        console.log("Logged output -->: responseErrors", responseErrors);
       }
     });
 };

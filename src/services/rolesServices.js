@@ -12,10 +12,6 @@ export const GetRoles = () => {
     .catch(errors => {
       if (errors.response) {
         const responseErrors = errors.response.data[""];
-        console.log(
-          "Logged output -->: GetRoles -> responseErrors",
-          responseErrors
-        );
       }
     });
 
