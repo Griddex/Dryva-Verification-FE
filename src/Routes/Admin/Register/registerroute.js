@@ -40,9 +40,21 @@ function RegisterRoute(props) {
           firstname: Yup.string().required("Firstname is required"),
           lastname: Yup.string().required("Lastname is required"),
           mobilenumber: Yup.string().required("Mobile number is required"),
-          password: Yup.string().required("Password is required"),
+          password: Yup.string()
+            .required("Password is required")
+            .min(8, "Password must be at least 8 characters long")
+            .matches(/[a-zA-Z]+/, {
+              message:
+                "Your password must contain at least 1 lowercase letter and 1 upper case letter"
+            })
+            .matches(/\d+/, {
+              message: "Your password must contain at least 1 digit"
+            })
+            .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?/]+/, {
+              message: "Your password must contain at least 1 special character"
+            }),
           confirmpassword: Yup.string().oneOf(
-            [Yup.ref("password"), null],
+            [Yup.ref("password")],
             "Passwords must match"
           )
         })}

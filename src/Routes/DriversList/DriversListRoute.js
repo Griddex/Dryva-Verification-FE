@@ -8,6 +8,7 @@ import { fullNameService } from "./../../services/fullNameService";
 import { connect } from "react-redux";
 import { editDriversDataAction } from "../../actions/editDriversDataAction";
 import { Redirect, Route, Switch, Link, useRouteMatch } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 const VehicleRoute = lazy(() => import("../../Routes/Vehicle/vehicleroute"));
 
@@ -213,7 +214,7 @@ const DriversListRoute = props => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
       <Switch>
         <Route
           exact

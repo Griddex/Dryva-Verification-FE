@@ -27,7 +27,7 @@ function InspectorForm(props) {
       <Grid item>
         {Input(
           "NameOfInspector",
-          "Name of Inspector",
+          "Inspector's Fullname",
           NameOfInspector,
           400,
           errors,
@@ -40,7 +40,7 @@ function InspectorForm(props) {
       <Grid item>
         {Input(
           "NameOfSupervisor",
-          "Name of Supervisor",
+          "Supervisor's Fullname",
           NameOfSupervisor,
           400,
           errors,

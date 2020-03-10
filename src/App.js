@@ -4,12 +4,14 @@ import OfficerDrawer from "./components/AppUserDrawer";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import Grid from "@material-ui/core/Grid";
 import authService from "./services/authService";
+import ReactLoading from "react-loading";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));
 const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
 const RegisterRoute = lazy(() =>
   import("./Routes/Admin/Register/registerroute")
 );
+const RolesRoute = lazy(() => import("./components/ManageRolesForm"));
 
 const App = () => {
   const currentRole = authService().Role;
@@ -23,14 +25,14 @@ const App = () => {
       style={{ minWidth: 800 }}
     >
       <React.Fragment>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
           <Switch>
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />
             <ProtectedRoute
               path={`/Auth`}
-              roles={["Officer", "Admin"]} //Need to store all roles in redux store on app startup
+              roles={["Officer", "Admin"]}
               component={OfficerDrawer}
             />
           </Switch>

@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Button from "@material-ui/core/Button";
 import Input from "./common/Input";
 import Select from "./common/Select";
-import httpOthers from "./../services/httpService/httpOthers";
+import ReactLoading from "react-loading";
+import { connect } from "react-redux";
 
 function RegisterForm(props) {
-  const [rolesData, setrolesData] = useState([]);
-  const [RegistrationErrors, setRegistrationErrors] = useState({});
-
-  useEffect(() => {
-    httpOthers("get", "Admin/GetAllRoles", null, null)
-      .then(response => {
-        if (response.status === 200) {
-          setrolesData(response.data);
-        }
-      })
-      .catch(errors => {
-        if (errors.response) {
-          const responseErrors = errors.response.data["Errors"];
-          setRegistrationErrors(responseErrors);
-        }
-      });
-  }, []);
-
   const {
     values: {
       firstname,
@@ -35,6 +18,8 @@ function RegisterForm(props) {
       password,
       confirmpassword
     },
+    loadErrors,
+    formLoading,
     errors,
     touched,
     handleSubmit,
@@ -47,13 +32,15 @@ function RegisterForm(props) {
   } = props;
 
   let errorsChecked = errors ? { ...errors } : {};
-  let registrationErrorsChecked = RegistrationErrors
-    ? { ...RegistrationErrors }
-    : {};
-  const allErrors = Object.values({
-    ...errorsChecked,
-    ...registrationErrorsChecked
-  });
+  const errorsCheckedArr = Object.values({ ...errorsChecked });
+  let loadErrorsChecked = loadErrors ? [...loadErrors] : [];
+  let allErrors = [...errorsCheckedArr, ...loadErrorsChecked];
+
+  if (formLoading) return <ReactLoading type={"Spin"} color="#006992" />;
+
+  let { rolesData } = props;
+  const roles = localStorage.getItem("roles");
+  rolesData = roles.split(",");
 
   return (
     <div>
@@ -161,6 +148,11 @@ function RegisterForm(props) {
           handleBlur,
           saveFormLoginInStore
         )}
+        <br />
+        <p>
+          Your password must be at least 8 characters long, contain at least 1
+          digit, 1 lowercase letter, 1 upper case letter and a special character
+        </p>
         {Input(
           "password",
           "Password",
@@ -205,4 +197,12 @@ function RegisterForm(props) {
   );
 }
 
-export default RegisterForm;
+const mapStateToProps = state => {
+  return {
+    rolesData: state.rolesReducer.roles,
+    loadErrors: state.rolesReducer.formErrors,
+    formLoading: state.rolesReducer.Loading
+  };
+};
+
+export default connect(mapStateToProps, null)(RegisterForm);

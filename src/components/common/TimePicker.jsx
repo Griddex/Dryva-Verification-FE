@@ -17,7 +17,9 @@ export default function DatePicker(props) {
 
   return (
     <div style={{ marginTop: 20 }}>
-      <label style={{ marginBottom: 20 }}>{label}</label>
+      <label style={{ marginBottom: 20 }}>
+        <b>{label}</b>
+      </label>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardTimePicker
           margin="normal"

@@ -1,48 +1,50 @@
 import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import httpOthers from "../services/httpService/httpOthers";
-import PermissionsForm from "./PermissionsForm";
 
 const ManageRolesForm = props => {
-  const [RolesAndPermissions, setRolesAndPermissions] = useState([]);
+  const [RolesAndClaims, setRolesAndClaims] = useState([]);
   const [Errors, setErrors] = useState([]);
-  const [
-    ResponseRolesAndPermissionsData,
-    setResponseRolesAndPermissionsData
-  ] = useState([]);
+  const [ResponseRolesAndClaimsData, setResponseRolesAndClaimsData] = useState(
+    []
+  );
 
   useEffect(() => {
     httpOthers("get", "Admin/GetRolesAndClaims", null, null)
       .then(response => {
         if (response.status === 200) {
-          const rolesPermissionsData = response.data.map(roleAndPermissions => {
+          const rolesClaimsData = response.data.map((roleAndClaims, i) => {
+            let data = Object.values(roleAndClaims);
+
             return {
-              id: Object.values(roleAndPermissions)[0],
-              role: Object.values(roleAndPermissions)[1],
-              permissions: Object.values(roleAndPermissions)[2].join(", ")
+              id: data[0],
+              sn: i + 1,
+              role: data[1],
+              Claims: data[2].join(", ")
             };
           });
-          setRolesAndPermissions(rolesPermissionsData);
-          setResponseRolesAndPermissionsData(response.data);
+          setRolesAndClaims(rolesClaimsData);
+          setResponseRolesAndClaimsData(response.data);
         }
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data[""];
+          const responseErrors = errors.response.data["Errors"];
           setErrors(responseErrors);
-          setRolesAndPermissions([]);
+          setRolesAndClaims([]);
         }
       });
 
     return () => {
-      setRolesAndPermissions([]);
+      setRolesAndClaims([]);
       setErrors([]);
     };
   }, []);
 
   const [columns, setColumns] = useState([
+    { title: "S/N", field: "sn", editable: "never" },
     { title: "Role", field: "role" },
-    { title: "Permissions", field: "permissions" }
+    { title: "Claims", field: "Claims", editable: "never" }
   ]);
 
   return (
@@ -50,7 +52,7 @@ const ManageRolesForm = props => {
       <br />
       <br />
       <h2>
-        <b>Manage Roles and Permissions</b>
+        <b>Manage Roles and Claims</b>
       </h2>
       <hr />
       {Errors &&
@@ -65,15 +67,15 @@ const ManageRolesForm = props => {
       <MaterialTable
         title=""
         columns={columns}
-        data={RolesAndPermissions}
-        //options={{ actionsColumnIndex: -1 }}
+        data={RolesAndClaims}
+        options={{ actionsColumnIndex: -1 }}
         editable={{
-          onRowAdd: newRoleAndPermissions => {
-            return new Promise((resolve, reject) => {
-              if (newRoleAndPermissions) {
-                setRolesAndPermissions(prevState => {
-                  const RolesAndPermissions = [...prevState];
-                  return [...RolesAndPermissions, newRoleAndPermissions];
+          onRowAdd: newRoleAndClaims =>
+            new Promise((resolve, reject) => {
+              if (newRoleAndClaims) {
+                setRolesAndClaims(prevState => {
+                  const RolesAndClaims = [...prevState];
+                  return [...RolesAndClaims, newRoleAndClaims];
                 });
               }
 
@@ -81,43 +83,33 @@ const ManageRolesForm = props => {
                 "post",
                 "/Admin/CreateRole",
                 { "Content-type": "application/json" },
-                { role: newRoleAndPermissions.role }
+                { role: newRoleAndClaims.role }
               )
                 .then(response => {
-                  if (
-                    response.data.message === "Role Created!" &&
-                    response.status === 200
-                  ) {
-                    resolve("Success!");
+                  if (response.status === 200) {
+                    const message = response.data;
+                    resolve(message["message"]);
+                    alert(message["message"]);
                   }
                 })
                 .catch(errors => {
                   if (errors.response) {
-                    const responseErrors = errors.response.data["errors"];
-                    setErrors(responseErrors);
+                    const responseErrors = errors.response.data;
+                    reject(responseErrors["errors"]);
+                    alert(responseErrors["errors"]);
                   }
-                  reject("Failure!");
                 });
-            });
-          },
-          onRowUpdate: (newRoleAndPermissions, oldRoleAndPermissions) => {
-            return new Promise((resolve, reject) => {
-              if (oldRoleAndPermissions) {
-                setRolesAndPermissions(prevState => {
-                  const RolesAndPermissions = [...prevState];
-                  const index = RolesAndPermissions.indexOf(
-                    oldRoleAndPermissions
-                  );
-                  RolesAndPermissions[index] = newRoleAndPermissions;
-                  return RolesAndPermissions;
+            }),
+          onRowUpdate: (newRoleAndClaims, oldRoleAndClaims) =>
+            new Promise((resolve, reject) => {
+              if (oldRoleAndClaims) {
+                setRolesAndClaims(prevState => {
+                  const RolesAndClaims = [...prevState];
+                  const index = RolesAndClaims.indexOf(oldRoleAndClaims);
+                  RolesAndClaims[index] = newRoleAndClaims;
+                  return RolesAndClaims;
                 });
               }
-
-              const roleAndPermissionsObj = ResponseRolesAndPermissionsData.filter(
-                obj => {
-                  return obj.name === oldRoleAndPermissions.role;
-                }
-              );
 
               httpOthers(
                 "put",
@@ -126,36 +118,35 @@ const ManageRolesForm = props => {
                   "Content-type": "application/json"
                 },
                 {
-                  id: roleAndPermissionsObj[0].id,
-                  role: newRoleAndPermissions.role
+                  id: oldRoleAndClaims.id,
+                  role: newRoleAndClaims.role
                 }
               )
                 .then(response => {
-                  resolve(response);
+                  if (response.status === 200) {
+                    const message = response.data;
+                    resolve(message["message"]);
+                    alert(message["message"]);
+                  }
                 })
-                .catch(error => {
-                  reject(error);
+                .catch(errors => {
+                  if (errors.response) {
+                    const responseErrors = errors.response.data;
+                    reject(responseErrors["errors"]);
+                    alert(responseErrors["errors"]);
+                  }
                 });
-            });
-          },
-          onRowDelete: oldRoleAndPermissions => {
-            return new Promise((resolve, reject) => {
-              if (oldRoleAndPermissions) {
-                setRolesAndPermissions(prevState => {
-                  const RolesAndPermissions = [...prevState];
-                  const index = RolesAndPermissions.indexOf(
-                    oldRoleAndPermissions
-                  );
-                  RolesAndPermissions.splice(index, 1);
-                  return RolesAndPermissions;
+            }),
+          onRowDelete: oldRoleAndClaims =>
+            new Promise((resolve, reject) => {
+              if (oldRoleAndClaims) {
+                setRolesAndClaims(prevState => {
+                  const RolesAndClaims = [...prevState];
+                  const index = RolesAndClaims.indexOf(oldRoleAndClaims);
+                  RolesAndClaims.splice(index, 1);
+                  return RolesAndClaims;
                 });
               }
-
-              const roleAndPermissionsObj = ResponseRolesAndPermissionsData.filter(
-                obj => {
-                  return obj.role === oldRoleAndPermissions.role;
-                }
-              );
 
               httpOthers(
                 "delete",
@@ -163,34 +154,24 @@ const ManageRolesForm = props => {
                 {
                   "Content-type": "application/json"
                 },
-                { id: roleAndPermissionsObj[0].id }
+                { id: oldRoleAndClaims.id }
               )
                 .then(response => {
-                  resolve(response);
-                })
-                .catch(error => {
-                  reject(error);
-                });
-            });
-          }
-        }}
-        detailPanel={[
-          {
-            icon: "account_circle",
-            tooltip: "Show permissions",
-            render: rowData => {
-              return (
-                <PermissionsForm
-                  rowData={rowData}
-                  RolesAndPermissions={RolesAndPermissions}
-                  ResponseRolesAndPermissionsData={
-                    ResponseRolesAndPermissionsData
+                  if (response.status === 200) {
+                    const message = response.data;
+                    resolve(message["message"]);
+                    alert(message["message"]);
                   }
-                />
-              );
-            }
-          }
-        ]}
+                })
+                .catch(errors => {
+                  if (errors.response) {
+                    const responseErrors = errors.response.data;
+                    reject(responseErrors["errors"]);
+                    alert(responseErrors["errors"]);
+                  }
+                });
+            })
+        }}
       />
     </div>
   );

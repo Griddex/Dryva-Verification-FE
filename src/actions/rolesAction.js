@@ -1,6 +1,9 @@
 export const SUBMIT_ROLES_COMMENCE = "SUBMIT_ROLES_COMMENCE";
 export const SUBMIT_ROLES_SUCCESS = "SUBMIT_ROLES_SUCCESS";
 export const SUBMIT_ROLES_FAILURE = "SUBMIT_ROLES_FAILURE";
+export const LOAD_ROLES_COMMENCE = "LOAD_ROLES_COMMENCE";
+export const LOAD_ROLES_SUCCESS = "LOAD_ROLES_SUCCESS";
+export const LOAD_ROLES_FAILURE = "LOAD_ROLES_FAILURE";
 
 export const onRowAddAction = newRole => (dispatch, getState, http) => {
   const { httpOthers } = http;

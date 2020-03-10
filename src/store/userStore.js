@@ -10,6 +10,7 @@ const UserState = {
   rememberMe: false,
   token: "",
   role: "Officer",
+  roles: [],
   Submitting: false,
   formErrors: [],
   IsAdmin: false,

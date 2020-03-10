@@ -17,7 +17,9 @@ export default function DatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div style={{ width: 200 }}>
-        <label>{label}</label>
+        <label>
+          <b>{label}</b>
+        </label>
         <KeyboardDatePicker
           name={name}
           format="dd-MMM-yyyy"

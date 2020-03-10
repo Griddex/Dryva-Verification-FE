@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,6 +19,7 @@ import { Route, Switch, Link, Redirect } from "react-router-dom";
 import unauthorized from "./unauthorized";
 import authService from "./../services/authService";
 import iconsService from "./../services/iconsService";
+import ReactLoading from "react-loading";
 
 const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
 const DriversListRoute = lazy(() =>
@@ -109,7 +110,8 @@ export default function OfficerDrawer(props) {
 
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -119,6 +121,9 @@ export default function OfficerDrawer(props) {
     setOpen(false);
   };
 
+  const handleClick = (text, e) => {
+    setSelected(text);
+  };
   const menuText = link => {
     const menuLinkText = {
       "/Auth/register": "Users Registration",
@@ -211,7 +216,13 @@ export default function OfficerDrawer(props) {
               `/Auth/DriversList`,
               `/Auth/verification`
             ].map((text, index) => (
-              <MenuItem component={Link} key={text} to={text}>
+              <MenuItem
+                component={Link}
+                key={text}
+                to={text}
+                selected={text === selected}
+                onClick={e => handleClick(text, e)}
+              >
                 <ListItemIcon>{iconsService(text)}</ListItemIcon>
                 <Typography>{menuText(text)}</Typography>
               </MenuItem>
@@ -220,7 +231,13 @@ export default function OfficerDrawer(props) {
         ) : (
           <MenuList>
             {[`/Auth/DriversList`, `/Auth/verification`].map((text, index) => (
-              <MenuItem component={Link} key={text} to={text}>
+              <MenuItem
+                component={Link}
+                key={text}
+                to={text}
+                selected={text === selected}
+                onClick={e => handleClick(text, e)}
+              >
                 <ListItemIcon>{iconsService(text)}</ListItemIcon>
                 <Typography>{menuText(text)}</Typography>
               </MenuItem>
@@ -231,17 +248,8 @@ export default function OfficerDrawer(props) {
       {currentRole && currentRole === "Admin" ? (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
             <Switch>
-              <Route
-                exact
-                path={`/Auth`}
-                render={props => (
-                  <div>
-                    <h1>Welcome Admin!</h1>
-                  </div>
-                )}
-              />
               <Route
                 exact
                 path={`/Auth/register`}
@@ -286,7 +294,7 @@ export default function OfficerDrawer(props) {
       ) : (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
             <Switch>
               <Route
                 exact

@@ -15,7 +15,9 @@ export default function MultiInput(
 ) {
   return (
     <div style={{ marginTop: 20, width: width }}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        <b>{label}</b>
+      </label>
       <div>
         <TextField
           name={name}
