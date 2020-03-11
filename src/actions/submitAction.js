@@ -1,5 +1,4 @@
 import dataService from "./../services/dataService";
-// import authService from "./../services/authService";
 
 export const FORM_SUBMISSION_REQUEST = "FORM_SUBMISSION_REQUEST";
 export const FORM_SUBMISSION_SUCCESS = "FORM_SUBMISSION_SUCCESS";
@@ -27,11 +26,11 @@ const submitFailureAction = errors => {
 };
 
 export const submitAction = () => {
-  //const currentRole = authService().Role;
-
   return (dispatch, getState, http) => {
     const { httpOthers } = http;
+
     dispatch(submitRequestAction());
+
     const data = dataService(getState().saveOrSubmitReducer);
     httpOthers(
       "post",
@@ -41,15 +40,16 @@ export const submitAction = () => {
     )
       .then(response => {
         if (response.status === 200) {
-          submitSuccessAction(response.data);
-
-          //history.replace(`/${currentRole}/driverslist`);
+          const message = response.data;
+          dispatch(submitSuccessAction(message["message"]));
+          alert(message["message"]);
         }
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data["Errors"];
-          submitFailureAction(responseErrors);
+          const responseErrors = errors.response.data;
+          dispatch(submitFailureAction(responseErrors["errors"]));
+          alert(responseErrors["errors"]);
         }
       });
   };

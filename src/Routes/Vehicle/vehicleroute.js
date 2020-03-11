@@ -19,6 +19,9 @@ import { connect } from "react-redux";
 import { submitAction } from "../../actions/submitAction";
 import { sendValuesToStoreAction } from "./../../actions/sendValuesToStoreAction";
 import { toggleStepErrorAction } from "./../../actions/toggleStepErrorAction";
+import { saveOrSubmitReducer } from "./../../reducers/saveOrSubmitReducer";
+import { Portal } from "react-portal";
+import ReactLoading from "react-loading";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,6 +126,8 @@ function VehicleRoute(reduxProps) {
   }
 
   function SubmitFormControls(reduxProps) {
+    const { Submitting } = reduxProps;
+
     return (
       <div
         style={{
@@ -139,6 +144,9 @@ function VehicleRoute(reduxProps) {
         >
           Back
         </Button>
+        {Submitting && (
+          <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        )}
         <Button
           variant="contained"
           color="primary"
@@ -180,7 +188,7 @@ function VehicleRoute(reduxProps) {
             case 6:
               return (
                 <div>
-                  <ReviseForm {...formProps} />
+                  <ReviseForm {...formProps} {...reduxProps} />
                   <SubmitFormControls {...reduxProps} />
                 </div>
               );
@@ -191,6 +199,15 @@ function VehicleRoute(reduxProps) {
       </Formik>
     );
   }
+
+  const { Submitting } = reduxProps;
+  console.log("Logged output -->: VehicleRoute -> Submitting", Submitting);
+  if (Submitting)
+    return (
+      <Portal>
+        <ReactLoading type={"Spin"} color="#006992" />
+      </Portal>
+    );
 
   return (
     <Container maxwidth="lg" className={classes.root}>
@@ -252,6 +269,71 @@ function VehicleRoute(reduxProps) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    formErrors: state.saveOrSubmitReducer.formErrors,
+    Submitting: state.saveOrSubmitReducer.Submitting,
+    saveAndTechnicalValues: {
+      FuelGaugeWorking: state.saveOrSubmitReducer.FuelGaugeWorking,
+      OilLevelPressureGaugeWorking:
+        state.saveOrSubmitReducer.OilLevelPressureGaugeWorking,
+      TransmissionFluidLevel: state.saveOrSubmitReducer.TransmissionFluidLevel,
+      PowerSteeringFluidLevel:
+        state.saveOrSubmitReducer.PowerSteeringFluidLevel,
+      BrakeFluidLevel: state.saveOrSubmitReducer.BrakeFluidLevel,
+      BatteryCharge: state.saveOrSubmitReducer.BatteryCharge,
+      WindshieldWiperFluid: state.saveOrSubmitReducer.WindshieldWiperFluid,
+      RadiatorFluidLevel: state.saveOrSubmitReducer.RadiatorFluidLevel,
+      FluidsLeakingUnderBus: state.saveOrSubmitReducer.FluidsLeakingUnderBus,
+      EngineWarningLights: state.saveOrSubmitReducer.EngineWarningLights,
+      OtherEngineFluidLevels: state.saveOrSubmitReducer.OtherEngineFluidLevels,
+
+      HeadlightsHiLow: state.saveOrSubmitReducer.HeadlightsHiLow,
+      FoglampsHazardlamps: state.saveOrSubmitReducer.FoglampsHazardlamps,
+      WindshieldCondition: state.saveOrSubmitReducer.WindshieldCondition,
+      DirectionalSignalsFrontrear:
+        state.saveOrSubmitReducer.DirectionalSignalsFrontrear,
+      TaillightsRunninglights:
+        state.saveOrSubmitReducer.TaillightsRunninglights,
+      BrakelightsBackUpLights:
+        state.saveOrSubmitReducer.BrakelightsBackUpLights,
+      TireconditionAirpressure:
+        state.saveOrSubmitReducer.TireconditionAirpressure,
+      LugnutsTight: state.saveOrSubmitReducer.LugnutsTight,
+      WindowscanWindfreely: state.saveOrSubmitReducer.WindowscanWindfreely,
+      LuggageStoragedoorsEnginecompartmentPanels:
+        state.saveOrSubmitReducer.LuggageStoragedoorsEnginecompartmentPanels,
+      ExteriorClean: state.saveOrSubmitReducer.ExteriorClean,
+      BodyconditionScratchesDingsDents:
+        state.saveOrSubmitReducer.BodyconditionScratchesDingsDents,
+      OtherExteriorChecks: state.saveOrSubmitReducer.OtherExteriorChecks,
+
+      Mirrors: state.saveOrSubmitReducer.Mirrors,
+      WindshieldWipers: state.saveOrSubmitReducer.WindshieldWipers,
+      Horn: state.saveOrSubmitReducer.Horn,
+      ParkingBrake: state.saveOrSubmitReducer.ParkingBrake,
+      Fans: state.saveOrSubmitReducer.Fans,
+      AirConditioning: state.saveOrSubmitReducer.AirConditioning,
+      RadioEquipmentCellphone:
+        state.saveOrSubmitReducer.RadioEquipmentCellphone,
+      CantheDoorsbeOpenedFreely:
+        state.saveOrSubmitReducer.CantheDoorsbeOpenedFreely,
+      InteriorLights: state.saveOrSubmitReducer.InteriorLights,
+      DriverSeatBelts: state.saveOrSubmitReducer.DriverSeatBelts,
+      PassengerSeats: state.saveOrSubmitReducer.PassengerSeats,
+      FireExtinguisher: state.saveOrSubmitReducer.FireExtinguisher,
+      OtherEmergencyGear: state.saveOrSubmitReducer.OtherEmergencyGear,
+      DestinationSignbox: state.saveOrSubmitReducer.DestinationSignbox,
+      WindowsCleanandcanWindFreely:
+        state.saveOrSubmitReducer.WindowsCleanandcanWindFreely,
+      InteriorClean: state.saveOrSubmitReducer.InteriorClean,
+      WastebinAvailableOrEmptied:
+        state.saveOrSubmitReducer.WastebinAvailableOrEmptied,
+      OtherInteriorChecks: state.saveOrSubmitReducer.OtherInteriorChecks
+    }
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     saveFormValuesInStore: (name, value) =>
@@ -261,4 +343,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(VehicleRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleRoute);

@@ -8,7 +8,9 @@ import { fullNameService } from "./../../services/fullNameService";
 import { connect } from "react-redux";
 import { editDriversDataAction } from "../../actions/editDriversDataAction";
 import { Redirect, Route, Switch, Link, useRouteMatch } from "react-router-dom";
+import { Portal } from "react-portal";
 import ReactLoading from "react-loading";
+import Grid from "@material-ui/core/Grid";
 
 const VehicleRoute = lazy(() => import("../../Routes/Vehicle/vehicleroute"));
 
@@ -17,8 +19,8 @@ const DriversListRoute = props => {
 
   const [toVerification, setToVerification] = useState(false);
   const [AllDrivers, setAllDrivers] = useState([]);
-  const [Drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [Drivers, setDrivers] = useState([]);
   const [Errors, setErrors] = useState([]);
 
   let DriversDataSorted;
@@ -26,6 +28,8 @@ const DriversListRoute = props => {
   let { path, url } = useRouteMatch();
 
   useEffect(() => {
+    setLoading(true);
+
     httpOthers("get", "Data/GetDriversData", null, null)
       .then(response => {
         if (response.status === 200) {
@@ -64,6 +68,7 @@ const DriversListRoute = props => {
           });
           setDrivers(DriversData);
           setAllDrivers(DriversDataSorted);
+          setLoading(false);
         }
       })
       .catch(errors => {
@@ -71,6 +76,7 @@ const DriversListRoute = props => {
           const responseErrors = errors.response.data["Errors"];
           setErrors(responseErrors);
           setDrivers([]);
+          setLoading(false);
         }
       });
 
@@ -109,6 +115,14 @@ const DriversListRoute = props => {
   ]);
 
   const DriversRecords = props => {
+    if (loading)
+      return (
+        <Portal node={document && document.getElementById("modal")}>
+          <h1>LOADING...</h1>
+          {/* <ReactLoading type={"Spin"} color="#006992" /> */}
+        </Portal>
+      );
+
     return (
       <div>
         <br />

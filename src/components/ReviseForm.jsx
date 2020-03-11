@@ -1,12 +1,19 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import authService from "./../services/authService";
 
 const ReviseForm = props => {
   const { values } = props;
+  const { saveAndTechnicalValues } = props;
   const {
     values: { Images }
   } = props;
 
+  const UserId = authService().sid;
+  const valuesAgain = { UserId, ...values };
+  const valuesFinal = { ...valuesAgain, ...saveAndTechnicalValues };
+
+  console.log("Logged output -->: valuesFinal", valuesFinal);
   const formLastFields = [
     "InspectorsGeneralRemarks",
     "DriversPermanentCity",
@@ -22,11 +29,11 @@ const ReviseForm = props => {
     <div>
       <br />
       <br />
-      <h1>Please review all information before submission</h1>
+      <h1>Review all information before submission</h1>
       <hr />
       <br />
       <Grid container direction="column" spacing={8}>
-        {Object.entries(values)
+        {Object.entries(valuesFinal)
           .filter(v => !["Errors", "Submitting", "Result"].includes(v[0]))
           .map((v, i) => {
             let key = v[0];
