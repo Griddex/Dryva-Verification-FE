@@ -1,7 +1,7 @@
 import decodeJwt from "jwt-decode";
 
 const authService = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (token !== null) {
     const identity = decodeJwt(token);
     return identity;

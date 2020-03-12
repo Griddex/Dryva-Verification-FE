@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
     overflowX: "hidden",
     width: theme.spacing(24) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(24) + 1
+      width: theme.spacing(30) + 1
     }
   },
   toolbar: {
@@ -130,8 +130,8 @@ export default function OfficerDrawer(props) {
       "/Auth/roles_and_permissions": "Roles and Permissions",
       "/Auth/officers_management": "Officers Management",
       "/Auth/settings": "Email Settings",
-      "/Auth/DriversList": "Drivers Records",
-      "/Auth/verification": "Drivers Verification"
+      "/Auth/verification": "Drivers Verification",
+      "/Auth/DriversList": "Drivers Records"
     };
 
     return menuLinkText[link];
@@ -174,7 +174,7 @@ export default function OfficerDrawer(props) {
               size="small"
               variant="outlined"
               onClick={() => {
-                localStorage.clear();
+                sessionStorage.clear();
                 history.replace("/logout");
               }}
             >
@@ -213,8 +213,8 @@ export default function OfficerDrawer(props) {
               `/Auth/roles_and_permissions`,
               `/Auth/officers_management`,
               `/Auth/settings`,
-              `/Auth/DriversList`,
-              `/Auth/verification`
+              `/Auth/verification`,
+              `/Auth/DriversList`
             ].map((text, index) => (
               <MenuItem
                 component={Link}
@@ -222,6 +222,7 @@ export default function OfficerDrawer(props) {
                 to={text}
                 selected={text === selected}
                 onClick={e => handleClick(text, e)}
+                style={{ padding: "0.8em" }}
               >
                 <ListItemIcon>{iconsService(text)}</ListItemIcon>
                 <Typography>{menuText(text)}</Typography>
@@ -230,13 +231,14 @@ export default function OfficerDrawer(props) {
           </MenuList>
         ) : (
           <MenuList>
-            {[`/Auth/DriversList`, `/Auth/verification`].map((text, index) => (
+            {[`/Auth/verification`, `/Auth/DriversList`].map((text, index) => (
               <MenuItem
                 component={Link}
                 key={text}
                 to={text}
                 selected={text === selected}
                 onClick={e => handleClick(text, e)}
+                style={{ padding: "0.8em" }}
               >
                 <ListItemIcon>{iconsService(text)}</ListItemIcon>
                 <Typography>{menuText(text)}</Typography>
@@ -278,15 +280,15 @@ export default function OfficerDrawer(props) {
               />
               <Route
                 exact
+                path={`/Auth/verification`}
+                render={props => <VehicleRoute {...props} />}
+              />
+              <Route
+                exact
                 path={`/Auth/DriversList`}
                 render={props => (
                   <DriversListRoute {...props} currentRole={currentRole} />
                 )}
-              />
-              <Route
-                exact
-                path={`/Auth/verification`}
-                render={props => <VehicleRoute {...props} />}
               />
             </Switch>
           </Suspense>

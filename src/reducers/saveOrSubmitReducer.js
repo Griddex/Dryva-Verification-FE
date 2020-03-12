@@ -16,21 +16,21 @@ export const saveOrSubmitReducer = (state = StoreInitialValues, action) => {
         ...state,
         Submitting: action.payload.Submitting,
         result: action.payload.result,
-        errors: action.payload.errors
+        errors: new Array(action.payload.errors)
       };
     case FORM_SUBMISSION_SUCCESS:
       return {
         ...state,
         Submitting: action.payload.Submitting,
         result: action.payload.result,
-        errors: action.payload.errors
+        errors: new Array(action.payload.errors)
       };
     case FORM_SUBMISSION_FAILURE:
       return {
         ...state,
         Submitting: action.payload.Submitting,
         result: action.payload.result,
-        errors: action.payload.errors
+        errors: new Array(action.payload.errors)
       };
     case DATA_UPDATE_STORE:
       let stateUpdated = { ...state, ...action.payload.data };
@@ -38,7 +38,7 @@ export const saveOrSubmitReducer = (state = StoreInitialValues, action) => {
         ...stateUpdated,
         Submitting: action.payload.Submitting,
         result: action.payload.result,
-        errors: action.payload.errors
+        errors: new Array(action.payload.errors)
       };
     default:
       return { ...state };

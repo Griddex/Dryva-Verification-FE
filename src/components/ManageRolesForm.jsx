@@ -29,7 +29,7 @@ const ManageRolesForm = props => {
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data["Errors"];
+          const responseErrors = errors.response.data["errors"];
           setErrors(responseErrors);
           setRolesAndClaims([]);
         }

@@ -20,6 +20,7 @@ function LoginRoute(props) {
   }));
 
   const { formErrors, loginUser } = props;
+  console.log("Logged output -->: LoginRoute -> props", props);
   const classes = useStyles();
 
   return (
@@ -53,13 +54,6 @@ function LoginRoute(props) {
         >
           {formikProps => <LoginForm {...formikProps} {...props} />}
         </Formik>
-        {/* <Link
-          onClick={() => history.push("/register")}
-          style={{ cursor: "pointer" }}
-          className="btn btn-secondary"
-        >
-          Not yet a verification officer? Register
-        </Link> */}
       </div>
     </div>
   );
@@ -69,7 +63,7 @@ const mapStateToProps = state => {
   return {
     rememberMe: state.userReducer.rememberMe,
     formErrors: state.userReducer.formErrors,
-    Submitting: state.userReducer.Submitting
+    loginSubmitting: state.userReducer.Submitting
   };
 };
 

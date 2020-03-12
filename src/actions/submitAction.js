@@ -34,7 +34,7 @@ export const submitAction = () => {
     const data = dataService(getState().saveOrSubmitReducer);
     httpOthers(
       "post",
-      "Data/PostData",
+      "Data/PostDriversData",
       { "Content-type": "multipart/form-data" },
       data
     )

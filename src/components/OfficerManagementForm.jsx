@@ -38,7 +38,7 @@ const OfficerManagementForm = props => {
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data["Errors"];
+          const responseErrors = errors.response.data["errors"];
           setErrors(responseErrors);
           setOfficers([]);
         }
@@ -106,7 +106,7 @@ const OfficerManagementForm = props => {
                 .catch(errors => {
                   if (errors.response) {
                     const responseErrors = errors.response.data;
-                    alert(responseErrors["Errors"]);
+                    alert(responseErrors["errors"]);
                   }
                 });
             }
@@ -139,7 +139,7 @@ const OfficerManagementForm = props => {
                 .catch(errors => {
                   if (errors.response) {
                     const responseErrors = errors.response.data;
-                    alert(responseErrors["Errors"]);
+                    alert(responseErrors["errors"]);
                   }
                 });
             }

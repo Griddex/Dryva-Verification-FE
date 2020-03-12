@@ -20,7 +20,7 @@ export const rolesReducer = (state = UserState, action) => {
       return {
         ...state,
         Submitting: action.payload.Submitting,
-        formErrors: action.payload.formErrors
+        formErrors: new Array(action.payload.formErrors)
       };
     case SUBMIT_ROLES_SUCCESS:
       return {
@@ -30,7 +30,7 @@ export const rolesReducer = (state = UserState, action) => {
     case SUBMIT_ROLES_FAILURE:
       return {
         ...state,
-        formErrors: action.payload.formErrors,
+        formErrors: new Array(action.payload.formErrors),
         Submitting: action.payload.Submitting
       };
     case LOAD_ROLES_COMMENCE:
@@ -38,20 +38,20 @@ export const rolesReducer = (state = UserState, action) => {
         ...state,
         roles: action.payload.roles,
         Loading: action.payload.Loading,
-        formErrors: action.payload.formErrors
+        formErrors: new Array(action.payload.formErrors)
       };
     case LOAD_ROLES_SUCCESS:
       return {
         ...state,
         roles: action.payload.roles,
         Loading: action.payload.Loading,
-        formErrors: action.payload.formErrors
+        formErrors: new Array(action.payload.formErrors)
       };
     case LOAD_ROLES_FAILURE:
       return {
         ...state,
         roles: action.payload.roles,
-        formErrors: action.payload.formErrors,
+        formErrors: new Array(action.payload.formErrors),
         Loading: action.payload.Loading
       };
     default:

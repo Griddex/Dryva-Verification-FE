@@ -6,6 +6,7 @@ import {
   LOAD_ROLES_SUCCESS,
   LOAD_ROLES_FAILURE
 } from "./rolesAction";
+
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
@@ -32,42 +33,52 @@ export const loginUserAction = (email, password, rememberMe) => (
   })
     .then(response => {
       const { token } = response.data;
-      localStorage.clear();
-      localStorage.setItem("token", token);
+      sessionStorage.clear();
+      sessionStorage.setItem("token", token);
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, Submitting: false, isAuthenticated: true }
       });
 
-      httpOthers("get", "Admin/GetAllRoles", null, null)
-        .then(response => {
-          if (response.status === 200) {
-            const rolesData = response.data;
-            localStorage.setItem("roles", rolesData.join());
+      const Role = authService().Role;
 
-            dispatch({
-              type: LOAD_ROLES_SUCCESS,
-              payload: { roles: rolesData, Loading: false, formErrors: false }
-            });
+      if (Role === "Admin") {
+        httpOthers("get", "Admin/GetAllRoles", null, null)
+          .then(response => {
+            if (response.status === 200) {
+              const rolesData = response.data;
+              sessionStorage.setItem("roles", rolesData.join());
 
-            history.replace(`/Auth/register`);
-          }
-        })
-        .catch(errors => {
-          if (errors.response) {
-            const responseErrors = errors.response.data["Errors"];
+              dispatch({
+                type: LOAD_ROLES_SUCCESS,
+                payload: { roles: rolesData, Loading: false, formErrors: false }
+              });
 
-            dispatch({
-              type: LOAD_ROLES_FAILURE,
-              payload: { roles: [], Loading: false, formErrors: responseErrors }
-            });
-          }
-        });
+              history.replace(`/Auth/register`);
+            }
+          })
+          .catch(errors => {
+            if (errors.response) {
+              const responseErrors = errors.response.data["errors"];
+
+              dispatch({
+                type: LOAD_ROLES_FAILURE,
+                payload: {
+                  roles: [],
+                  Loading: false,
+                  formErrors: new Array(responseErrors)
+                }
+              });
+            }
+          });
+      }
+      history.replace(`/Auth/verification`);
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data["Errors"];
+        const responseErrors = errors.response.data["errors"];
+
         dispatch({
           type: LOGIN_USER_FAILURE,
           payload: {

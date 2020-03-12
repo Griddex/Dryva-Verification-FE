@@ -39,7 +39,7 @@ function RegisterForm(props) {
   if (formLoading) return <ReactLoading type={"Spin"} color="#006992" />;
 
   let { rolesData } = props;
-  const roles = localStorage.getItem("roles");
+  const roles = sessionStorage.getItem("roles");
   rolesData = roles.split(",");
 
   return (

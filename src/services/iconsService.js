@@ -7,12 +7,12 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 const icons = {
-  [`/Auth/register`]: <PersonAddIcon />,
-  [`/Auth/roles_and_permissions`]: <PersonPinCircleIcon />,
-  [`/Auth/officers_management`]: <RecentActorsIcon />,
-  [`/Auth/settings`]: <EmailIcon />,
-  [`/Auth/DriversList`]: <LibraryBooksIcon />,
-  [`/Auth/verification`]: <VerifiedUserIcon />
+  [`/Auth/register`]: <PersonAddIcon fontSize={"default"} />,
+  [`/Auth/roles_and_permissions`]: <PersonPinCircleIcon fontSize={"default"} />,
+  [`/Auth/officers_management`]: <RecentActorsIcon fontSize={"default"} />,
+  [`/Auth/settings`]: <EmailIcon fontSize={"default"} />,
+  [`/Auth/DriversList`]: <LibraryBooksIcon fontSize={"default"} />,
+  [`/Auth/verification`]: <VerifiedUserIcon fontSize={"default"} />
 };
 
 const iconsService = icon => {

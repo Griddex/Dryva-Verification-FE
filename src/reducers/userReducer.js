@@ -20,7 +20,7 @@ export const userReducer = (state = UserState, action) => {
       return {
         ...state,
         Submitting: action.payload.Submitting,
-        formErrors: action.payload.formErrors
+        formErrors: new Array(action.payload.formErrors)
       };
     case LOGIN_USER_SUCCESS:
       return {
@@ -30,28 +30,33 @@ export const userReducer = (state = UserState, action) => {
         isAuthenticated: action.payload.isAuthenticated
       };
     case LOGIN_USER_FAILURE:
+      console.log(
+        "Logged output -->: userReducer -> action.payload.formErrors",
+        action.payload.formErrors
+      );
       return {
         ...state,
-        formErrors: action.payload.formErrors,
-        Submitting: action.payload.Submitting
+        formErrors: new Array(action.payload.formErrors),
+        Submitting: action.payload.Submitting,
+        isAuthenticated: action.payload.isAuthenticated
       };
     case REGISTER_USER_COMMENCE:
       return {
         ...state,
         Submitting: action.payload.Submitting,
-        formErrors: action.payload.formErrors
+        formErrors: new Array(action.payload.formErrors)
       };
     case REGISTER_USER_SUCCESS:
       return {
         ...state,
         Submitting: action.payload.Submitting,
-        formErrors: action.payload.formErrors,
+        formErrors: new Array(action.payload.formErrors),
         registrationSucceeded: true
       };
     case REGISTER_USER_FAILURE:
       return {
         ...state,
-        formErrors: action.payload.responseErrors
+        formErrors: new Array(action.payload.responseErrors)
       };
     default:
       return { ...state };

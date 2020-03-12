@@ -202,12 +202,12 @@ function VehicleRoute(reduxProps) {
 
   const { Submitting } = reduxProps;
   console.log("Logged output -->: VehicleRoute -> Submitting", Submitting);
-  if (Submitting)
-    return (
-      <Portal>
-        <ReactLoading type={"Spin"} color="#006992" />
-      </Portal>
-    );
+  // if (Submitting)
+  //   return (
+  //     <Portal>
+  //       <ReactLoading type={"Spin"} color="#006992" />
+  //     </Portal>
+  //   );
 
   return (
     <Container maxwidth="lg" className={classes.root}>

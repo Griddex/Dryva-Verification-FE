@@ -19,7 +19,7 @@ const DriversListRoute = props => {
 
   const [toVerification, setToVerification] = useState(false);
   const [AllDrivers, setAllDrivers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [Drivers, setDrivers] = useState([]);
   const [Errors, setErrors] = useState([]);
 
@@ -28,16 +28,38 @@ const DriversListRoute = props => {
   let { path, url } = useRouteMatch();
 
   useEffect(() => {
-    setLoading(true);
-
     httpOthers("get", "Data/GetDriversData", null, null)
       .then(response => {
         if (response.status === 200) {
-          DriversDataSorted = _.sortBy(response.data, "officerName");
+          DriversDataSorted = _.orderBy(
+            response.data,
+            function(officerInfo) {
+              if (officerInfo.managedBy !== null)
+                return officerInfo.managedBy.managedByName;
+            },
+            ["asc"]
+          );
+
+          let managedByName = "";
+          let registeredByName = "";
           DriversData = DriversDataSorted.map((officerInfo, i) => {
+            if (officerInfo.managedBy === null) {
+              managedByName = "None";
+            } else {
+              managedByName = officerInfo.managedBy.managedByName;
+            }
+
+            if (officerInfo.registeredBy === null) {
+              registeredByName = "None";
+            } else {
+              registeredByName = officerInfo.registeredBy.registeredByName;
+            }
+
             return {
               dataUniqueNumber: officerInfo.dataUniqueNumber,
               serialNumber: i + 1,
+              managedBy: managedByName,
+              registeredBy: registeredByName,
               nameOfSupervisor: officerInfo.inspector.nameOfSupervisor,
               placeOfInspection: officerInfo.inspector.placeOfInspection,
               dateOfInspection: dateddMMYYYTransformationService(
@@ -66,6 +88,7 @@ const DriversListRoute = props => {
               ownersMobileNo: officerInfo.owner.ownersMobileNo
             };
           });
+          console.log("Logged output -->: DriversData", "Hello");
           setDrivers(DriversData);
           setAllDrivers(DriversDataSorted);
           setLoading(false);
@@ -73,7 +96,7 @@ const DriversListRoute = props => {
       })
       .catch(errors => {
         if (errors.response) {
-          const responseErrors = errors.response.data["Errors"];
+          const responseErrors = errors.response.data["errors"];
           setErrors(responseErrors);
           setDrivers([]);
           setLoading(false);
@@ -91,6 +114,8 @@ const DriversListRoute = props => {
 
   const [columns, setColumns] = useState([
     { title: "S/N", field: "serialNumber" },
+    { title: "Managed By", field: "managedBy" },
+    { title: "Registered By", field: "registeredBy" },
     { title: "Supervisor's Name", field: "nameOfSupervisor" },
     { title: "Place of Inspection", field: "placeOfInspection" },
     { title: "Date of Inspection", field: "dateOfInspection" },
@@ -115,14 +140,6 @@ const DriversListRoute = props => {
   ]);
 
   const DriversRecords = props => {
-    if (loading)
-      return (
-        <Portal node={document && document.getElementById("modal")}>
-          <h1>LOADING...</h1>
-          {/* <ReactLoading type={"Spin"} color="#006992" /> */}
-        </Portal>
-      );
-
     return (
       <div>
         <br />
@@ -227,6 +244,15 @@ const DriversListRoute = props => {
     );
   };
 
+  //console.log("Logged output -->: loading", loading);
+  // if (loading)
+  //   return (
+  //     <Portal node={document && document.getElementById("portal")}>
+  //       <h1>LOADING...</h1>
+  //       {/* <ReactLoading type={"Spin"} color="#006992" /> */}
+  //     </Portal>
+  //   );
+
   return (
     <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
       <Switch>
@@ -238,7 +264,7 @@ const DriversListRoute = props => {
         <Route
           exact
           // path={`${path}/Verification`}
-          path={`Admin/Verification`}
+          path={`Auth/Verification`}
           render={props => <VehicleRoute {...props} />}
           //render={props => <h1>DDV</h1>}
         />
