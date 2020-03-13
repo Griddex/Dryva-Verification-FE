@@ -40,7 +40,8 @@ function RegisterForm(props) {
 
   let { rolesData } = props;
   const roles = sessionStorage.getItem("roles");
-  rolesData = roles.split(",");
+  if (roles === null) rolesData = ["Officer", "Admin"];
+  else rolesData = roles.split(",");
 
   return (
     <div>

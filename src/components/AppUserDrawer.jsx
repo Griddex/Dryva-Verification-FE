@@ -15,6 +15,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Tooltip from "@material-ui/core/Tooltip";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
 import unauthorized from "./unauthorized";
 import authService from "./../services/authService";
@@ -126,7 +127,7 @@ export default function OfficerDrawer(props) {
   };
   const menuText = link => {
     const menuLinkText = {
-      "/Auth/register": "Users Registration",
+      "/Auth/register": "Officer's Registration",
       "/Auth/roles_and_permissions": "Roles and Permissions",
       "/Auth/officers_management": "Officers Management",
       "/Auth/settings": "Email Settings",
@@ -216,33 +217,47 @@ export default function OfficerDrawer(props) {
               `/Auth/verification`,
               `/Auth/DriversList`
             ].map((text, index) => (
-              <MenuItem
-                component={Link}
+              <Tooltip
                 key={text}
-                to={text}
-                selected={text === selected}
-                onClick={e => handleClick(text, e)}
-                style={{ padding: "0.8em" }}
+                title={menuText(text)}
+                placement="right"
+                interactive
+                arrow
               >
-                <ListItemIcon>{iconsService(text)}</ListItemIcon>
-                <Typography>{menuText(text)}</Typography>
-              </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to={text}
+                  selected={text === selected}
+                  onClick={e => handleClick(text, e)}
+                  style={{ padding: "0.8em" }}
+                >
+                  <ListItemIcon>{iconsService(text)}</ListItemIcon>
+                  <Typography>{menuText(text)}</Typography>
+                </MenuItem>
+              </Tooltip>
             ))}
           </MenuList>
         ) : (
           <MenuList>
             {[`/Auth/verification`, `/Auth/DriversList`].map((text, index) => (
-              <MenuItem
-                component={Link}
+              <Tooltip
                 key={text}
-                to={text}
-                selected={text === selected}
-                onClick={e => handleClick(text, e)}
-                style={{ padding: "0.8em" }}
+                title={menuText(text)}
+                placement="right"
+                interactive
+                arrow
               >
-                <ListItemIcon>{iconsService(text)}</ListItemIcon>
-                <Typography>{menuText(text)}</Typography>
-              </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to={text}
+                  selected={text === selected}
+                  onClick={e => handleClick(text, e)}
+                  style={{ padding: "0.8em" }}
+                >
+                  <ListItemIcon>{iconsService(text)}</ListItemIcon>
+                  <Typography>{menuText(text)}</Typography>
+                </MenuItem>
+              </Tooltip>
             ))}
           </MenuList>
         )}

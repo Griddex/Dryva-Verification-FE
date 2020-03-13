@@ -1,8 +1,10 @@
 import axios from "axios";
 import baseURL from "../../utils/config";
 
-const AUTH_TOKEN = `Bearer ${sessionStorage.getItem("token")}`;
-console.log("Logged output -->: AUTH_TOKEN", AUTH_TOKEN);
+const token = sessionStorage.getItem("token");
+if (token === null) sessionStorage.getItem("token");
+const AUTH_TOKEN = `Bearer ${token}`;
+
 const globalHeaders = {
   "Access-Control-Allow-Origin": "*",
   Accept: "application/json",

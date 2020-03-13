@@ -201,7 +201,6 @@ function VehicleRoute(reduxProps) {
   }
 
   const { Submitting } = reduxProps;
-  console.log("Logged output -->: VehicleRoute -> Submitting", Submitting);
   // if (Submitting)
   //   return (
   //     <Portal>

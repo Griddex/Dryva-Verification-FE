@@ -11,10 +11,8 @@ const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
 const RegisterRoute = lazy(() =>
   import("./Routes/Admin/Register/registerroute")
 );
-const RolesRoute = lazy(() => import("./components/ManageRolesForm"));
 
 const App = () => {
-  const currentRole = authService().Role;
   return (
     <Grid
       container
@@ -27,6 +25,7 @@ const App = () => {
       <React.Fragment>
         <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
           <Switch>
+            {/* <Route exact path="/" component={RegisterRoute} /> */}
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />

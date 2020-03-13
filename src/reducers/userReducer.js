@@ -30,10 +30,6 @@ export const userReducer = (state = UserState, action) => {
         isAuthenticated: action.payload.isAuthenticated
       };
     case LOGIN_USER_FAILURE:
-      console.log(
-        "Logged output -->: userReducer -> action.payload.formErrors",
-        action.payload.formErrors
-      );
       return {
         ...state,
         formErrors: new Array(action.payload.formErrors),

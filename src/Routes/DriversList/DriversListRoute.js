@@ -11,11 +11,13 @@ import { Redirect, Route, Switch, Link, useRouteMatch } from "react-router-dom";
 import { Portal } from "react-portal";
 import ReactLoading from "react-loading";
 import Grid from "@material-ui/core/Grid";
+import authService from "./../../services/authService";
 
 const VehicleRoute = lazy(() => import("../../Routes/Vehicle/vehicleroute"));
 
 const DriversListRoute = props => {
   const { currentRole, editDriversData, history, match } = props;
+  const Role = authService().Role;
 
   const [toVerification, setToVerification] = useState(false);
   const [AllDrivers, setAllDrivers] = useState([]);
@@ -56,7 +58,7 @@ const DriversListRoute = props => {
             }
 
             return {
-              dataUniqueNumber: officerInfo.dataUniqueNumber,
+              driverDataId: officerInfo.driverDataId,
               serialNumber: i + 1,
               managedBy: managedByName,
               registeredBy: registeredByName,
@@ -88,7 +90,6 @@ const DriversListRoute = props => {
               ownersMobileNo: officerInfo.owner.ownersMobileNo
             };
           });
-          console.log("Logged output -->: DriversData", "Hello");
           setDrivers(DriversData);
           setAllDrivers(DriversDataSorted);
           setLoading(false);
@@ -144,7 +145,6 @@ const DriversListRoute = props => {
       <div>
         <br />
         <br />
-        <Link to={"/Admin/DriversList/Verification"}>Edit Drivers</Link>
         <h2>
           <b>Drivers Records</b>
         </h2>
@@ -167,84 +167,100 @@ const DriversListRoute = props => {
             exportButton: true
           }}
           actions={[
-            {
-              icon: "save",
-              tooltip: "Save User",
-              onClick: (event, rowData) => {
-                httpOthers(
-                  "get",
-                  "Data/GetAllDriversData",
-                  {
-                    "Content-type": "application/json"
-                  },
-                  null
-                )
-                  .then(response => {
-                    const driversData = response.data;
-                    const driversDataFlat = flatten(driversData);
+            Role === "Admin"
+              ? {
+                  icon: "edit",
+                  tooltip: "Edit Driver",
+                  onClick: (event, rowData) => {
+                    httpOthers(
+                      "get",
+                      "Data/GetDriversData",
+                      {
+                        "Content-type": "application/json"
+                      },
+                      null
+                    )
+                      .then(response => {
+                        if (response.status === 200) {
+                          const driversData = response.data;
+                          const driversDataFlat = flatten(driversData);
 
-                    const driversDataFlatRealKeys = {};
-                    for (const key in driversDataFlat) {
-                      if (driversDataFlat.hasOwnProperty(key)) {
-                        let value = driversDataFlat[key];
-                        const keyArray = key.split(".");
-                        const lastKey = keyArray[keyArray.length - 1];
-                        const finalKey = capitalizeFirstLetter(lastKey);
-                        driversDataFlatRealKeys[finalKey] = value;
-                      }
-                    }
-                    editDriversData(driversDataFlatRealKeys);
-                    //setToVerification(true);
-                    // history.push(`${url}/Verification`);
-                    history.push(`Admin/Verification`);
-                    //How does verification form knows to load from redux store?
-                    //-->Create an equivalent update component for each form that reads
-                    //from the store? OR checking the route from which admin is coming from
-                    //and using that route as a parameter to load redux store or not
-                  })
-                  .catch(error => {});
-              }
-            }
-          ]}
-          editable={{
-            onRowDelete: oldofficerInfo => {
-              return new Promise((resolve, reject) => {
-                if (oldofficerInfo) {
-                  setDrivers(prevState => {
-                    const Drivers = [...prevState];
-                    const index = Drivers.indexOf(oldofficerInfo);
-                    Drivers.splice(index, 1);
-                    return Drivers;
-                  });
+                          const driversDataFlatRealKeys = {};
+                          for (const key in driversDataFlat) {
+                            if (driversDataFlat.hasOwnProperty(key)) {
+                              let value = driversDataFlat[key];
+                              const keyArray = key.split(".");
+                              const lastKey = keyArray[keyArray.length - 1];
+                              const finalKey = capitalizeFirstLetter(lastKey);
+                              driversDataFlatRealKeys[finalKey] = value;
+                            }
+                          }
+                          editDriversData(driversDataFlatRealKeys);
+                          history.push(`Admin/Verification`);
+                        }
+                      })
+                      .catch(errors => {
+                        if (errors.response) {
+                          const responseErrors = errors.response.data;
+                          window.location.reload();
+                          alert(responseErrors["errors"]);
+                        }
+                      });
+                  }
                 }
-
-                const officerInfoObj = DriversData.filter(obj => {
-                  return obj.role === oldofficerInfo.role;
-                });
-
-                httpOthers(
-                  "delete",
-                  "Admin/DeleteRole",
-                  {
-                    "Content-type": "application/json"
-                  },
-                  { id: officerInfoObj[0].id }
-                )
-                  .then(response => {
-                    resolve(response);
-                  })
-                  .catch(error => {
-                    reject(error);
-                  });
-              });
-            }
-          }}
+              : {
+                  icon: "edit",
+                  tooltip:
+                    "You require administrative privileges to edit a driver. Please contact your administrator."
+                },
+            Role === "Admin"
+              ? {
+                  icon: "delete",
+                  tooltip: "Delete Driver",
+                  onClick: (event, rowData) => {
+                    console.log("Logged output -->: rowData", rowData);
+                    if (rowData) {
+                      setDrivers(prevState => {
+                        const Drivers = [...prevState];
+                        const index = Drivers.indexOf(rowData);
+                        Drivers.splice(index, 1);
+                        return Drivers;
+                      });
+                    }
+                    httpOthers(
+                      "delete",
+                      "Admin/DeleteDriver",
+                      {
+                        "Content-type": "application/json"
+                      },
+                      { driverDataId: rowData.driverDataId }
+                    )
+                      .then(response => {
+                        if (response.status === 200) {
+                          const message = response.data;
+                          alert(message["message"]);
+                        }
+                      })
+                      .catch(errors => {
+                        if (errors.response) {
+                          const responseErrors = errors.response.data;
+                          window.location.reload();
+                          alert(responseErrors["errors"]);
+                        }
+                      });
+                  }
+                }
+              : {
+                  icon: "delete",
+                  tooltip:
+                    "You require administrative privileges to delete a driver. Please contact your administrator."
+                }
+          ]}
         />
       </div>
     );
   };
 
-  //console.log("Logged output -->: loading", loading);
   // if (loading)
   //   return (
   //     <Portal node={document && document.getElementById("portal")}>
@@ -263,19 +279,12 @@ const DriversListRoute = props => {
         />
         <Route
           exact
-          // path={`${path}/Verification`}
           path={`Auth/Verification`}
           render={props => <VehicleRoute {...props} />}
-          //render={props => <h1>DDV</h1>}
         />
       </Switch>
     </Suspense>
   );
-
-  if (toVerification) {
-    //return <Redirect to={`${currentRole}/DriversList/verification`} />;
-    //history.push(`Admin/DriversList/verification`);
-  }
 };
 
 const mapDispatchToProps = dispatch => {

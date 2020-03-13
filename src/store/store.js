@@ -1,6 +1,6 @@
 const StoreInitialValues = {
-  DataUniqueNumber: "",
-  
+  DriverDataId: "",
+
   //Inspector's Form
   NameOfInspector: "",
   NameOfSupervisor: "",

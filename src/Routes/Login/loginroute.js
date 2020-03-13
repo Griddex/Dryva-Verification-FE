@@ -20,7 +20,6 @@ function LoginRoute(props) {
   }));
 
   const { formErrors, loginUser } = props;
-  console.log("Logged output -->: LoginRoute -> props", props);
   const classes = useStyles();
 
   return (

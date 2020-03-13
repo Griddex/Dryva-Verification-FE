@@ -38,7 +38,7 @@ const dataService = storeValues => {
       for (const image of Images) {
         formData.append("Images", image, image.name);
       }
-    } else if (key === "DataUniqueNumber") {
+    } else if (key === "DriverDataId") {
       formData.append(key, uuid());
     } else {
       formData.append(key, filteredSubmitDataWithTrfmdDates[key]);

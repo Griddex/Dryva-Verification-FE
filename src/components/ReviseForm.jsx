@@ -13,7 +13,6 @@ const ReviseForm = props => {
   const valuesAgain = { UserId, ...values };
   const valuesFinal = { ...valuesAgain, ...saveAndTechnicalValues };
 
-  console.log("Logged output -->: valuesFinal", valuesFinal);
   const formLastFields = [
     "InspectorsGeneralRemarks",
     "DriversPermanentCity",

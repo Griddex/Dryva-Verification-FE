@@ -3,15 +3,21 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import authService from "./../../../services/authService";
+import { Divider } from "@material-ui/core/Divider";
 
 export const RegistrationSuccess = props => {
   const currentRole = authService().Role;
   const { history } = props;
 
   return (
-    <Grid
-      container
-      style={{ width: "50%", margin: "0 auto", alignItems: "center" }}
+    <div
+      style={{
+        width: "100%",
+        margin: "auto",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "200px"
+      }}
     >
       <CheckBoxIcon htmlColor={"green"} style={{ fontSize: 70 }} />
       <h1>Registration Success!</h1>
@@ -24,7 +30,7 @@ export const RegistrationSuccess = props => {
       >
         Register Another...
       </Button>
-    </Grid>
+    </div>
   );
 };
 export default RegistrationSuccess;
