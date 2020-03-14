@@ -34,12 +34,15 @@ const SmtpRoute = () => {
       .then(response => {
         if (response.status === 200) {
           setemailSettingsData(response.data);
+          const message = response.data;
+          alert(message["message"]);
         }
       })
       .catch(errors => {
         if (errors.response) {
           const responseErrors = errors.response.data["errors"];
           setErrors(responseErrors);
+          alert(responseErrors["errors"]);
         }
       });
   }, []);
@@ -95,7 +98,6 @@ const SmtpRoute = () => {
       >
         {formikProps => {
           const {
-            values,
             errors,
             touched,
             handleSubmit,
@@ -104,8 +106,6 @@ const SmtpRoute = () => {
             isValid,
             status,
             isSubmitting,
-            isValidating,
-
             setValues
           } = formikProps;
 

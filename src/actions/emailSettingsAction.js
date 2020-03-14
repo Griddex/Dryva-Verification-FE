@@ -18,11 +18,14 @@ export const updateEmailSettingsAction = (
     .then(response => {
       if (response.status === 200) {
         SetSubmitting(false);
+        const message = response.data;
+        alert(message["message"]);
       }
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data[""];
+        const responseErrors = errors.response.data;
+        alert(responseErrors["errors"]);
       }
     });
 };

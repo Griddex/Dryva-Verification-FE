@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import OfficerDrawer from "./components/AppUserDrawer";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import Grid from "@material-ui/core/Grid";
-import authService from "./services/authService";
 import ReactLoading from "react-loading";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));

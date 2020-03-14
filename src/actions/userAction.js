@@ -139,9 +139,6 @@ export const registerUserAction = (
           }
         });
       }
-      const currentRole = authService().Role;
-      //Define the route where this route will be
-      //rendered or use dialog box
       history.replace(`/Auth/registration_success`);
     })
     .catch(errors => {

@@ -7,19 +7,16 @@ import { dateddMMYYYTransformationService } from "./../../services/dateTransform
 import { fullNameService } from "./../../services/fullNameService";
 import { connect } from "react-redux";
 import { editDriversDataAction } from "../../actions/editDriversDataAction";
-import { Redirect, Route, Switch, Link, useRouteMatch } from "react-router-dom";
-import { Portal } from "react-portal";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import ReactLoading from "react-loading";
-import Grid from "@material-ui/core/Grid";
 import authService from "./../../services/authService";
 
 const VehicleRoute = lazy(() => import("../../Routes/Vehicle/vehicleroute"));
 
 const DriversListRoute = props => {
-  const { currentRole, editDriversData, history, match } = props;
-  const Role = authService().Role;
+  const { editDriversData, history } = props;
+  const currentRole = authService().Role;
 
-  const [toVerification, setToVerification] = useState(false);
   const [AllDrivers, setAllDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Drivers, setDrivers] = useState([]);
@@ -27,7 +24,7 @@ const DriversListRoute = props => {
 
   let DriversDataSorted;
   let DriversData;
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
 
   useEffect(() => {
     httpOthers("get", "Data/GetDriversData", null, null)
@@ -167,7 +164,7 @@ const DriversListRoute = props => {
             exportButton: true
           }}
           actions={[
-            Role === "Admin"
+            currentRole === "Admin"
               ? {
                   icon: "edit",
                   tooltip: "Edit Driver",
@@ -213,7 +210,7 @@ const DriversListRoute = props => {
                   tooltip:
                     "You require administrative privileges to edit a driver. Please contact your administrator."
                 },
-            Role === "Admin"
+            currentRole === "Admin"
               ? {
                   icon: "delete",
                   tooltip: "Delete Driver",
@@ -260,14 +257,6 @@ const DriversListRoute = props => {
       </div>
     );
   };
-
-  // if (loading)
-  //   return (
-  //     <Portal node={document && document.getElementById("portal")}>
-  //       <h1>LOADING...</h1>
-  //       {/* <ReactLoading type={"Spin"} color="#006992" /> */}
-  //     </Portal>
-  //   );
 
   return (
     <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
