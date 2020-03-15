@@ -24,7 +24,6 @@ const App = () => {
       <React.Fragment>
         <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
           <Switch>
-            {/* <Route exact path="/" component={RegisterRoute} /> */}
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />
             <Route exact path="/logout" component={LandingRoute} />
