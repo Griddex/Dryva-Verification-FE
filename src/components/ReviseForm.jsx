@@ -9,7 +9,7 @@ const ReviseForm = props => {
     values: { Images }
   } = props;
 
-  const UserId = authService().sid;
+  const UserId = authService("identity").sid;
   const valuesAgain = { UserId, ...values };
   const valuesFinal = { ...valuesAgain, ...saveAndTechnicalValues };
 

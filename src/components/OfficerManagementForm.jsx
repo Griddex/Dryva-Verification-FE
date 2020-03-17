@@ -80,6 +80,10 @@ const OfficerManagementForm = props => {
         columns={columns}
         data={Officers}
         options={{
+          headerStyle: {
+            backgroundColor: "#6192A6",
+            color: "#FFF"
+          },
           actionsColumnIndex: -1,
           exportButton: true
         }}

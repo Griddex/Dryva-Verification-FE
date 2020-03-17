@@ -1,7 +1,6 @@
 import React from "react";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import Button from "@material-ui/core/Button";
-import authService from "./../../../services/authService";
 
 export const RegistrationSuccess = props => {
   const { history } = props;

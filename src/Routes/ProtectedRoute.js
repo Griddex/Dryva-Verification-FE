@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import authService from "./../services/authService";
 
 const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
-  const auth = authService();
+  const auth = authService("identity");
 
   return (
     <Route

@@ -35,14 +35,15 @@ const SmtpRoute = () => {
         if (response.status === 200) {
           setemailSettingsData(response.data);
           const message = response.data;
-          alert(message["message"]);
         }
       })
       .catch(errors => {
         if (errors.response) {
           const responseErrors = errors.response.data["errors"];
-          setErrors(responseErrors);
-          alert(responseErrors["errors"]);
+          if (responseErrors !== undefined) {
+            setErrors(responseErrors);
+            alert(responseErrors["errors"]);
+          }
         }
       });
   }, []);

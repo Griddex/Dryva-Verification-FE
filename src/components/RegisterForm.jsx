@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Input from "./common/Input";
 import Select from "./common/Select";
-import ReactLoading from "react-loading";
 import { connect } from "react-redux";
+import httpOthers from "./../services/httpService/httpOthers";
+import {
+  LOAD_ROLES_SUCCESS,
+  LOAD_ROLES_FAILURE
+} from "./../actions/rolesAction";
 
 function RegisterForm(props) {
   const {
@@ -18,8 +22,8 @@ function RegisterForm(props) {
       password,
       confirmpassword
     },
+    dispatch,
     loadErrors,
-    formLoading,
     errors,
     touched,
     handleSubmit,
@@ -27,16 +31,43 @@ function RegisterForm(props) {
     handleBlur,
     isValid,
     status,
-    Submitting,
+    registerSubmitting,
     saveFormLoginInStore
   } = props;
+
+  useEffect(() => {
+    httpOthers("get", "Admin/GetAllRoles", null, null)
+      .then(response => {
+        if (response.status === 200) {
+          const rolesData = response.data;
+          sessionStorage.setItem("roles", rolesData.join());
+
+          dispatch({
+            type: LOAD_ROLES_SUCCESS,
+            payload: { roles: rolesData, Loading: false, formErrors: false }
+          });
+        }
+      })
+      .catch(errors => {
+        if (errors.response) {
+          const responseErrors = errors.response.data["errors"];
+
+          dispatch({
+            type: LOAD_ROLES_FAILURE,
+            payload: {
+              roles: [],
+              Loading: false,
+              formErrors: new Array(responseErrors)
+            }
+          });
+        }
+      });
+  }, []);
 
   let errorsChecked = errors ? { ...errors } : {};
   const errorsCheckedArr = Object.values({ ...errorsChecked });
   let loadErrorsChecked = loadErrors ? [...loadErrors] : [];
   let allErrors = [...errorsCheckedArr, ...loadErrorsChecked];
-
-  if (formLoading) return <ReactLoading type={"Spin"} color="#006992" />;
 
   let { rolesData } = props;
   const roles = sessionStorage.getItem("roles");
@@ -180,7 +211,7 @@ function RegisterForm(props) {
         )}
         <br />
         <br />
-        {Submitting && (
+        {registerSubmitting && (
           <img
             alt="Loading..."
             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
@@ -191,7 +222,7 @@ function RegisterForm(props) {
           width={400}
           variant="contained"
           color="primary"
-          disabled={!isValid || Submitting}
+          disabled={!isValid || registerSubmitting}
         >
           Register
         </Button>

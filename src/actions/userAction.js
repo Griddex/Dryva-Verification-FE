@@ -1,11 +1,5 @@
 import history from "./../services/historyService";
-import authService from "./../services/authService";
-import httpOthers from "./../services/httpService/httpOthers";
-import {
-  LOAD_ROLES_COMMENCE,
-  LOAD_ROLES_SUCCESS,
-  LOAD_ROLES_FAILURE
-} from "./rolesAction";
+import { LOAD_ROLES_COMMENCE } from "./rolesAction";
 
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
@@ -41,39 +35,7 @@ export const loginUserAction = (email, password, rememberMe) => (
         payload: { token: token, Submitting: false, isAuthenticated: true }
       });
 
-      const Role = authService().Role;
-
-      if (Role === "Admin") {
-        httpOthers("get", "Admin/GetAllRoles", null, null)
-          .then(response => {
-            if (response.status === 200) {
-              const rolesData = response.data;
-              sessionStorage.setItem("roles", rolesData.join());
-
-              dispatch({
-                type: LOAD_ROLES_SUCCESS,
-                payload: { roles: rolesData, Loading: false, formErrors: false }
-              });
-
-              history.replace(`/Auth/register`);
-            }
-          })
-          .catch(errors => {
-            if (errors.response) {
-              const responseErrors = errors.response.data["errors"];
-
-              dispatch({
-                type: LOAD_ROLES_FAILURE,
-                payload: {
-                  roles: [],
-                  Loading: false,
-                  formErrors: new Array(responseErrors)
-                }
-              });
-            }
-          });
-      }
-      history.replace(`/Auth/verification`);
+      history.replace("/Auth/register");
     })
     .catch(errors => {
       if (errors.response) {

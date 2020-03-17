@@ -20,7 +20,6 @@ import { Route, Switch, Link, Redirect } from "react-router-dom";
 import unauthorized from "./unauthorized";
 import authService from "./../services/authService";
 import iconsService from "./../services/iconsService";
-import ReactLoading from "react-loading";
 
 const VehicleRoute = lazy(() => import("../Routes/Vehicle/vehicleroute"));
 const DriversListRoute = lazy(() =>
@@ -106,7 +105,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function OfficerDrawer(props) {
   const { history } = props;
-  const auth = authService();
+  const auth = authService("identity");
   const currentRole = auth.Role;
 
   const classes = useStyles();
@@ -265,7 +264,7 @@ export default function OfficerDrawer(props) {
       {currentRole && currentRole === "Admin" ? (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
+          <Suspense fallback={<div>Loading...</div>}>
             <Switch>
               <Route
                 exact
@@ -311,7 +310,7 @@ export default function OfficerDrawer(props) {
       ) : (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
+          <Suspense fallback={<div>Loading...</div>}>
             <Switch>
               <Route
                 exact

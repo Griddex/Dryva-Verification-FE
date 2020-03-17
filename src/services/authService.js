@@ -1,12 +1,19 @@
 import decodeJwt from "jwt-decode";
 
-const authService = () => {
-  const token = sessionStorage.getItem("token");
-  if (token !== null) {
-    const identity = decodeJwt(token);
-    return identity;
+let currentUserToken = null;
+
+export function setToken(token) {
+  currentUserToken = token;
+}
+
+export default function authService(type) {
+  if (currentUserToken !== null) {
+    if (type === "token") {
+      return currentUserToken;
+    } else {
+      const identity = decodeJwt(currentUserToken);
+      return identity;
+    }
   }
   return "";
-};
-
-export default authService;
+}

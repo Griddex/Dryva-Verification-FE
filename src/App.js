@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import OfficerDrawer from "./components/AppUserDrawer";
 import ProtectedRoute from "./Routes/ProtectedRoute";
 import Grid from "@material-ui/core/Grid";
-import ReactLoading from "react-loading";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));
 const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
@@ -22,7 +21,7 @@ const App = () => {
       style={{ minWidth: 800 }}
     >
       <React.Fragment>
-        <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
+        <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />

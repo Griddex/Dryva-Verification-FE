@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Suspense, lazy } from "react";
 import MaterialTable from "material-table";
+import Avatar from "@material-ui/core/Avatar";
 import httpOthers from "./../../services/httpService/httpOthers";
 import * as _ from "lodash";
 import { flatten } from "flat";
@@ -8,14 +9,13 @@ import { fullNameService } from "./../../services/fullNameService";
 import { connect } from "react-redux";
 import { editDriversDataAction } from "../../actions/editDriversDataAction";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import ReactLoading from "react-loading";
 import authService from "./../../services/authService";
 
 const VehicleRoute = lazy(() => import("../../Routes/Vehicle/vehicleroute"));
 
 const DriversListRoute = props => {
   const { editDriversData, history } = props;
-  const currentRole = authService().Role;
+  const currentRole = authService("identity").Role;
 
   const [AllDrivers, setAllDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -118,6 +118,11 @@ const DriversListRoute = props => {
     { title: "Place of Inspection", field: "placeOfInspection" },
     { title: "Date of Inspection", field: "dateOfInspection" },
     { title: "Driver's Fullname", field: "driversFullName" },
+    {
+      title: "Profile",
+      field: "avatar",
+      render: rowData => <Avatar alt={rowData.driversFullName} src="" />
+    },
     { title: "Driver's Mobile", field: "driversMobile" },
     { title: "Driver's Email", field: "driversEmail" },
     { title: "Driver's License No.", field: "driversLicenseNo" },
@@ -160,7 +165,12 @@ const DriversListRoute = props => {
           columns={columns}
           data={Drivers}
           options={{
+            headerStyle: {
+              backgroundColor: "#6192A6",
+              color: "#FFF"
+            },
             actionsColumnIndex: -1,
+            grouping: true,
             exportButton: true
           }}
           actions={[
@@ -215,7 +225,6 @@ const DriversListRoute = props => {
                   icon: "delete",
                   tooltip: "Delete Driver",
                   onClick: (event, rowData) => {
-                    console.log("Logged output -->: rowData", rowData);
                     if (rowData) {
                       setDrivers(prevState => {
                         const Drivers = [...prevState];
@@ -259,7 +268,7 @@ const DriversListRoute = props => {
   };
 
   return (
-    <Suspense fallback={<ReactLoading type={"Spin"} color="#006992" />}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Switch>
         <Route
           exact

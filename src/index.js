@@ -5,17 +5,18 @@ import App from "./App";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import history from "./services/historyService";
 import thunk from "redux-thunk";
 import { userReducer } from "./reducers/userReducer";
 import { saveOrSubmitReducer } from "./reducers/saveOrSubmitReducer";
 import { rolesReducer } from "./reducers/rolesReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
-import history from "./services/historyService";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import httpLogin from "./services/httpService/httpLogin";
 import httpOthers from "./services/httpService/httpOthers";
 import httpRegister from "./services/httpService/httpRegister";
+import { setToken } from "./services/authService";
 
 const rootReducer = combineReducers({
   userReducer,
@@ -23,10 +24,18 @@ const rootReducer = combineReducers({
   rolesReducer
 });
 
+const setAuthToken = store => next => action => {
+  if (action.type === "LOGIN_USER_SUCCESS") {
+    setToken(action.payload.token);
+  }
+  return next(action);
+};
+
 const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
+      setAuthToken,
       thunk.withExtraArgument({ httpLogin, httpRegister, httpOthers })
     )
   )

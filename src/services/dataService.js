@@ -4,7 +4,7 @@ import uuid from "uuid/v4";
 import authService from "./authService";
 
 const dataService = storeValues => {
-  const UserId = authService().sid;
+  const UserId = authService("identity").sid;
 
   let formData = new FormData();
   let SubmitData = { UserId, ...storeValues };

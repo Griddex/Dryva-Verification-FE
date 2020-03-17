@@ -35,7 +35,6 @@ function RegisterRoute(props) {
       </div>
       <Formik
         initialValues={UserState}
-        //IdentityOptions validation needed here for password
         validationSchema={Yup.object().shape({
           firstname: Yup.string().required("Firstname is required"),
           lastname: Yup.string().required("Lastname is required"),
@@ -94,7 +93,7 @@ function RegisterRoute(props) {
 const mapStateToProps = state => {
   return {
     formErrors: state.userReducer.formErrors,
-    Submitted: state.userReducer.Submitted,
+    registerSubmitting: state.userReducer.Submitting,
     registrationSucceeded: state.userReducer.registrationSucceeded
   };
 };

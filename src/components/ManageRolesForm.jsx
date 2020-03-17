@@ -68,7 +68,13 @@ const ManageRolesForm = props => {
         title=""
         columns={columns}
         data={RolesAndClaims}
-        options={{ actionsColumnIndex: -1 }}
+        options={{
+          headerStyle: {
+            backgroundColor: "#6192A6",
+            color: "#FFF"
+          },
+          actionsColumnIndex: -1
+        }}
         editable={{
           onRowAdd: newRoleAndClaims =>
             new Promise((resolve, reject) => {
