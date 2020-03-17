@@ -1,4 +1,5 @@
 import history from "./../services/historyService";
+import authService from "../services/authService";
 import { LOAD_ROLES_COMMENCE } from "./rolesAction";
 
 export const LOGIN_USER_COMMENCE = "LOGIN_USER_COMMENCE";
@@ -30,12 +31,16 @@ export const loginUserAction = (email, password, rememberMe) => (
       sessionStorage.clear();
       sessionStorage.setItem("token", token);
 
-      dispatch({
+      return dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { token: token, Submitting: false, isAuthenticated: true }
       });
+    })
+    .then(response => {
+      const role = authService("Identity").Role;
 
-      history.replace("/Auth/register");
+      if (role === "Admin") history.replace("/Auth/register");
+      else history.replace("/Auth/verification");
     })
     .catch(errors => {
       if (errors.response) {
