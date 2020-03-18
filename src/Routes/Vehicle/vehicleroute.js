@@ -153,7 +153,7 @@ function VehicleRoute(reduxProps) {
           onClick={e => {
             const result = window.confirm(`Submit Form?`);
             if (!result) return;
-            return reduxProps.sendFormToServer;
+            reduxProps.sendFormToServer();
           }}
           className={classes.button}
         >
