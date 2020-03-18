@@ -92,6 +92,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
+    backgroundColor: "#6C6C6C",
     ...theme.mixins.toolbar
   },
   content: {
@@ -264,7 +265,21 @@ export default function OfficerDrawer(props) {
       {currentRole && currentRole === "Admin" ? (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  width: "100%",
+                  margin: "auto",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "200px"
+                }}
+              >
+                <h2>Loading...</h2>
+              </div>
+            }
+          >
             <Switch>
               <Route
                 exact
@@ -310,7 +325,21 @@ export default function OfficerDrawer(props) {
       ) : (
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  width: "100%",
+                  margin: "auto",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "200px"
+                }}
+              >
+                <h2>Loading...</h2>
+              </div>
+            }
+          >
             <Switch>
               <Route
                 exact

@@ -81,7 +81,7 @@ const OfficerManagementForm = props => {
         data={Officers}
         options={{
           headerStyle: {
-            backgroundColor: "#6192A6",
+            backgroundColor: "#6C6C6C",
             color: "#FFF"
           },
           actionsColumnIndex: -1,
@@ -92,6 +92,11 @@ const OfficerManagementForm = props => {
             icon: "rotate_left",
             tooltip: "Reset Password",
             onClick: (event, rowData) => {
+              const result = window.confirm(
+                `Do you want to reset the password for ${rowData.firstName} ${rowData.lastName}?`
+              );
+              if (!result) return;
+
               const userId = rowData.id;
               httpOthers(
                 "post",
@@ -104,7 +109,7 @@ const OfficerManagementForm = props => {
                 .then(response => {
                   if (response.status === 200) {
                     const message = response.data;
-                    alert(message["Message"]);
+                    alert(message["message"]);
                   }
                 })
                 .catch(errors => {
@@ -117,8 +122,13 @@ const OfficerManagementForm = props => {
           },
           {
             icon: "delete_outline",
-            tooltip: "Delete row",
+            tooltip: "Delete Officer",
             onClick: (event, rowData) => {
+              const result = window.confirm(
+                `Do you want to delete verification officer ${rowData.firstName} ${rowData.lastName}?`
+              );
+              if (!result) return;
+
               if (rowData) {
                 setOfficers(prevState => {
                   const Officers = [...prevState];
@@ -130,7 +140,7 @@ const OfficerManagementForm = props => {
               const userId = rowData.id;
               httpOthers(
                 "delete",
-                "Admin/DeleteUser",
+                "Admin/DeleteOfficer",
                 {
                   "Content-type": "application/json"
                 },
@@ -138,7 +148,7 @@ const OfficerManagementForm = props => {
               )
                 .then(response => {
                   const message = response.data;
-                  alert(message["Message"]);
+                  alert(message["message"]);
                 })
                 .catch(errors => {
                   if (errors.response) {

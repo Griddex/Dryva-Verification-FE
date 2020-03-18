@@ -150,7 +150,11 @@ function VehicleRoute(reduxProps) {
         <Button
           variant="contained"
           color="primary"
-          onClick={reduxProps.sendFormToServer}
+          onClick={e => {
+            const result = window.confirm(`Submit Form?`);
+            if (!result) return;
+            return reduxProps.sendFormToServer;
+          }}
           className={classes.button}
         >
           Submit
@@ -320,7 +324,8 @@ const mapStateToProps = state => {
       InteriorClean: state.saveOrSubmitReducer.InteriorClean,
       WastebinAvailableOrEmptied:
         state.saveOrSubmitReducer.WastebinAvailableOrEmptied,
-      OtherInteriorChecks: state.saveOrSubmitReducer.OtherInteriorChecks
+      OtherInteriorChecks: state.saveOrSubmitReducer.OtherInteriorChecks,
+      Images: state.saveOrSubmitReducer.Images
     }
   };
 };

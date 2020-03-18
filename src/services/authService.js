@@ -14,6 +14,13 @@ export default function authService(type) {
       const identity = decodeJwt(currentUserToken);
       return identity;
     }
+  } else {
+    if (type === "token") {
+      return window.sessionStorage.getItem("token");
+    } else {
+      const userToken = window.sessionStorage.getItem("token");
+      const identity = decodeJwt(userToken);
+      return identity;
+    }
   }
-  return "";
 }

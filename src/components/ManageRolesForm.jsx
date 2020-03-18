@@ -70,7 +70,7 @@ const ManageRolesForm = props => {
         data={RolesAndClaims}
         options={{
           headerStyle: {
-            backgroundColor: "#6192A6",
+            backgroundColor: "#6C6C6C",
             color: "#FFF"
           },
           actionsColumnIndex: -1
@@ -79,32 +79,39 @@ const ManageRolesForm = props => {
           onRowAdd: newRoleAndClaims =>
             new Promise((resolve, reject) => {
               if (newRoleAndClaims) {
-                setRolesAndClaims(prevState => {
-                  const RolesAndClaims = [...prevState];
-                  return [...RolesAndClaims, newRoleAndClaims];
-                });
-              }
+                httpOthers(
+                  "post",
+                  "/Admin/CreateRole",
+                  { "Content-type": "application/json" },
+                  { role: newRoleAndClaims.role }
+                )
+                  .then(response => {
+                    if (response.status === 200) {
+                      const message = response.data;
+                      const id = message["id"];
+                      const sn = message["sn"];
+                      const role = message["role"];
 
-              httpOthers(
-                "post",
-                "/Admin/CreateRole",
-                { "Content-type": "application/json" },
-                { role: newRoleAndClaims.role }
-              )
-                .then(response => {
-                  if (response.status === 200) {
-                    const message = response.data;
-                    resolve(message["message"]);
-                    alert(message["message"]);
-                  }
-                })
-                .catch(errors => {
-                  if (errors.response) {
-                    const responseErrors = errors.response.data;
-                    reject(responseErrors["errors"]);
-                    alert(responseErrors["errors"]);
-                  }
-                });
+                      setRolesAndClaims(prevState => {
+                        const RolesAndClaims = [...prevState];
+                        return [
+                          ...RolesAndClaims,
+                          { id: id, sn: sn, role: role, Claims: [] }
+                        ];
+                      });
+
+                      resolve(message["message"]);
+                      alert(message["message"]);
+                    }
+                  })
+                  .catch(errors => {
+                    if (errors.response) {
+                      const responseErrors = errors.response.data;
+                      reject(responseErrors["errors"]);
+                      alert(responseErrors["errors"]);
+                    }
+                  });
+              }
             }),
           onRowUpdate: (newRoleAndClaims, oldRoleAndClaims) =>
             new Promise((resolve, reject) => {

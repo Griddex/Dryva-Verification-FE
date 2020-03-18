@@ -52,6 +52,7 @@ export const userReducer = (state = UserState, action) => {
     case REGISTER_USER_FAILURE:
       return {
         ...state,
+        Submitting: action.payload.Submitting,
         formErrors: new Array(action.payload.responseErrors)
       };
     default:

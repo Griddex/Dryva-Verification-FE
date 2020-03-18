@@ -31,7 +31,7 @@ export const onRowAddAction = newRole => (dispatch, getState, http) => {
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data[""];
+        const responseErrors = errors.response.data["errors"];
         dispatch({
           type: SUBMIT_ROLES_FAILURE,
           payload: { Submitting: false, formErrors: responseErrors }

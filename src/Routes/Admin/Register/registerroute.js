@@ -23,16 +23,6 @@ function RegisterRoute(props) {
 
   return (
     <div>
-      <div>
-        {formErrors &&
-          formErrors.map((e, i) => {
-            return (
-              <p key={i} className={classes.error}>
-                {e}
-              </p>
-            );
-          })}
-      </div>
       <Formik
         initialValues={UserState}
         validationSchema={Yup.object().shape({
@@ -52,10 +42,9 @@ function RegisterRoute(props) {
             .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?/]+/, {
               message: "Your password must contain at least 1 special character"
             }),
-          confirmpassword: Yup.string().oneOf(
-            [Yup.ref("password")],
-            "Passwords must match"
-          )
+          confirmpassword: Yup.string()
+            .oneOf([Yup.ref("password")], "Passwords must match")
+            .required()
         })}
         onSubmit={(
           {
@@ -71,6 +60,8 @@ function RegisterRoute(props) {
           },
           formikBag
         ) => {
+          const answer = window.confirm(`Register ${firstname} ${lastname}?`);
+          if (!answer) return;
           registerUser(
             firstname,
             middlename,
@@ -92,7 +83,7 @@ function RegisterRoute(props) {
 
 const mapStateToProps = state => {
   return {
-    formErrors: state.userReducer.formErrors,
+    loadErrors: state.userReducer.formErrors,
     registerSubmitting: state.userReducer.Submitting,
     registrationSucceeded: state.userReducer.registrationSucceeded
   };

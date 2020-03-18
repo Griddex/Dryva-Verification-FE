@@ -166,7 +166,7 @@ const DriversListRoute = props => {
           data={Drivers}
           options={{
             headerStyle: {
-              backgroundColor: "#6192A6",
+              backgroundColor: "#6C6C6C",
               color: "#FFF"
             },
             actionsColumnIndex: -1,
@@ -179,6 +179,11 @@ const DriversListRoute = props => {
                   icon: "edit",
                   tooltip: "Edit Driver",
                   onClick: (event, rowData) => {
+                    const result = window.confirm(
+                      `Do you want to edit driver ${rowData.driversFullName}?`
+                    );
+                    if (!result) return;
+
                     httpOthers(
                       "get",
                       "Data/GetDriversData",
@@ -203,13 +208,12 @@ const DriversListRoute = props => {
                             }
                           }
                           editDriversData(driversDataFlatRealKeys);
-                          history.push(`Admin/Verification`);
+                          history.push(`Auth/Verification`);
                         }
                       })
                       .catch(errors => {
                         if (errors.response) {
                           const responseErrors = errors.response.data;
-                          window.location.reload();
                           alert(responseErrors["errors"]);
                         }
                       });
@@ -225,6 +229,11 @@ const DriversListRoute = props => {
                   icon: "delete",
                   tooltip: "Delete Driver",
                   onClick: (event, rowData) => {
+                    const result = window.confirm(
+                      `Do you want to delete driver ${rowData.driversFullName}?`
+                    );
+                    if (!result) return;
+
                     if (rowData) {
                       setDrivers(prevState => {
                         const Drivers = [...prevState];
@@ -250,7 +259,6 @@ const DriversListRoute = props => {
                       .catch(errors => {
                         if (errors.response) {
                           const responseErrors = errors.response.data;
-                          window.location.reload();
                           alert(responseErrors["errors"]);
                         }
                       });
@@ -268,7 +276,21 @@ const DriversListRoute = props => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            width: "100%",
+            margin: "auto",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "200px"
+          }}
+        >
+          <h2>Loading...</h2>
+        </div>
+      }
+    >
       <Switch>
         <Route
           exact

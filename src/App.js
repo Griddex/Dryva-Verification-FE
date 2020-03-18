@@ -6,9 +6,6 @@ import Grid from "@material-ui/core/Grid";
 
 const LandingRoute = lazy(() => import("./Routes/Landing/landingroute"));
 const LoginRoute = lazy(() => import("./Routes/Login/loginroute"));
-const RegisterRoute = lazy(() =>
-  import("./Routes/Admin/Register/registerroute")
-);
 
 const App = () => {
   return (
@@ -21,7 +18,21 @@ const App = () => {
       style={{ minWidth: 800 }}
     >
       <React.Fragment>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: "100%",
+                margin: "auto",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "200px"
+              }}
+            >
+              <h2>Loading...</h2>
+            </div>
+          }
+        >
           <Switch>
             <Route exact path="/" component={LandingRoute} />
             <Route exact path="/login" component={LoginRoute} />

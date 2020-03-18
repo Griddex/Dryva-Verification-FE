@@ -3,11 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import authService from "./../services/authService";
 
 const ReviseForm = props => {
-  const { values } = props;
-  const { saveAndTechnicalValues } = props;
-  const {
-    values: { Images }
-  } = props;
+  const { values, saveAndTechnicalValues } = props;
+  const { Images } = saveAndTechnicalValues;
 
   const UserId = authService("identity").sid;
   const valuesAgain = { UserId, ...values };

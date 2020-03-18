@@ -44,7 +44,8 @@ export const loginUserAction = (email, password, rememberMe) => (
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data["errors"];
+        const responseErrors = errors.response.data;
+        alert(responseErrors["Errors"]);
 
         dispatch({
           type: LOGIN_USER_FAILURE,
@@ -110,7 +111,9 @@ export const registerUserAction = (
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data[""];
+        const responseErrors = errors.response.data;
+        alert(responseErrors["Errors"]);
+
         dispatch({
           type: REGISTER_USER_FAILURE,
           payload: { Submitting: false, responseErrors: responseErrors }

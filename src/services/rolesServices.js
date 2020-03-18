@@ -11,7 +11,7 @@ export const GetRoles = () => {
     })
     .catch(errors => {
       if (errors.response) {
-        const responseErrors = errors.response.data[""];
+        const responseErrors = errors.response.data["errors"];
       }
     });
 
